@@ -11,7 +11,7 @@ function App() {
   return (
     <ConnectedRouter history={history}>
       <div>
-        <FormattedMessage defaultMessage="asdf" />
+        <FormattedMessage defaultMessage="Hello there" />
       </div>
     </ConnectedRouter>
   )

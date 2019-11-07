@@ -28,6 +28,7 @@
     "redux-devtools-extension": "^2.13.5"
   },
   "dependencies": {
+    "airswap.js": "0.1.62",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.1.0",
@@ -35,7 +36,6 @@
     "@types/styled-components": "^4.1.16",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "airswap.js": "^0.1.53",
     "auth0-js": "^9.8.1",
     "babel-loader": "8.0.4",
     "babel-plugin-react-intl-auto": "^1.7.0",
@@ -52,6 +52,7 @@
     "react-dom": "^16.11.0",
     "react-intl": "^2.8.0",
     "react-redux": "^7.1.3",
+    "react-responsive": "^6.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "2.1.3",
     "redux": "^4.0.4",
