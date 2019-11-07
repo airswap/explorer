@@ -1635,7 +1635,7 @@ aes-js@^3.1.1:
   resolved "https://registry.yarnpkg.com/aes-js/-/aes-js-3.1.2.tgz#db9aabde85d5caabbfc0d4f2a4446960f627146a"
   integrity sha512-e5pEa2kBnBOgR4Y/p20pskXI74UEz7de8ZGVo58asOtvSVG5YAbJeELPZxOmt+Bnz3rX753YKhfIn4X4l1PPRQ==
 
-airswap.js@^0.1.53:
+airswap.js@0.1.61:
   version "0.1.61"
   resolved "https://registry.yarnpkg.com/airswap.js/-/airswap.js-0.1.61.tgz#128e143d5c9a01022387047084fe63e417d789f8"
   integrity sha512-+QKd4TEQxzh5xM6hLMRwCxattFZA0zKZAY1JmoyFZNRmPj9OKSqcjTfpGKVJ3yO2cBM+wHbcKw2vmXfFJ6Ni4w==
