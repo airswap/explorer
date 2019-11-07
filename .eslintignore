@@ -1,0 +1,6 @@
+**/flow-typed/**/*
+src/registerServiceWorker.js
+src/styles/bootstrap
+**/*.story.js
+src/actions/walletActions.js
+src/App.js

@@ -1,0 +1,134 @@
+###
+# Fluidity S3 Static Website CircleCI script
+#
+# Copy and paste me into a repo to enable static S3 website build and deploys.
+# Please update the version number when making changes.
+#
+# @author Fluidity Ops
+# @version 1.2.0
+#
+###
+
+version: 2.1
+
+orbs:
+  airswap: airswap/assume-role@volatile
+  aws-cli: airswap/aws-cli@volatile
+  slack: circleci/slack@0.1.1
+  datadog: airswap/datadog@volatile
+
+references:
+
+  container_config: &container_config
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/repo
+
+  npm_cache_key: &npm_cache_key
+    v3-dependencies-{{ checksum "package.json" }}
+  npm_backup_cache_key: &npm_backup_cache_key
+    v3-dependencies-
+
+  restore_node_modules: &restore_node_modules
+    restore_cache:
+      keys:
+        - *npm_cache_key
+        - *npm_backup_cache_key
+
+  invalidate_cloudfront: &invalidate_cloudfront
+    run:
+      name: create invalidations for cloudfront
+      command: |
+        case $ENV in
+          "sandbox")
+            #aws cloudfront create-invalidation --distribution-id E1U9KAL5XKT2XE --paths "/*"
+            ;;
+          "production")
+            #aws cloudfront create-invalidation --distribution-id E3RQU0UOQ0Z2HI --paths "/*"
+            ;;
+          "development")
+            #aws cloudfront create-invalidation --distribution-id EXQQB1MAZAWWN --paths "/*"
+            ;;
+        esac
+
+  setup_bucket: &setup_bucket
+    run:
+        name: set up bucket name
+        command: echo "export S3_BUCKET=explorer.$DOMAIN" >> $BASH_ENV
+
+  install_missing_packages: &install_missing_packages
+    run:
+      command: |
+        sudo apt-get install libusb-1.0-0-dev
+
+  restore_repo: &restore_repo
+    restore_cache:
+      keys:
+        - v3-repo-{{ .Branch }}-{{ .Revision }}
+        - v3-repo-{{ .Branch }}
+        - v3-repo
+
+  build_and_deploy: &build_and_deploy
+    <<: *container_config
+    resource_class: large
+    steps:
+      - *restore_repo
+      - checkout
+      - *restore_node_modules
+      - *install_missing_packages
+      - add_ssh_keys:
+          fingerprints:
+            - "70:4e:92:f1:da:63:59:af:cd:40:b3:43:90:e7:cb:0a"
+      - run:
+          name: yarn install
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: *npm_cache_key
+      - run:
+          name: build minified files
+          command: |
+             echo "Building for $ENV / $STAGE in branch: $CIRCLE_BRANCH with domain $DOMAIN "
+             REACT_APP_SERVER_ENV=$ENV CI=false yarn react-scripts build # dont treat warnings as errors
+      - aws-cli/install
+      - airswap/assume-role:
+          role-name: StaticSiteDeployer
+      - *setup_bucket
+      - run:
+          name: deploy to s3 bucket
+          command: |
+            aws s3 sync ./build s3://$S3_BUCKET --delete --acl public-read
+      - *invalidate_cloudfront
+      - slack/status
+      - datadog/deploy
+
+jobs:
+  development:
+    <<: *build_and_deploy
+  sandbox:
+    <<: *build_and_deploy
+  production:
+    <<: *build_and_deploy
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - development:
+          context: Development
+          filters:
+            branches:
+              only:
+                - develop
+      - sandbox:
+          context: Sandbox
+          filters:
+            branches:
+              only:
+                - master
+      - production:
+          context: Production
+          filters:
+            branches:
+              only:
+                - master
