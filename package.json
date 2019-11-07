@@ -3,64 +3,70 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prettier:run-all": "prettier --write \"src/**/*.{js,jsx}\"",
-    "lint": "eslint src --ext .js,.jsx",
+    "start:dev": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='development' react-app-rewired start",
+    "start:prod": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='production' react-app-rewired start",
+    "start": "yarn start:dev",
+    "build": "react-app-rewired build",
+    "prettier:run-all": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "types": "tsc",
+    "lint": "eslint . --ext .ts,.tsx",
     "lint-staged": "lint-staged",
-    "flow": "flow"
+    "locale": "yarn generateAllLocaleMessages",
+    "generateAllLocaleMessages": "yarn generateLocaleMessages 'src/**/*.tsx'",
+    "generateLocaleMessages": "NODE_ENV='development' extract-react-intl-messages --flat -l=en_US,de_DE,fr_FR,ja,ko,ru_RU,zh_CN,zh_TW --default-locale en_US -o src/locales/messages",
+    "fixLocales": "rm -rf src/locales/messages && yarn generateAllLocaleMessages"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.1.0",
+    "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-class-property": "^1.1.0",
     "eslint-plugin-jest": "^22.2.1",
     "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react-intl": "^1.1.2",
-    "flow-bin": "^0.84.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
     "lint-staged": "^7.3.0",
     "pre-commit": "^1.2.2",
     "redux-devtools-extension": "^2.13.5"
   },
   "dependencies": {
-    "@airswap/component-library": "ssh://git@github.com:airswap/component-library.git#v1.1.1",
-    "airswap.js": "^0.0.17",
+    "@types/react": "^16.9.11",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-redux": "^7.1.0",
+    "@types/react-router-dom": "^4.3.3",
+    "@types/styled-components": "^4.1.16",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "airswap.js": "^0.1.53",
     "auth0-js": "^9.8.1",
+    "babel-loader": "8.0.4",
+    "babel-plugin-react-intl-auto": "^1.7.0",
     "bignumber.js": "4.1.0",
-    "chroma-js": "^2.0.2",
+    "connected-react-router": "^6.5.2",
+    "customize-cra": "^0.2.11",
+    "extract-react-intl-messages": "1",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
+    "locale2": "^2.3.1",
     "prettier": "^1.15.1",
-    "react": "16.3",
-    "react-dom": "16.3",
-    "react-native-web-responsive": "^1.0.5",
-    "react-primitives": "^0.6.1",
-    "react-redux": "^5.1.1",
-    "react-router-dom": "^4.3.1",
+    "react": "^16.11.0",
+    "react-app-rewired": "^2.0.3",
+    "react-dom": "^16.11.0",
+    "react-intl": "^2.8.0",
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "2.1.3",
-    "redux": "3.7.2",
+    "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "reselect": "3.0.1",
-    "styled-components": "^4.0.3",
+    "reselect": "^3.0.1",
+    "styled-components": "^4.4.1",
+    "styled-reset": "^4.0.6",
+    "typescript": "^3.6.0",
     "webfontloader": "^1.6.28"
   },
   "pre-commit": [
-    "lint-staged",
-    "flow"
+    "prettier:run-all",
+    "types",
+    "lint"
   ],
-  "lint-staged": {
-    "*.{js}": [
-      "prettier --write",
-      "node_modules/eslint/bin/eslint.js",
-      "git add"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -68,6 +74,6 @@
     "not op_mini all"
   ],
   "engines": {
-    "node": ">=8.12.0"
+    "node": ">=10.10.0"
   }
 }
