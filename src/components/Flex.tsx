@@ -9,11 +9,13 @@ export interface FlexProps {
   height?: string
   children?: React.ReactNode
   opacity?: number
+  shrink?: number
 }
 
 const Flex = styled.div<FlexProps>`
   display: flex;
   box-sizing: border-box;
+  flex-shrink: ${({ shrink }) => shrink};
   flex-direction: ${({ direction }) => direction || 'column'};
   justify-content: ${({ justify }) => justify || 'flex-start'};
   align-items: ${({ align }) => align || 'center'};

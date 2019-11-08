@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { createGlobalStyle, ThemeProvider as BaseThemeProvider } from 'styled-components'
 import reset from 'styled-reset'
 
@@ -24,8 +24,9 @@ const BaseStyles = createGlobalStyle`
   div,
   span,
   p,
-  a {
-    font-family: proxima-nova, sans-serif;
+  a,
+  button {
+    font-family: ${theme.text.fontFamily};
     letter-spacing: 0.5px;
 
     ::selection {
