@@ -11,10 +11,6 @@ export interface FlexProps {
   opacity?: number
 }
 
-interface FlexItemProps extends FlexProps {
-  flex?: number | string
-}
-
 const Flex = styled.div<FlexProps>`
   display: flex;
   box-sizing: border-box;
@@ -34,13 +30,4 @@ Flex.defaultProps = {
   wrap: 'nowrap',
 }
 
-const FlexItem = styled(Flex)<FlexItemProps>`
-  flex: ${({ flex }) => flex || 1};
-`
-FlexItem.displayName = 'FlexItem'
-FlexItem.defaultProps = {
-  ...Flex.defaultProps,
-  flex: 1,
-}
-
-export { Flex, FlexItem }
+export default Flex

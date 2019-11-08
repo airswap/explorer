@@ -14,6 +14,7 @@ const BaseStyles = createGlobalStyle`
     overflow-x: hidden;
   }
   html, body {
+    background-color: #292937;
     cursor: default;
     height: 100%;
     width: 100%;
