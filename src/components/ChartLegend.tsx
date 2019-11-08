@@ -60,7 +60,7 @@ export default function ChartLegend(props: ChartLegendProps) {
   return (
     <Flex expand>
       {props.data.map((item, index) => (
-        <ChartLegendItem>
+        <ChartLegendItem key={item.name}>
           <Flex direction="row" shrink={0}>
             <Dot color={props.colors[index % props.colors.length]} />
             <Label>{item.name}</Label>

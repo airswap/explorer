@@ -1,6 +1,7 @@
 import React from 'react'
 
 import PeerDistributionWidget from '../widgets/PeerDistribution'
+import SwapsWidget from '../widgets/Swaps'
 import TopTradersWidget from '../widgets/TopTraders'
 import VolumeWidget from '../widgets/Volume'
 import WidgetCard from '../widgets/WidgetComponents/WidgetCard'
@@ -21,9 +22,7 @@ export default function Dashboard(props: DashboardProps) {
         <WidgetCard width="580px">
           <div />
         </WidgetCard>
-        <WidgetCard width="455px">
-          <div />
-        </WidgetCard>
+        <SwapsWidget />
         <WidgetCard width="500px">
           <div />
         </WidgetCard>
