@@ -6,6 +6,10 @@ const spacing = (multiplier = 1) => {
   return `${unit * multiplier}px`
 }
 
+interface Props {
+  units: number
+}
+
 const VerticalSpace = styled.div<Props>`
   flex-shrink: 0;
   height: ${({ units }) => spacing(units)};
@@ -15,10 +19,6 @@ const HorizontalSpace = styled.div<Props>`
   flex-shrink: 0;
   width: ${({ units }) => spacing(units)};
 `
-
-interface Props {
-  units: number
-}
 
 export const VerticalSpacer = ({ units }: Props) => <VerticalSpace units={units} />
 

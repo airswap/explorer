@@ -9,6 +9,7 @@ import Flex from '../../components/Flex'
 import { VerticalSpacer } from '../../components/Spacer'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
 import { H6 } from '../../components/Typography'
+import WithLoading from '../../components/WithLoading'
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg'
 import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg'
 import { calculateDifferenceInTrade, getFormattedNumber } from '../../utils/transformations'
@@ -50,45 +51,47 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         <ArrowButton text="View All" onClick={() => setExpanded(true)} />
       </Flex>
       <VerticalSpacer units={6} />
-      <Table columns={columns}>
-        {props.trades.slice(0, 4).map(swap => (
-          <TableRow key={swap.transactionHash}>
-            <TableRowItem>
-              <Flex>
-                <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
-              </Flex>
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.75}>
-                {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
-              </H6>
-            </TableRowItem>
-            <TableRowItem>
-              <SwapIcon />
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.75}>
-                {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
-              </H6>
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                {getDisplayAmount(swap.ethAmount, 'ETH')}
-              </H6>
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                {calculateDifferenceInTrade(swap.timestamp * 1000)}
-              </H6>
-            </TableRowItem>
-            <TableRowItem>
-              <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
-                <ArrowUpRightIcon />
-              </EtherscanIcon>
-            </TableRowItem>
-          </TableRow>
-        ))}
-      </Table>
+      <WithLoading isLoading={!props.trades || props.trades.length < 4}>
+        <Table columns={columns}>
+          {props.trades.slice(0, 4).map(swap => (
+            <TableRow key={swap.transactionHash}>
+              <TableRowItem>
+                <Flex>
+                  <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                </Flex>
+              </TableRowItem>
+              <TableRowItem>
+                <H6 color="white" opacity={0.75}>
+                  {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                </H6>
+              </TableRowItem>
+              <TableRowItem>
+                <SwapIcon />
+              </TableRowItem>
+              <TableRowItem>
+                <H6 color="white" opacity={0.75}>
+                  {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                </H6>
+              </TableRowItem>
+              <TableRowItem>
+                <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                  {getDisplayAmount(swap.ethAmount, 'ETH')}
+                </H6>
+              </TableRowItem>
+              <TableRowItem>
+                <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                  {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                </H6>
+              </TableRowItem>
+              <TableRowItem>
+                <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
+                  <ArrowUpRightIcon />
+                </EtherscanIcon>
+              </TableRowItem>
+            </TableRow>
+          ))}
+        </Table>
+      </WithLoading>
     </WidgetCard>
   )
 }
