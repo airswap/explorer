@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import ArrowButton from '../../components/Button/ArrowButton'
 import Flex from '../../components/Flex'
 import { VerticalSpacer } from '../../components/Spacer'
+import Spinner from '../../components/Spinner'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
 import { H6 } from '../../components/Typography'
 import { WidgetTitle } from '../styles'
@@ -48,8 +49,36 @@ export default function TopTradersWidget() {
     },
   ]
 
+  const expandedContent = (
+    <>
+      <WidgetTitle>
+        <FormattedMessage defaultMessage="Top Traders" />
+      </WidgetTitle>
+      <VerticalSpacer units={6} />
+      <Table columns={columns}>
+        {traders.map(trader => (
+          <TableRow>
+            <TableRowItem>
+              <TraderImage />
+            </TableRowItem>
+            <TableRowItem>
+              <H6 color="white" opacity={0.5}>
+                {trader.totalTrades}
+              </H6>
+            </TableRowItem>
+            <TableRowItem>
+              <H6 color="white" opacity={0.75} textAlign="right">
+                {trader.volume}
+              </H6>
+            </TableRowItem>
+          </TableRow>
+        ))}
+      </Table>
+    </>
+  )
+
   return (
-    <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
+    <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={expandedContent}>
       <Flex expand direction="row" justify="space-between">
         <WidgetTitle>
           <FormattedMessage defaultMessage="Top Traders" />
@@ -61,7 +90,9 @@ export default function TopTradersWidget() {
         {traders.slice(0, 4).map(trader => (
           <TableRow>
             <TableRowItem>
-              <TraderImage />
+              <Flex>
+                <TraderImage />
+              </Flex>
             </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.5}>
@@ -69,7 +100,7 @@ export default function TopTradersWidget() {
               </H6>
             </TableRowItem>
             <TableRowItem>
-              <H6 color="white" textAlign="right">
+              <H6 color="white" opacity={0.75}>
                 {trader.volume}
               </H6>
             </TableRowItem>

@@ -1,3 +1,4 @@
+import { openEtherscanLink } from 'airswap.js/src/utils/etherscan'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
@@ -10,11 +11,16 @@ import Table, { TableRow, TableRowItem } from '../../components/Table'
 import { H6 } from '../../components/Typography'
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg'
 import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg'
+import { calculateDifferenceInTrade, getFormattedNumber } from '../../utils/transformations'
 import { WidgetTitle } from '../styles'
 import TokenPairIcon from '../WidgetComponents/TokenPairIcon'
 import WidgetCard from '../WidgetComponents/WidgetCard'
+import Container, { RecentSwapProps } from './Container'
 
-const EtherscanIcon = styled(Flex)`
+const EtherscanIcon = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 
   svg {
@@ -27,50 +33,16 @@ const EtherscanIcon = styled(Flex)`
   }
 `
 
-export default function SwapsWidget() {
+function RecentSwapsWidget(props: RecentSwapProps) {
   const [expanded, setExpanded] = useState(false)
   const columns = ['Trade', 'Sender Token', '', 'Signer Token', 'Value', 'Time', 'Details']
-  const swaps = [
-    {
-      senderToken: 'AST',
-      senderAmount: 100,
-      signerToken: 'WETH',
-      signerAmount: 0.5,
-      value: '$0.18',
-      time: '2 min ago',
-    },
-    {
-      senderToken: 'DAI',
-      senderAmount: 100,
-      signerToken: 'AST',
-      signerAmount: 0.5,
-      value: '$0.18',
-      time: '2 min ago',
-    },
-    {
-      senderToken: 'WETH',
-      senderAmount: 100,
-      signerToken: 'DAI',
-      signerAmount: 0.5,
-      value: '$0.18',
-      time: '2 min ago',
-    },
-    {
-      senderToken: 'AST',
-      senderAmount: 100,
-      signerToken: 'DAI',
-      signerAmount: 0.5,
-      value: '$0.18',
-      time: '2 min ago',
-    },
-  ]
 
   const getDisplayAmount = (amount, symbol) => {
-    return `${amount} ${symbol}`
+    return `${getFormattedNumber(Number(amount), 6, 6)} ${symbol}`
   }
 
   return (
-    <WidgetCard width="455px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
+    <WidgetCard width="700px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
       <Flex expand direction="row" justify="space-between">
         <WidgetTitle>
           <FormattedMessage defaultMessage="Recent Swaps" />
@@ -79,16 +51,16 @@ export default function SwapsWidget() {
       </Flex>
       <VerticalSpacer units={6} />
       <Table columns={columns}>
-        {swaps.slice(0, 4).map(swap => (
-          <TableRow>
+        {props.trades.slice(0, 4).map(swap => (
+          <TableRow key={swap.transactionHash}>
             <TableRowItem>
               <Flex>
-                <TokenPairIcon senderToken={swap.senderToken} signerToken={swap.signerToken} />
+                <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
               </Flex>
             </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.75}>
-                {getDisplayAmount(swap.senderAmount, swap.senderToken)}
+                {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
               </H6>
             </TableRowItem>
             <TableRowItem>
@@ -96,21 +68,21 @@ export default function SwapsWidget() {
             </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.75}>
-                {getDisplayAmount(swap.signerAmount, swap.signerToken)}
+                {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
               </H6>
             </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                {swap.value}
+                {getDisplayAmount(swap.ethAmount, 'ETH')}
               </H6>
             </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                {swap.time}
+                {calculateDifferenceInTrade(swap.timestamp * 1000)}
               </H6>
             </TableRowItem>
             <TableRowItem>
-              <EtherscanIcon>
+              <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
                 <ArrowUpRightIcon />
               </EtherscanIcon>
             </TableRowItem>
@@ -120,3 +92,5 @@ export default function SwapsWidget() {
     </WidgetCard>
   )
 }
+
+export default Container(RecentSwapsWidget)

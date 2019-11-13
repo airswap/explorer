@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { TokenMetadata } from '../../../types/Tokens'
 
-const { getTokensBySymbol } = tokenSelectors
+const { getTokensByAddress } = tokenSelectors
 
 interface PassedProps {
   senderToken: string
@@ -11,14 +11,14 @@ interface PassedProps {
 }
 
 interface ReduxProps {
-  tokensBySymbol: Record<string, TokenMetadata>[]
+  tokensByAddress: Record<string, TokenMetadata>[]
 }
 
 export type TokenPairIconProps = PassedProps & ReduxProps
 
 const mapStateToProps = (state, ownProps: PassedProps) => {
   return {
-    tokensBySymbol: getTokensBySymbol(state),
+    tokensByAddress: getTokensByAddress(state),
     ...ownProps,
   }
 }

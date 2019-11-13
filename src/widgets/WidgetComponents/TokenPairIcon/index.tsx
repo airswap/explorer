@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import Flex from '../../../components/Flex'
+import Image from '../../../components/Image'
 import { TokenMetadata } from '../../../types/Tokens'
 import Container, { TokenPairIconProps } from './Container'
 
@@ -11,35 +12,33 @@ const TokenPairIconContainer = styled(Flex).attrs({ align: 'flex-start' })`
   height: 30px;
 `
 
-const TokenIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: contain;
-`
-
-const SignerTokenIcon = styled(TokenIcon)`
+const SenderTokenIcon = styled(Flex)`
   position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
   top: 0;
   left: 20px;
 `
 
-const SenderTokenIcon = styled(TokenIcon)`
+const SignerTokenIcon = styled(Flex)`
   z-index: 1;
+  background-color: #30303b;
   border: 2px solid #30303b;
+  border-radius: 50%;
+  overflow: hidden;
   margin: -2px;
 `
 
 function TokenPairIcon(props: TokenPairIconProps) {
   const senderToken: TokenMetadata | null = useMemo(() => {
-    if (props.tokensBySymbol) return props.tokensBySymbol[props.senderToken]
+    if (props.tokensByAddress) return props.tokensByAddress[props.senderToken]
     return null
-  }, [props.senderToken, props.tokensBySymbol])
+  }, [props.senderToken, props.tokensByAddress])
 
   const signerToken: TokenMetadata | null = useMemo(() => {
-    if (props.tokensBySymbol) return props.tokensBySymbol[props.signerToken]
+    if (props.tokensByAddress) return props.tokensByAddress[props.signerToken]
     return null
-  }, [props.signerToken, props.tokensBySymbol])
+  }, [props.signerToken, props.tokensByAddress])
 
   if (!senderToken || !signerToken) {
     return null
@@ -47,8 +46,12 @@ function TokenPairIcon(props: TokenPairIconProps) {
 
   return (
     <TokenPairIconContainer>
-      <SignerTokenIcon src={signerToken.airswap_img_url} />
-      <SenderTokenIcon src={senderToken.airswap_img_url} />
+      <SenderTokenIcon>
+        <Image src={senderToken.airswap_img_url} width={30} height={30} />
+      </SenderTokenIcon>
+      <SignerTokenIcon>
+        <Image src={signerToken.airswap_img_url} width={30} height={30} />
+      </SignerTokenIcon>
     </TokenPairIconContainer>
   )
 }

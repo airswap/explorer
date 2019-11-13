@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import Flex from '../../components/Flex'
 import { ReactComponent as CloseIcon } from '../../static/close-icon.svg'
+import { FadeIn } from '../../utils/animations'
 
 interface ContainerProps {
   width: string
@@ -24,7 +25,7 @@ const Close = styled(Flex)`
   }
 `
 
-const Container = styled.div<ContainerProps>`
+const Container = styled(Flex)<ContainerProps>`
   flex: auto;
   min-width: ${({ width }) => width};
   max-width: 100%;
@@ -69,13 +70,17 @@ const ExpandedCard = styled.div`
 const ExpandedCardContent = styled(Flex).attrs({
   expand: true,
 })`
+  padding: 40px;
   position: relative;
   height: 100%;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  animation: ${FadeIn} 2s ease;
 `
 
 interface WidgetCardProps {
   expanded?: boolean
   width: string
+  uhm?: React.ReactNode
   expandedContent?: React.ReactNode
   children: React.ReactNode
   setExpanded?(expanded: boolean): void
@@ -133,14 +138,16 @@ export default function WidgetCard(props: WidgetCardProps) {
         <>
           <ExpandedBackgroundOverlay ref={overlayRef} onClick={closeExpandedCard} />
           <ExpandedCard ref={expandedCardRef}>
-            <ExpandedCardContent>
-              {props.setExpanded && (
-                <Close onClick={closeExpandedCard}>
-                  <CloseIcon />
-                </Close>
-              )}
-              {props.expanded && props.expandedContent}
-            </ExpandedCardContent>
+            {props.expanded && (
+              <ExpandedCardContent>
+                {props.setExpanded && (
+                  <Close onClick={closeExpandedCard}>
+                    <CloseIcon />
+                  </Close>
+                )}
+                {props.expandedContent}
+              </ExpandedCardContent>
+            )}
           </ExpandedCard>
         </>
       )}

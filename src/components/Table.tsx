@@ -7,7 +7,7 @@ export const TableRow = styled.tr``
 
 export const TableRowItem = styled.td`
   height: 30px;
-  padding-top: 30px;
+  padding-top: 40px;
   padding-bottom: 0;
   vertical-align: middle;
 `
@@ -31,24 +31,18 @@ interface TableProps {
 }
 
 export default function Table(props: TableProps) {
-  const getTextAlign = index => {
-    if (index === 0) return 'left'
-    if (index === props.columns.length - 1) return 'right'
-    return 'center'
-  }
-
   return (
     <TableContainer>
-      <tbody>
+      <thead>
         <TableRow>
-          {props.columns.map((column, index) => (
+          {props.columns.map(column => (
             <TableHeader>
               <TableHeaderText>{column}</TableHeaderText>
             </TableHeader>
           ))}
         </TableRow>
-        {props.children}
-      </tbody>
+      </thead>
+      <tbody>{props.children}</tbody>
     </TableContainer>
   )
 }

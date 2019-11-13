@@ -7,10 +7,12 @@ const spacing = (multiplier = 1) => {
 }
 
 const VerticalSpace = styled.div<Props>`
+  flex-shrink: 0;
   height: ${({ units }) => spacing(units)};
 `
 
 const HorizontalSpace = styled.div<Props>`
+  flex-shrink: 0;
   width: ${({ units }) => spacing(units)};
 `
 
