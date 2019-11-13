@@ -7,6 +7,8 @@
     "start:prod": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='production' react-app-rewired start",
     "start": "yarn start:dev",
     "build": "react-app-rewired build",
+    "build:production": "REACT_APP_SERVER_ENV=production REACT_APP_ENVIRONMENT=production ENV=production GENERATE_SOURCEMAP=false CI=false yarn build",
+    "build:development": "REACT_APP_SERVER_ENV=development REACT_APP_ENVIRONMENT=development ENV=development GENERATE_SOURCEMAP=false CI=false yarn build",
     "prettier:run-all": "prettier --write \"src/**/*.{ts,tsx}\"",
     "types": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
