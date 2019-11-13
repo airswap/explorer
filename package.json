@@ -43,6 +43,7 @@
     "auth0-js": "^9.8.1",
     "babel-loader": "8.0.4",
     "babel-plugin-react-intl-auto": "^1.7.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "bignumber.js": "4.1.0",
     "connected-react-router": "^6.5.2",
     "customize-cra": "^0.2.11",

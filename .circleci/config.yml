@@ -89,8 +89,9 @@ references:
       - run:
           name: build minified files
           command: |
-             echo "Building for $ENV / $STAGE in branch: $CIRCLE_BRANCH with domain $DOMAIN "
-             REACT_APP_SERVER_ENV=$ENV CI=false yarn react-scripts build # dont treat warnings as errors
+            echo "Building for $ENV / $STAGE in branch: $CIRCLE_BRANCH with domain $DOMAIN "
+            echo "export REACT_APP_GIT_SHA1=$CIRCLE_SHA1" >> $BASH_ENV
+            REACT_APP_SERVER_ENV=$ENV REACT_APP_ENVIRONMENT=$ENV ENV=$ENV GENERATE_SOURCEMAP=false CI=false yarn build # dont treat warnings as errors
       - aws-cli/install
       - airswap/assume-role:
           role-name: StaticSiteDeployer
