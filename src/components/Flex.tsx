@@ -10,12 +10,14 @@ export interface FlexProps {
   children?: React.ReactNode
   opacity?: number
   shrink?: number
+  grow?: number
 }
 
 const Flex = styled.div<FlexProps>`
   display: flex;
   box-sizing: border-box;
   flex-shrink: ${({ shrink }) => shrink};
+  flex-grow: ${({ shrink }) => shrink};
   flex-direction: ${({ direction }) => direction || 'column'};
   justify-content: ${({ justify }) => justify || 'flex-start'};
   align-items: ${({ align }) => align || 'center'};

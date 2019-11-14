@@ -7,9 +7,9 @@ import theme from '../../app/theme'
 import ArrowButton from '../../components/Button/ArrowButton'
 import Flex from '../../components/Flex'
 import MediaQuery from '../../components/MediaQuery'
-import { VerticalSpacer } from '../../components/Spacer'
+import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
-import { H6 } from '../../components/Typography'
+import { H6, H7 } from '../../components/Typography'
 import WithLoading from '../../components/WithLoading'
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg'
 import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg'
@@ -35,6 +35,10 @@ const EtherscanIcon = styled.a`
   }
 `
 
+const MobileSwapEvent = styled(Flex).attrs({ expand: true, direction: 'row' })`
+  padding: 20px 0;
+`
+
 function RecentSwapsWidget(props: RecentSwapProps) {
   const [expanded, setExpanded] = useState(false)
   const columns = ['Trade', 'Sender Token', '', 'Signer Token', 'Value', 'Time', 'Details']
@@ -51,12 +55,35 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         </WidgetTitle>
         <ArrowButton text="View All" onClick={() => setExpanded(true)} />
       </Flex>
-      <VerticalSpacer units={6} />
       <WithLoading isLoading={!props.trades || props.trades.length < 4}>
         <MediaQuery size="sm">
-          <div />
+          <VerticalSpacer units={4} />
+          {props.trades.slice(0, 4).map(swap => (
+            <MobileSwapEvent>
+              <Flex shrink={0} direction="row">
+                <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                <HorizontalSpacer units={2} />
+              </Flex>
+              <Flex expand grow={1} align="flex-start">
+                <H7 fit color="white" opacity={0.25}>
+                  {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                </H7>
+                <VerticalSpacer units={1} />
+                <Flex direction="row" justify="space-between" expand>
+                  <H6 color="white" opacity={0.75} fit>
+                    {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                  </H6>
+                  <SwapIcon />
+                  <H6 color="white" opacity={0.75} fit>
+                    {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                  </H6>
+                </Flex>
+              </Flex>
+            </MobileSwapEvent>
+          ))}
         </MediaQuery>
         <MediaQuery size="md-up">
+          <VerticalSpacer units={6} />
           <Table columns={columns}>
             {props.trades.slice(0, 4).map(swap => (
               <TableRow key={swap.transactionHash}>
