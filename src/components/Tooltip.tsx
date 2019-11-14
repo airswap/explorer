@@ -9,10 +9,22 @@ const Container = styled(Flex)`
   position: relative;
 `
 
-const TooltipContainer = styled(Flex)`
+interface TooltipContainerProps {
+  maxWidth?: number
+}
+
+const TooltipContainer = styled(Flex)<TooltipContainerProps>`
   position: absolute;
   left: 50%;
+  top: -50px;
   transform: translateX(-50%);
+  z-index: 1;
+  padding: 5px 10px;
+  background-color: black;
+  opacity: 0.75;
+  width: auto;
+  border-radius: 5px;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
 `
 
 const ChildContainer = styled(Flex)``
@@ -24,6 +36,7 @@ enum TooltipPosition {
 
 interface TooltipProps {
   position?: TooltipPosition
+  maxWidth?: number
   tooltipContent: React.ReactNode
   children: React.ReactNode
 }
@@ -35,8 +48,8 @@ export default function Tooltip(props: TooltipProps) {
     <Container>
       <Transition in={showTooltip} timeout={0}>
         {state => (
-          <TooltipContainer style={{ ...FadeInOutTransition[state] }}>
-            <div />
+          <TooltipContainer maxWidth={props.maxWidth} style={{ ...FadeInOutTransition[state] }}>
+            {props.tooltipContent}
           </TooltipContainer>
         )}
       </Transition>

@@ -9,6 +9,7 @@ import Flex from '../../components/Flex'
 import MediaQuery from '../../components/MediaQuery'
 import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
+import Tooltip from '../../components/Tooltip'
 import { H6, H7 } from '../../components/Typography'
 import WithLoading from '../../components/WithLoading'
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg'
@@ -93,9 +94,17 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                   </Flex>
                 </TableRowItem>
                 <TableRowItem>
-                  <H6 color="white" opacity={0.75}>
-                    {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
-                  </H6>
+                  <Tooltip
+                    tooltipContent={
+                      <H6 color="white" fit>
+                        {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                      </H6>
+                    }
+                  >
+                    <H6 color="white" opacity={0.75}>
+                      {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                    </H6>
+                  </Tooltip>
                 </TableRowItem>
                 <TableRowItem>
                   <SwapIcon />
