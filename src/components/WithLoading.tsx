@@ -25,9 +25,11 @@ const LoadingContainer = styled(Flex).attrs({
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 0;
 `
 
 const ChildrenContainer = styled(Flex)<LoadingProps>`
+  z-index: 1;
   opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
   width: 100%;
