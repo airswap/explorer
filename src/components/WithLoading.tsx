@@ -1,6 +1,8 @@
 import React from 'react'
+import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 
+import { FadeInOutTransition } from '../utils/animations'
 import Flex from './Flex'
 import Spinner from './Spinner'
 
@@ -18,7 +20,6 @@ const LoadingContainer = styled(Flex).attrs({
   justify: 'center',
   align: 'center',
 })<LoadingProps>`
-  opacity: ${({ isLoading }) => (isLoading ? 1 : 0)};
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
   position: absolute;
   top: 0;
@@ -30,7 +31,6 @@ const LoadingContainer = styled(Flex).attrs({
 
 const ChildrenContainer = styled(Flex)<LoadingProps>`
   z-index: 1;
-  opacity: ${({ isLoading }) => (isLoading ? 0 : 1)};
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
   width: 100%;
   height: 100%;
@@ -44,10 +44,20 @@ interface WithLoadingProps {
 export default function WithLoading(props: WithLoadingProps) {
   return (
     <Container>
-      <LoadingContainer isLoading={props.isLoading}>
-        <Spinner size={100} />
-      </LoadingContainer>
-      <ChildrenContainer isLoading={props.isLoading}>{props.children}</ChildrenContainer>
+      <Transition in={props.isLoading} timeout={0}>
+        {state => (
+          <LoadingContainer style={{ ...FadeInOutTransition[state] }} isLoading={props.isLoading}>
+            <Spinner size={100} />
+          </LoadingContainer>
+        )}
+      </Transition>
+      <Transition in={!props.isLoading} timeout={0}>
+        {state => (
+          <ChildrenContainer style={{ ...FadeInOutTransition[state] }} isLoading={props.isLoading}>
+            {props.children}
+          </ChildrenContainer>
+        )}
+      </Transition>
     </Container>
   )
 }

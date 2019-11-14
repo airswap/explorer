@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 
+import theme from '../../app/theme'
 import Flex from '../../components/Flex'
 import { ReactComponent as CloseIcon } from '../../static/close-icon.svg'
-import { FadeIn } from '../../utils/animations'
+import { FadeIn, FadeInOutTransition } from '../../utils/animations'
 
 interface ContainerProps {
   width: string
@@ -20,7 +22,7 @@ const Close = styled(Flex)`
     height: 15px;
 
     path {
-      stroke: ${({ theme }) => theme.palette.primaryColor};
+      stroke: ${theme.palette.primaryColor};
     }
   }
 `
@@ -35,7 +37,7 @@ const Container = styled(Flex)<ContainerProps>`
   padding: 40px;
   margin: 0 20px 20px 0;
 
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+  @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
     width: 100%;
     min-width: 100%;
     margin: 0 0 20px 0;
@@ -49,21 +51,17 @@ const ExpandedBackgroundOverlay = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  opacity: 0;
-  visibility: hidden;
   background-color: rgba(0, 0, 0, 0.25);
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  transition: ${theme.animation.defaultTransition}s ease;
   will-change: auto;
 `
 
 const ExpandedCard = styled.div`
   z-index: 2;
   border-radius: 20px;
-  visibility: hidden;
   background-color: #30303b;
   position: fixed;
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
-  opacity: 0;
+  transition: ${theme.animation.defaultTransition}s ease;
   will-change: auto;
 `
 
@@ -73,7 +71,7 @@ const ExpandedCardContent = styled(Flex).attrs({
   padding: 40px;
   position: relative;
   height: 100%;
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  transition: ${theme.animation.defaultTransition}s ease;
   animation: ${FadeIn} 2s ease;
 `
 
@@ -87,9 +85,12 @@ interface WidgetCardProps {
 }
 
 export default function WidgetCard(props: WidgetCardProps) {
+  const [cardTransitionStyles, setCardTransitionStyles] = useState({})
   const cardRef = useRef<HTMLDivElement>(null)
-  const expandedCardRef = useRef<HTMLDivElement>(null)
-  const overlayRef = useRef<HTMLDivElement>(null)
+
+  const transitionTimeout = {
+    appear: theme.animation.defaultTransition * 100,
+  }
 
   const closeExpandedCard = () => {
     if (props.setExpanded) {
@@ -98,57 +99,67 @@ export default function WidgetCard(props: WidgetCardProps) {
   }
 
   useEffect(() => {
-    if (cardRef.current && expandedCardRef.current && overlayRef.current) {
-      if (props.expanded) {
-        const dimensions = cardRef.current.getBoundingClientRect()
-        expandedCardRef.current.style.visibility = 'visible'
-        expandedCardRef.current.style.opacity = '1'
-        expandedCardRef.current.style.left = `${dimensions.left}px`
-        expandedCardRef.current.style.top = `${dimensions.top}px`
-        expandedCardRef.current.style.width = `${dimensions.width}px`
-        expandedCardRef.current.style.height = `${dimensions.height}px`
-
-        setTimeout(() => {
-          if (expandedCardRef.current && overlayRef.current) {
-            overlayRef.current.style.opacity = '1'
-            overlayRef.current.style.visibility = 'visible'
-            expandedCardRef.current.style.left = '20px'
-            expandedCardRef.current.style.top = '20px'
-            expandedCardRef.current.style.width = 'calc(100vw - 40px)'
-            expandedCardRef.current.style.height = 'calc(100vh - 40px)'
-          }
-        }, 100)
-      } else {
-        const dimensions = cardRef.current.getBoundingClientRect()
-        overlayRef.current.style.opacity = '0'
-        overlayRef.current.style.visibility = 'hidden'
-        expandedCardRef.current.style.visibility = 'hidden'
-        expandedCardRef.current.style.opacity = '0'
-        expandedCardRef.current.style.left = `${dimensions.left}px`
-        expandedCardRef.current.style.top = `${dimensions.top}px`
-        expandedCardRef.current.style.width = `${dimensions.width}px`
-        expandedCardRef.current.style.height = `${dimensions.height}px`
+    if (cardRef.current) {
+      const dimensions = cardRef.current.getBoundingClientRect()
+      const matchDimensions = {
+        top: `${dimensions.top}px`,
+        left: `${dimensions.left}px`,
+        width: `${dimensions.width}px`,
+        height: `${dimensions.height}px`,
       }
+
+      const transitionStyles = {
+        entering: {
+          opacity: 1,
+          ...matchDimensions,
+        },
+        entered: {
+          opacity: 1,
+          top: '20px',
+          left: '20px',
+          width: 'calc(100vw - 40px)',
+          height: 'calc(100vh - 40px)',
+        },
+        exiting: {
+          opacity: 0,
+          ...matchDimensions,
+        },
+        exited: {
+          opacity: 0,
+          visibility: 'hidden',
+          ...matchDimensions,
+        },
+      }
+      setCardTransitionStyles(transitionStyles)
     }
-  }, [props.expanded])
+  }, [props.expanded, cardRef.current])
 
   return (
     <>
       {props.expandedContent && (
         <>
-          <ExpandedBackgroundOverlay ref={overlayRef} onClick={closeExpandedCard} />
-          <ExpandedCard ref={expandedCardRef}>
-            {props.expanded && (
-              <ExpandedCardContent>
-                {props.setExpanded && (
-                  <Close onClick={closeExpandedCard}>
-                    <CloseIcon />
-                  </Close>
-                )}
-                {props.expandedContent}
-              </ExpandedCardContent>
+          <Transition in={props.expanded} timeout={transitionTimeout}>
+            {state => (
+              <ExpandedBackgroundOverlay style={{ ...FadeInOutTransition[state] }} onClick={closeExpandedCard} />
             )}
-          </ExpandedCard>
+          </Transition>
+
+          <Transition in={props.expanded} timeout={transitionTimeout}>
+            {state => (
+              <ExpandedCard style={{ ...cardTransitionStyles[state] }}>
+                {props.expanded && (
+                  <ExpandedCardContent>
+                    {props.setExpanded && (
+                      <Close onClick={closeExpandedCard}>
+                        <CloseIcon />
+                      </Close>
+                    )}
+                    {props.expandedContent}
+                  </ExpandedCardContent>
+                )}
+              </ExpandedCard>
+            )}
+          </Transition>
         </>
       )}
       <Container width={props.width} ref={cardRef}>

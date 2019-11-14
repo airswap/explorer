@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import theme from '../../app/theme'
 import ArrowButton from '../../components/Button/ArrowButton'
 import Flex from '../../components/Flex'
+import MediaQuery from '../../components/MediaQuery'
 import { VerticalSpacer } from '../../components/Spacer'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
 import { H6 } from '../../components/Typography'
@@ -52,45 +53,50 @@ function RecentSwapsWidget(props: RecentSwapProps) {
       </Flex>
       <VerticalSpacer units={6} />
       <WithLoading isLoading={!props.trades || props.trades.length < 4}>
-        <Table columns={columns}>
-          {props.trades.slice(0, 4).map(swap => (
-            <TableRow key={swap.transactionHash}>
-              <TableRowItem>
-                <Flex>
-                  <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
-                </Flex>
-              </TableRowItem>
-              <TableRowItem>
-                <H6 color="white" opacity={0.75}>
-                  {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
-                </H6>
-              </TableRowItem>
-              <TableRowItem>
-                <SwapIcon />
-              </TableRowItem>
-              <TableRowItem>
-                <H6 color="white" opacity={0.75}>
-                  {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
-                </H6>
-              </TableRowItem>
-              <TableRowItem>
-                <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                  {getDisplayAmount(swap.ethAmount, 'ETH')}
-                </H6>
-              </TableRowItem>
-              <TableRowItem>
-                <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                  {calculateDifferenceInTrade(swap.timestamp * 1000)}
-                </H6>
-              </TableRowItem>
-              <TableRowItem>
-                <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
-                  <ArrowUpRightIcon />
-                </EtherscanIcon>
-              </TableRowItem>
-            </TableRow>
-          ))}
-        </Table>
+        <MediaQuery size="sm">
+          <div />
+        </MediaQuery>
+        <MediaQuery size="md-up">
+          <Table columns={columns}>
+            {props.trades.slice(0, 4).map(swap => (
+              <TableRow key={swap.transactionHash}>
+                <TableRowItem>
+                  <Flex>
+                    <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                  </Flex>
+                </TableRowItem>
+                <TableRowItem>
+                  <H6 color="white" opacity={0.75}>
+                    {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                  </H6>
+                </TableRowItem>
+                <TableRowItem>
+                  <SwapIcon />
+                </TableRowItem>
+                <TableRowItem>
+                  <H6 color="white" opacity={0.75}>
+                    {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                  </H6>
+                </TableRowItem>
+                <TableRowItem>
+                  <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                    {getDisplayAmount(swap.ethAmount, 'ETH')}
+                  </H6>
+                </TableRowItem>
+                <TableRowItem>
+                  <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                    {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                  </H6>
+                </TableRowItem>
+                <TableRowItem>
+                  <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
+                    <ArrowUpRightIcon />
+                  </EtherscanIcon>
+                </TableRowItem>
+              </TableRow>
+            ))}
+          </Table>
+        </MediaQuery>
       </WithLoading>
     </WidgetCard>
   )
