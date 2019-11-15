@@ -8,9 +8,7 @@ export default function VolumeWidget() {
 
   return (
     <WidgetCard width="630px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
-      <button type="button" onClick={() => setExpanded(true)}>
-        <FormattedMessage defaultMessage="expand" />
-      </button>
+      <div />
     </WidgetCard>
   )
 }

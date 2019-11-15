@@ -86,8 +86,8 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         <MediaQuery size="md-up">
           <VerticalSpacer units={6} />
           <Table columns={columns}>
-            {props.trades.slice(0, 4).map(swap => (
-              <TableRow key={swap.transactionHash}>
+            {props.trades.slice(0, 4).map((swap, index) => (
+              <TableRow fadeIn index={index} key={swap.transactionHash}>
                 <TableRowItem>
                   <Flex>
                     <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />

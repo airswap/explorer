@@ -56,8 +56,8 @@ export default function TopTradersWidget() {
       </WidgetTitle>
       <VerticalSpacer units={6} />
       <Table columns={columns}>
-        {traders.map(trader => (
-          <TableRow>
+        {traders.map((trader, index) => (
+          <TableRow fadeIn index={index} key={trader.trader}>
             <TableRowItem>
               <TraderImage />
             </TableRowItem>
@@ -87,8 +87,8 @@ export default function TopTradersWidget() {
       </Flex>
       <VerticalSpacer units={6} />
       <Table columns={columns}>
-        {traders.slice(0, 4).map(trader => (
-          <TableRow>
+        {traders.slice(0, 4).map((trader, index) => (
+          <TableRow fadeIn index={index} key={trader.trader}>
             <TableRowItem>
               <Flex>
                 <TraderImage />

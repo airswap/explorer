@@ -23,12 +23,6 @@ export default function Dashboard(props: DashboardProps) {
           <div />
         </WidgetCard>
         <RecentSwapsWidget />
-        <WidgetCard width="500px">
-          <div />
-        </WidgetCard>
-        <WidgetCard width="450px">
-          <div />
-        </WidgetCard>
       </WidgetGrid>
     </ScreenContainer>
   )
