@@ -14,3 +14,6 @@ export const APPROVE_TOKEN_FAQ_URL =
 export const WRAP_ETH_FAQ_URL = 'https://support.airswap.io/en/articles/3027715-what-is-weth-or-wrapped-eth'
 export const AIRSWAP_INSTANT_URL = 'https://instant.airswap.io/'
 export const AIRSWAP_TRADER_URL = 'https://trader.airswap.io/'
+
+// Data
+export const STABLECOIN_SYMBOLS = ['DAI', 'USDC', 'USDT', 'TUSD', 'PAX', 'KRWB', 'GUSD']

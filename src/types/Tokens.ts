@@ -3,6 +3,11 @@ export enum TokenKind {
   ERC721 = 'ERC721',
 }
 
+export interface TokenQuery {
+  symbol?: string
+  address?: string
+}
+
 export interface TokenMetadata {
   address: string
   airswapUI: 'yes' | 'no'

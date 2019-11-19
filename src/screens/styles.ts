@@ -6,7 +6,6 @@ export const ScreenContainer = styled(Flex).attrs({
   expand: true,
 })`
   margin: auto;
-  margin-top: 50px;
   padding: 0 20px;
   max-width: 1440px;
 `

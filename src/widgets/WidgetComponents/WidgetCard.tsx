@@ -27,7 +27,7 @@ const Close = styled(Flex)`
   }
 `
 
-const Container = styled(Flex)<ContainerProps>`
+export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
   min-width: ${({ width }) => width};
   max-width: 100%;
@@ -75,16 +75,57 @@ const ExpandedCardContent = styled(Flex).attrs({
   animation: ${FadeIn} 2s ease;
 `
 
-interface WidgetCardProps {
+export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
+  flex: auto;
+  min-width: ${({ width }) => width};
+  max-width: 100%;
+  height: 450px;
+  margin: 0 20px 20px 0;
+
+  @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
+    width: 100%;
+    min-width: 100%;
+    margin: 0 0 20px 0;
+  }
+`
+
+const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })`
+  background-color: #30303b;
+  padding: 40px;
+  border-radius: 20px;
+
+  ${({ height }) =>
+    height
+      ? `
+    height: ${height}px;
+    flex-shrink: 0;
+    margin-bottom: 20px;
+  `
+      : `
+    height: 100%;
+  `}
+`
+
+interface BaseWidgetCardProps {
   expanded?: boolean
-  width: string
-  uhm?: React.ReactNode
   expandedContent?: React.ReactNode
   children: React.ReactNode
   setExpanded?(expanded: boolean): void
 }
 
-export default function WidgetCard(props: WidgetCardProps) {
+interface WidgetCardProps extends BaseWidgetCardProps {
+  grouped?: false
+  width: string
+}
+
+interface GroupedWidgetCardProps extends BaseWidgetCardProps {
+  height?: string
+  grouped: true
+}
+
+type Props = WidgetCardProps | GroupedWidgetCardProps
+
+export default function WidgetCard(props: Props) {
   const [cardTransitionStyles, setCardTransitionStyles] = useState({})
   const cardRef = useRef<HTMLDivElement>(null)
 
@@ -162,9 +203,15 @@ export default function WidgetCard(props: WidgetCardProps) {
           </Transition>
         </>
       )}
-      <Container width={props.width} ref={cardRef}>
-        {props.children}
-      </Container>
+      {props.grouped ? (
+        <GroupedWidgetCard height={props.height} ref={cardRef}>
+          {props.children}
+        </GroupedWidgetCard>
+      ) : (
+        <WidgetCardContainer width={props.width} ref={cardRef}>
+          {props.children}
+        </WidgetCardContainer>
+      )}
     </>
   )
 }
