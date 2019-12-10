@@ -91,10 +91,15 @@ export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
   }
 `
 
-const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })`
+interface WidgetCardElProps {
+  height?: string
+  noPadding?: boolean
+}
+
+const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })<WidgetCardElProps>`
   background-color: #30303b;
   position: relative;
-  padding: 40px;
+  padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
   border-radius: 20px;
 
   ${({ height }) =>
@@ -113,6 +118,7 @@ interface BaseWidgetCardProps {
   expanded?: boolean
   expandedContent?: React.ReactNode
   children: React.ReactNode
+  noPadding?: boolean
   setExpanded?(expanded: boolean): void
 }
 
@@ -208,7 +214,7 @@ export default function WidgetCard(props: Props) {
         </>
       )}
       {props.grouped ? (
-        <GroupedWidgetCard height={props.height} ref={cardRef}>
+        <GroupedWidgetCard height={props.height} ref={cardRef} noPadding={props.noPadding}>
           {props.children}
         </GroupedWidgetCard>
       ) : (
