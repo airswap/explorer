@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import theme from '../../app/theme'
 import Flex from '../../components/Flex'
+import useWindowSize from '../../hooks/useWindowSize'
 import { ReactComponent as CloseIcon } from '../../static/close-icon.svg'
 import { FadeIn, FadeInOutTransition } from '../../utils/animations'
 
@@ -29,6 +30,7 @@ const Close = styled(Flex)`
 
 export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
+  position: relative;
   min-width: ${({ width }) => width};
   max-width: 100%;
   height: 450px;
@@ -91,6 +93,7 @@ export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
 
 const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })`
   background-color: #30303b;
+  position: relative;
   padding: 40px;
   border-radius: 20px;
 
@@ -128,6 +131,7 @@ type Props = WidgetCardProps | GroupedWidgetCardProps
 export default function WidgetCard(props: Props) {
   const [cardTransitionStyles, setCardTransitionStyles] = useState({})
   const cardRef = useRef<HTMLDivElement>(null)
+  const windowSize = useWindowSize()
 
   const transitionTimeout = {
     appear: theme.animation.defaultTransition * 100,
@@ -173,7 +177,7 @@ export default function WidgetCard(props: Props) {
       }
       setCardTransitionStyles(transitionStyles)
     }
-  }, [props.expanded, cardRef.current])
+  }, [windowSize, props.expanded, cardRef.current])
 
   return (
     <>

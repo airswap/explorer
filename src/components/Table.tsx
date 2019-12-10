@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Transition } from 'react-transition-group'
 import styled from 'styled-components'
 
+import useInterval from '../hooks/useInterval'
 import { FadeInOutTransition } from '../utils/animations'
-import useInterval from '../utils/useInterval'
 import { H8 } from './Typography'
 
 export const TableRowEl = styled.tr`
@@ -61,13 +61,13 @@ interface TableRowProps {
 export function TableRow(props: TableRowProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false)
 
-  if (!props.fadeIn) {
-    return <TableRowEl>{props.children}</TableRowEl>
-  }
-
   useInterval(() => {
     setIsVisible(true)
   }, (props.index + 1) * 150)
+
+  if (!props.fadeIn) {
+    return <TableRowEl>{props.children}</TableRowEl>
+  }
 
   return (
     <Transition in={isVisible} timeout={0}>

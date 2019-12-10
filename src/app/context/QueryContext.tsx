@@ -1,5 +1,6 @@
+import queryString from 'query-string'
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 export enum Timeframe {
   DAY = 'day',
@@ -28,6 +29,7 @@ interface QueryContextProviderProps {
 }
 
 export default function QueryContextProvider(props: QueryContextProviderProps) {
+  const history = useHistory()
   const location = useLocation()
   const params = useParams()
 
@@ -45,6 +47,23 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
     newTokens.delete(value)
     setTokens(Array.from(newTokens))
   }
+
+  useEffect(() => {
+    const query = queryString.parse(location.search, { arrayFormat: 'comma' })
+    if (query.tokens) {
+      if (Array.isArray(query.tokens)) {
+        setTokens(query.tokens)
+      } else {
+        setTokens([query.tokens])
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const query = { tokens }
+
+    history.push(`?${queryString.stringify(query, { arrayFormat: 'comma' })}`)
+  }, [tokens])
 
   const contextValue = { tokens, addToken, removeToken, timeframe, setTimeframe }
 

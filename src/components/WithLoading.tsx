@@ -20,7 +20,7 @@ const LoadingContainer = styled(Flex).attrs({
   justify: 'center',
   align: 'center',
 })<LoadingProps>`
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s;
   position: absolute;
   top: 0;
   right: 0;
@@ -31,7 +31,7 @@ const LoadingContainer = styled(Flex).attrs({
 
 const ChildrenContainer = styled(Flex)<LoadingProps>`
   z-index: 1;
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s;
   width: 100%;
   height: 100%;
 `

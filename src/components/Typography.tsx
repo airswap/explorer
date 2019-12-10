@@ -5,7 +5,7 @@ interface TypographyProps {
   opacity?: 0.25 | 0.5 | 0.75 | 1
   textAlign?: 'left' | 'center' | 'right'
   display?: 'block' | 'inline' | 'inline-block' | 'inline-flex'
-  fit?: boolean
+  expand?: boolean
   decoration?: string
 }
 
@@ -14,7 +14,7 @@ export const BaseText = styled.p<TypographyProps>`
   font-family: ${({ theme }) => theme.text.fontFamily};
   text-decoration: ${({ decoration }) => decoration || 'none'};
   opacity: ${({ opacity }) => opacity || 1};
-  width: ${({ fit }) => (fit ? 'auto' : '100%')};
+  width: ${({ expand }) => (expand ? '100%' : 'auto')};
   text-align: ${({ textAlign }) => textAlign || 'center'};
   color: ${({ color }) => color || 'inherit'};
   display: ${({ display }) => display || 'auto'};

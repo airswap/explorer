@@ -66,16 +66,16 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                 <HorizontalSpacer units={2} />
               </Flex>
               <Flex expand grow={1} align="flex-start">
-                <H7 fit color="white" opacity={0.25}>
+                <H7 color="white" opacity={0.25}>
                   {calculateDifferenceInTrade(swap.timestamp * 1000)}
                 </H7>
                 <VerticalSpacer units={1} />
                 <Flex direction="row" justify="space-between" expand>
-                  <H6 color="white" opacity={0.75} fit>
+                  <H6 color="white" opacity={0.75}>
                     {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
                   </H6>
                   <SwapIcon />
-                  <H6 color="white" opacity={0.75} fit>
+                  <H6 color="white" opacity={0.75}>
                     {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
                   </H6>
                 </Flex>
@@ -96,9 +96,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                 <TableRowItem>
                   <Tooltip
                     tooltipContent={
-                      <H6 color="white" fit>
-                        {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
-                      </H6>
+                      <H6 color="white">{getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}</H6>
                     }
                   >
                     <H6 color="white" opacity={0.75}>

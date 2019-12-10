@@ -1,85 +1,28 @@
-import { transparentize } from 'polished'
-import React, { useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import { QueryContext } from '../../../app/context/QueryContext'
+import FadeIn from '../../../components/FadeIn'
 import Flex from '../../../components/Flex'
+import { VerticalSpacer } from '../../../components/Spacer'
+import { H6 } from '../../../components/Typography'
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg'
 import { TokenMetadata } from '../../../types/Tokens'
+import { SearchLabel } from '../styles'
 import Container, { SearchInputProps } from './Container'
-
-const SearchInputContainer = styled(Flex).attrs({ expand: true })`
-  position: relative;
-`
-
-interface InputContainerProps {
-  showDropdown: boolean
-}
-
-const InputContainer = styled.form<InputContainerProps>`
-  display: flex;
-  z-index: 1;
-  align-items: center;
-  height: 40px;
-  width: 100%;
-  flex-direction: row;
-  background-color: #3e3e49;
-  border-radius: 10px;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  border-width: 3px;
-  border-style: solid;
-  border-color: ${({ showDropdown, theme }) =>
-    showDropdown ? transparentize(0.5, theme.palette.primaryColor) : '#3e3e49'};
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
-  will-change: auto;
-`
-
-const IconContainer = styled(Flex)`
-  flex-shrink: 0;
-  margin-right: 10px;
-
-  svg {
-    width: 18px;
-    height: 18px;
-
-    path {
-      stroke: ${({ theme }) => theme.palette.primaryColor};
-    }
-  }
-`
-
-const InputEl = styled.input`
-  font-size: ${({ theme }) => theme.text.fontSize.h6};
-  color: white;
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  outline: none;
-`
-
-interface DropdownContainerProps {
-  showDropdown: boolean
-}
-
-const DropdownContainer = styled(Flex)<DropdownContainerProps>`
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  background-color: #3e3e49;
-  height: auto;
-  border-radius: 10px;
-  min-height: ${({ showDropdown }) => (showDropdown ? '100px' : '0')};
-  max-height: ${({ showDropdown }) => (showDropdown ? '350px' : '0')};
-  transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
-  will-change: auto;
-  padding: ${({ showDropdown }) => (showDropdown ? '40px 30px' : '0 30px')};
-  overflow-y: auto;
-`
+import SearchInputItem from './SearchInputItem'
+import {
+  DropdownContainer,
+  DropdownContent,
+  IconContainer,
+  InputContainer,
+  InputEl,
+  SearchInputContainer,
+  TokenTypeHeaderContainer,
+} from './styles'
 
 function SearchInput(props: SearchInputProps) {
+  const searchInputRef = useRef<HTMLDivElement>(null)
   const [searchString, setSearchString] = useState<string>('')
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const [stablecoinTokens, setStablecoinTokens] = useState<TokenMetadata[]>(props.stablecoinTokens)
@@ -96,12 +39,50 @@ function SearchInput(props: SearchInputProps) {
     addToken(searchString)
   }
 
+  const handleClickOutside = (evt: MouseEvent) => {
+    if (evt.target instanceof HTMLDivElement) {
+      if (searchInputRef.current && !searchInputRef.current.contains(evt.target)) {
+        setShowDropdown(false)
+      }
+    }
+  }
+
+  const selectToken = (tokenSymbol: string) => {
+    addToken(tokenSymbol)
+    setShowDropdown(false)
+  }
+
+  const onInputFocus = () => {
+    setShowDropdown(true)
+  }
+
   useEffect(() => {
-    console.log(tokens)
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showDropdown])
+
+  useEffect(() => {
+    // console.log(tokens)
   }, [tokens])
 
+  useEffect(() => {
+    setStablecoinTokens(props.stablecoinTokens)
+  }, [props.stablecoinTokens])
+
+  useEffect(() => {
+    setAllOtherTokens(props.allOtherTokens)
+  }, [props.allOtherTokens])
+
   return (
-    <SearchInputContainer>
+    <SearchInputContainer ref={searchInputRef}>
+      <SearchLabel>
+        <FormattedMessage defaultMessage="Filter by token" />
+      </SearchLabel>
       <InputContainer onSubmit={onEnter} showDropdown={showDropdown}>
         <IconContainer>
           <SearchIcon />
@@ -109,12 +90,46 @@ function SearchInput(props: SearchInputProps) {
         <InputEl
           value={searchString}
           onChange={onChange}
-          onFocus={() => setShowDropdown(true)}
-          onBlur={() => setShowDropdown(false)}
+          onFocus={onInputFocus}
+          // onBlur={() => setShowDropdown(false)}
         />
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
-        <div />
+        <DropdownContent showDropdown={showDropdown}>
+          {stablecoinTokens.length > 0 && (
+            <TokenTypeHeaderContainer>
+              <H6 expand color="white" textAlign="left">
+                <FormattedMessage defaultMessage="Stablecoins" />
+              </H6>
+            </TokenTypeHeaderContainer>
+          )}
+          {stablecoinTokens.map(token => (
+            <SearchInputItem
+              key={token.address}
+              title={token.symbol}
+              description={token.name}
+              image={token.airswap_img_url || token.cmc_img_url}
+              onClick={() => selectToken(token.symbol)}
+            />
+          ))}
+          <VerticalSpacer units={4} />
+          {allOtherTokens.length > 0 && (
+            <TokenTypeHeaderContainer>
+              <H6 expand color="white" textAlign="left">
+                <FormattedMessage defaultMessage="Other tokens" />
+              </H6>
+            </TokenTypeHeaderContainer>
+          )}
+          {allOtherTokens.map(token => (
+            <SearchInputItem
+              key={token.address}
+              title={token.symbol}
+              description={token.name}
+              image={token.airswap_img_url || token.cmc_img_url}
+              onClick={() => selectToken(token.symbol)}
+            />
+          ))}
+        </DropdownContent>
       </DropdownContainer>
     </SearchInputContainer>
   )

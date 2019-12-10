@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Cell, Pie, PieChart } from 'recharts'
 import styled from 'styled-components'
 
+import useInterval from '../hooks/useInterval'
 import { ChartDataType } from '../types/Chart'
 import Flex from './Flex'
 
@@ -40,7 +41,16 @@ interface Props {
 export default function PieChartComponent(props: Props) {
   const [childVisible, setChildVisible] = useState<boolean>(false)
 
-  const showChild = () => setChildVisible(true)
+  const showChild = () => {
+    setChildVisible(true)
+  }
+
+  useInterval(() => {
+    // If pie chart animation didn't work
+    if (!childVisible) {
+      setChildVisible(true)
+    }
+  }, 2000)
 
   return (
     <Container size={props.size}>
