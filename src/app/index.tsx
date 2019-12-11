@@ -29,7 +29,9 @@ const AirswapLogoContainer = styled(Flex).attrs({ align: 'flex-start' })`
   }
 `
 
-const ContentContainer = styled(Flex)``
+const ContentContainer = styled(Flex)`
+  width: 100%;
+`
 
 function App() {
   return (

@@ -17,10 +17,11 @@ export default function Dashboard(props: DashboardProps) {
   return (
     <ScreenContainer>
       <WidgetGrid>
-        <GroupedWidgetContainer width="630px">
+        {/* <GroupedWidgetContainer width="630px">
           <SearchWidget />
           <VolumeWidget />
-        </GroupedWidgetContainer>
+        </GroupedWidgetContainer> */}
+        <VolumeWidget />
         <TopTradersWidget />
         <PeerDistributionWidget />
         <WidgetCard width="580px">

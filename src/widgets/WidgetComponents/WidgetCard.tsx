@@ -10,6 +10,7 @@ import { FadeIn, FadeInOutTransition } from '../../utils/animations'
 
 interface ContainerProps {
   width: string
+  noPadding?: boolean
 }
 
 const Close = styled(Flex)`
@@ -32,16 +33,17 @@ export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
   position: relative;
   min-width: ${({ width }) => width};
-  max-width: 100%;
+  padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
+  max-width: 50%;
   height: 450px;
   background-color: #30303b;
   border-radius: 20px;
-  padding: 40px;
   margin: 0 20px 20px 0;
 
   @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
     width: 100%;
     min-width: 100%;
+    max-width: 100%;
     margin: 0 0 20px 0;
   }
 `
@@ -218,7 +220,7 @@ export default function WidgetCard(props: Props) {
           {props.children}
         </GroupedWidgetCard>
       ) : (
-        <WidgetCardContainer width={props.width} ref={cardRef}>
+        <WidgetCardContainer width={props.width} ref={cardRef} noPadding={props.noPadding}>
           {props.children}
         </WidgetCardContainer>
       )}
