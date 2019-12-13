@@ -13,7 +13,7 @@ interface InputContainerProps {
 
 export const InputContainer = styled.form<InputContainerProps>`
   display: flex;
-  z-index: 2;
+  z-index: 3;
   align-items: center;
   height: 30px;
   width: 100%;
@@ -59,7 +59,7 @@ interface DropdownContainerProps {
 
 export const DropdownContainer = styled(Flex)<DropdownContainerProps>`
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 50%;
   left: 0;
   width: 100%;

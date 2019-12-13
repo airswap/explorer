@@ -5,13 +5,13 @@ export const willFormatNumber = (num: number, digits: number, decimals?: number)
   return amount.length > digits || (amount.includes('.') && (decimals && amount.split('.')[1].length > decimals))
 }
 
-export const getFormattedNumber = (num: number, digits: number, decimals?: number) => {
+export const getFormattedNumber = (num: number, digits: number, decimals?: number, noEllipsis?: boolean) => {
   let amount = num.toString()
   if (!amount.includes('.')) return amount
   if (amount.length <= digits && (!decimals || amount.split('.')[1].length <= decimals)) return amount
 
   amount = num.toFixed(decimals).toString()
-  return `${amount.substring(0, digits)}...`
+  return `${amount.substring(0, digits)}${noEllipsis ? '' : '...'}`
 }
 
 export const calculateDifferenceInTrade = (timestamp: string | number) => {

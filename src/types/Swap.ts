@@ -21,3 +21,18 @@ export interface SwapEvent {
   tokenSymbol: string
   transactionHash: string
 }
+
+export interface TradeQuery {
+  days: number
+  tokens?: string[]
+}
+
+export interface TradeVolumeByDay {
+  date: string
+  volume: number
+}
+
+export interface TradeVolumeByToken {
+  token: string
+  volume: number
+}

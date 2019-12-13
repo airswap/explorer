@@ -57,10 +57,18 @@
   }
 }
 
+.slick-slide, .slick-slide * {
+  outline: none !important;
+}
+
 .token-carousel {
   .slick-list,
   .slick-track {
     height: 100%;
+  }
+
+  .slick-track {
+    margin-left: 0;
   }
 
   .slick-slide > div {

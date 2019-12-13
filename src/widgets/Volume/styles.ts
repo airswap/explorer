@@ -11,7 +11,12 @@ export const VolumeAmount = styled(H2).attrs({ expand: true, textAlign: 'left' }
   color: white;
 `
 
-export const VolumeContentContainer = styled(Flex).attrs({ expand: true })`
-  padding: 40px;
+export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true })`
+  padding: 40px 40px 15px 40px;
+  flex-shrink: 0;
+`
+
+export const VolumeFooterContainer = styled(Flex).attrs({ expand: true })`
+  padding: 15px 40px 40px 40px;
   flex-shrink: 0;
 `

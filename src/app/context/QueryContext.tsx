@@ -3,9 +3,20 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 
 export enum Timeframe {
-  DAY = 'day',
   WEEK = 'week',
   MONTH = 'month',
+}
+
+export const TimeframeDisplayMap = {
+  [Timeframe.WEEK]: '1 Week',
+  [Timeframe.MONTH]: '1 Month',
+  '1 Week': [Timeframe.WEEK],
+  '1 Month': [Timeframe.MONTH],
+}
+
+export const TimeframeDaysMap = {
+  [Timeframe.WEEK]: 7,
+  [Timeframe.MONTH]: 30,
 }
 
 interface QueryContextType {
@@ -20,7 +31,7 @@ export const QueryContext = React.createContext<QueryContextType>({
   tokens: [],
   addToken: () => {},
   removeToken: () => {},
-  timeframe: Timeframe.DAY,
+  timeframe: Timeframe.WEEK,
   setTimeframe: () => {},
 })
 
@@ -31,10 +42,9 @@ interface QueryContextProviderProps {
 export default function QueryContextProvider(props: QueryContextProviderProps) {
   const history = useHistory()
   const location = useLocation()
-  const params = useParams()
 
   const [tokens, setTokens] = useState<string[]>([])
-  const [timeframe, setTimeframe] = useState<Timeframe>(Timeframe.DAY)
+  const [timeframe, setTimeframe] = useState<Timeframe>(Timeframe.WEEK)
 
   const addToken = (value: string) => {
     const newTokens = new Set(tokens)
@@ -60,10 +70,10 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
   }, [])
 
   useEffect(() => {
-    const query = { tokens }
+    const query = { tokens, timeframe }
 
     history.push(`?${queryString.stringify(query, { arrayFormat: 'comma' })}`)
-  }, [tokens])
+  }, [tokens, timeframe])
 
   const contextValue = { tokens, addToken, removeToken, timeframe, setTimeframe }
 

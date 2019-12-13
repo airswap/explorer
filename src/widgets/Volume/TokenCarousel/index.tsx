@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
+import { QueryContext } from '../../../app/context/QueryContext'
 import Carousel from '../../../components/Carousel'
 import Flex from '../../../components/Flex'
 import Image from '../../../components/Image'
 import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer'
 import { H7, H8 } from '../../../components/Typography'
-import Container, { TokenCarouselProps } from './Container'
+import { TokenMetadata } from '../../../types/Tokens'
+import Container, { TokenCarouselProps, TokenVolume } from './Container'
 
 const TokenCarouselContainer = styled.div`
   width: 100%;
@@ -15,7 +17,8 @@ const TokenCarouselContainer = styled.div`
 `
 
 const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
-  width: 130px;
+  width: 140px;
+  cursor: pointer;
 `
 
 const Divider = styled.div`
@@ -27,6 +30,9 @@ const Divider = styled.div`
 `
 
 function TokenCarousel(props: TokenCarouselProps) {
+  const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes)
+  const { tokens, addToken, removeToken } = useContext(QueryContext)
+
   const carouselSettings = {
     className: 'token-carousel',
     dots: false,
@@ -35,16 +41,40 @@ function TokenCarousel(props: TokenCarouselProps) {
     slidesToScroll: 2,
   }
 
+  const onTokenClick = (token: TokenMetadata) => {
+    if (tokens.indexOf(token.symbol) !== -1) {
+      removeToken(token.symbol)
+    } else {
+      addToken(token.symbol)
+    }
+  }
+
+  useEffect(() => {
+    if (tokens && tokens.length) {
+      // filter
+      const filteredTokenVolumes = props.tokenVolumes.filter(
+        tokenVolume => tokens.indexOf(tokenVolume.token.symbol) !== -1,
+      )
+      setTokenVolumes(filteredTokenVolumes)
+    } else {
+      setTokenVolumes(props.tokenVolumes)
+    }
+  }, [tokens, props.tokenVolumes])
+
   return (
     <TokenCarouselContainer>
       <H8 color="rgba(255, 255, 255, 0.25)" expand textAlign="left">
-        <FormattedMessage defaultMessage="Top Traded Tokens" />
+        {tokens && tokens.length ? (
+          <FormattedMessage defaultMessage="Selected Tokens" />
+        ) : (
+          <FormattedMessage defaultMessage="Top Traded Tokens" />
+        )}
       </H8>
       <Divider />
       <Carousel settings={carouselSettings}>
-        {props.tokenVolumes.map(tokenVolume => (
+        {tokenVolumes.map(tokenVolume => (
           <div>
-            <TokenCarouselItem>
+            <TokenCarouselItem onClick={() => onTokenClick(tokenVolume.token)}>
               <Flex>
                 <Image
                   circle

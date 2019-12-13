@@ -4,12 +4,32 @@ import { Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
 import styled from 'styled-components'
 
 import Flex from '../../components/Flex'
-import { H7 } from '../../components/Typography'
+import { VerticalSpacer } from '../../components/Spacer'
+import { H7, H8 } from '../../components/Typography'
+import { getFormattedNumber } from '../../utils/transformations'
 
 const ChartContainer = styled.div`
   width: 100%;
   height: 100%;
 `
+
+const VolumeChartTooltip = ({ active, payload }) => {
+  if (active) {
+    return (
+      <Flex align="flex-start">
+        <H7 color="white">
+          <FormattedMessage
+            defaultMessage="{amount} ETH"
+            values={{ amount: getFormattedNumber(payload[0].payload.volume, 10, 2, true) }}
+          />
+        </H7>
+        <VerticalSpacer units={1} />
+        <H8 color="white">{payload[0].payload.date}</H8>
+      </Flex>
+    )
+  }
+  return null
+}
 
 interface VolumeChartProps {
   data: any
@@ -29,25 +49,18 @@ export default function VolumeChart(props: VolumeChartProps) {
             </linearGradient>
           </defs>
           <Tooltip
-            animationDuration={500}
-            content={
-              <Flex>
-                <H7 color="white">
-                  <FormattedMessage defaultMessage="Monday" />
-                </H7>
-              </Flex>
-            }
+            offset={30}
+            animationDuration={200}
+            content={tooltipProps => <VolumeChartTooltip {...tooltipProps} />}
             cursor={{ stroke: 'rgba(255, 255, 255, 0.25)', strokeWidth: 1, strokeDasharray: '2.5px' }}
           />
           <Line
-            animationBegin={3000}
             type="monotone"
             dataKey="volume"
             stroke="url(#gradient)"
             strokeWidth={3}
             dot={false}
             activeDot={{ fill: '#2B71FF', strokeWidth: 0, r: 5 }}
-            // activeDot={<ChartActiveDot />}
           />
         </LineChart>
       </ResponsiveContainer>

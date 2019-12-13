@@ -35,7 +35,7 @@ export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   min-width: ${({ width }) => width};
   padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
   max-width: 50%;
-  height: 450px;
+  height: ${({ height }) => height || '450px'};
   background-color: #30303b;
   border-radius: 20px;
   margin: 0 20px 20px 0;
@@ -126,6 +126,7 @@ interface BaseWidgetCardProps {
 
 interface WidgetCardProps extends BaseWidgetCardProps {
   grouped?: false
+  height?: string
   width: string
 }
 
@@ -220,7 +221,7 @@ export default function WidgetCard(props: Props) {
           {props.children}
         </GroupedWidgetCard>
       ) : (
-        <WidgetCardContainer width={props.width} ref={cardRef} noPadding={props.noPadding}>
+        <WidgetCardContainer height={props.height} width={props.width} ref={cardRef} noPadding={props.noPadding}>
           {props.children}
         </WidgetCardContainer>
       )}
