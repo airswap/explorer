@@ -8,6 +8,7 @@ import { VerticalSpacer } from '../../../components/Spacer'
 import { H6 } from '../../../components/Typography'
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg'
 import { TokenMetadata } from '../../../types/Tokens'
+import { findTokens } from '../../../utils/tokens'
 import { SearchLabel } from '../styles'
 import Container, { SearchInputProps } from './Container'
 import SearchInputItem from './SearchInputItem'
@@ -32,6 +33,9 @@ function SearchInput(props: SearchInputProps) {
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault()
     setSearchString(evt.target.value)
+
+    setStablecoinTokens(findTokens(evt.target.value, props.stablecoinTokens))
+    setAllOtherTokens(findTokens(evt.target.value, props.allOtherTokens))
   }
 
   const onEnter = (evt: React.FormEvent) => {
@@ -87,12 +91,7 @@ function SearchInput(props: SearchInputProps) {
         <IconContainer>
           <SearchIcon />
         </IconContainer>
-        <InputEl
-          value={searchString}
-          onChange={onChange}
-          onFocus={onInputFocus}
-          // onBlur={() => setShowDropdown(false)}
-        />
+        <InputEl value={searchString} onChange={onChange} onFocus={onInputFocus} />
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
         <DropdownContent showDropdown={showDropdown}>
@@ -112,7 +111,7 @@ function SearchInput(props: SearchInputProps) {
               onClick={() => selectToken(token.symbol)}
             />
           ))}
-          <VerticalSpacer units={4} />
+          {stablecoinTokens.length > 0 && <VerticalSpacer units={4} />}
           {allOtherTokens.length > 0 && (
             <TokenTypeHeaderContainer>
               <H6 expand color="white" textAlign="left">

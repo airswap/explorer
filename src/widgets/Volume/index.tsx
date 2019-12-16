@@ -35,15 +35,13 @@ function VolumeWidget(props: VolumeWidgetProps) {
   })
 
   useEffect(() => {
-    if (props.trades) {
-      const volume = props.getTradeVolumeByDate({ days: TimeframeDaysMap[timeframe], tokens })
-      setTradeVolume(volume)
-    }
-  }, [tokens, timeframe, props.trades])
+    const volume = props.getTradeVolumeByDate({ days: TimeframeDaysMap[timeframe], tokens })
+    setTradeVolume(volume)
+  }, [tokens, timeframe, props.getTradeVolumeByDate])
 
   return (
     <WidgetCard width="630px" noPadding>
-      <WithLoading isLoading={isLoading || tradeVolume.length === 0}>
+      <WithLoading isLoading={isLoading || !tradeVolume.length}>
         <VolumeHeaderContainer>
           <VolumeTitle>
             <FormattedMessage defaultMessage="Volume" />
@@ -53,7 +51,7 @@ function VolumeWidget(props: VolumeWidgetProps) {
         </VolumeHeaderContainer>
         <VolumeChart data={tradeVolume} />
         <VolumeFooterContainer>
-          <TokenCarousel />
+          <TokenCarousel timeframe={timeframe} />
         </VolumeFooterContainer>
       </WithLoading>
     </WidgetCard>

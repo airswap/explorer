@@ -1,13 +1,16 @@
-import { storeFetchedTrades } from './actions'
+import { fetchTrades, storeFetchedTrades } from './actions'
 
-async function fetchTrades(store) {
+async function fetchAllTrades(store) {
   try {
-    const response = await fetch('https://maker-stats.production.airswap.io/trades?days=30')
-    const trades = await response.json()
-    store.dispatch(storeFetchedTrades(trades))
+    const [tradesResponse, swapsResponse] = await Promise.all([
+      fetch('https://maker-stats.production.airswap.io/trades?days=30'),
+      fetch('https://maker-stats.production.airswap.io/swaps?days=30'),
+    ])
+    const [trades, swaps] = await Promise.all([tradesResponse.json(), swapsResponse.json()])
+    store.dispatch(storeFetchedTrades(trades.concat(swaps)))
   } catch (err) {
-    // TODO: error handling
-    console.log(err)
+    // Add retry count
+    store.dispatch(fetchTrades())
   }
 }
 
@@ -15,8 +18,7 @@ export default function tradesMiddleware(store) {
   return next => action => {
     switch (action.type) {
       case 'FETCH_TRADES':
-        fetchTrades(store)
-        // fetch trades here
+        fetchAllTrades(store)
         next(action)
         break
       default:

@@ -6,12 +6,7 @@ import { connect } from 'react-redux'
 import { STABLECOIN_SYMBOLS } from '../../../constants'
 import { TokenMetadata, TokenQuery } from '../../../types/Tokens'
 
-const {
-  getAirSwapApprovedTokens,
-  getTokensByAddress,
-  makeDisplayByToken,
-  makeGetNFTItemByAddressAndId,
-} = tokenSelectors
+const { getAirSwapApprovedTokens } = tokenSelectors
 
 interface PassedProps {}
 

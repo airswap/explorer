@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-import Flex from '../components/Flex'
+import { QueryContext } from '../app/context/QueryContext'
+import NetworkWidget from '../widgets/Network'
 import PeerDistributionWidget from '../widgets/PeerDistribution'
 import RecentSwapsWidget from '../widgets/RecentSwaps'
 import SearchWidget from '../widgets/Search'
 import TopTradersWidget from '../widgets/TopTraders'
 import VolumeWidget from '../widgets/Volume'
-import WidgetCard from '../widgets/WidgetComponents/WidgetCard'
 import WidgetGrid from '../widgets/WidgetComponents/WidgetGrid'
 import { ScreenContainer } from './styles'
 
@@ -15,18 +15,18 @@ interface DashboardProps {
 }
 
 export default function Dashboard(props: DashboardProps) {
+  const { timeframe, tokens } = useContext(QueryContext)
+
   return (
     <ScreenContainer>
-      <Flex expand align="flex-start">
+      <WidgetGrid>
         <SearchWidget />
-      </Flex>
+      </WidgetGrid>
       <WidgetGrid>
         <VolumeWidget />
-        <TopTradersWidget />
+        <TopTradersWidget timeframe={timeframe} tokens={tokens} />
         <PeerDistributionWidget />
-        <WidgetCard width="580px">
-          <div />
-        </WidgetCard>
+        <NetworkWidget />
         <RecentSwapsWidget />
       </WidgetGrid>
     </ScreenContainer>

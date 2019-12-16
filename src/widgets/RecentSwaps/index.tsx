@@ -49,7 +49,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
   }
 
   return (
-    <WidgetCard width="700px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
+    <WidgetCard width="650px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
       <Flex expand direction="row" justify="space-between">
         <WidgetTitle>
           <FormattedMessage defaultMessage="Recent Swaps" />
@@ -60,7 +60,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         <MediaQuery size="sm">
           <VerticalSpacer units={4} />
           {props.trades.slice(0, 4).map(swap => (
-            <MobileSwapEvent>
+            <MobileSwapEvent key={swap.transactionHash}>
               <Flex shrink={0} direction="row">
                 <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
                 <HorizontalSpacer units={2} />

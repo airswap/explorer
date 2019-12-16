@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { createSelector } from 'reselect'
 
-import { SwapEvent, TradeQuery, TradeVolumeByToken } from '../../types/Swap'
+import { SwapEvent, TradeQuery } from '../../types/Swap'
 
 export const defaultState = {
   trades: [],
@@ -24,10 +24,32 @@ export default trades
 
 const getAllTrades = state => state.trades.trades
 
-const makeGetTradeVolumeByDate = createSelector(
+const makeGetTradesForDate = createSelector(
   getAllTrades,
-  allTrades => (query: TradeQuery) => {
+  allTrades => days => {
+    return allTrades.filter((trade: SwapEvent) => {
+      if (trade.timestamp) {
+        const timestampDate = moment.unix(trade.timestamp)
+        const dayDiff = moment().diff(timestampDate, 'days')
+
+        // Don't show today or days past
+        if (dayDiff >= days) {
+          return false
+        }
+        return true
+      }
+      return false
+    })
+    //
+  },
+)
+
+const makeGetTradeVolumeByDate = createSelector(
+  makeGetTradesForDate,
+  getTradesForDate => (query: TradeQuery) => {
     const tradesByDay = {}
+
+    const filteredTrades = getTradesForDate(query.days)
 
     for (let i = 0; i <= query.days; i++) {
       const formattedDate = moment()
@@ -37,7 +59,7 @@ const makeGetTradeVolumeByDate = createSelector(
     }
 
     // Pre-populate tradesByDay
-    allTrades
+    filteredTrades
       .filter((trade: SwapEvent) => {
         if (!query.tokens || !query.tokens.length) return true
         return query.tokens.indexOf(trade.makerSymbol) !== -1 || query.tokens.indexOf(trade.takerSymbol) !== -1
@@ -46,13 +68,6 @@ const makeGetTradeVolumeByDate = createSelector(
         if (trade.timestamp) {
           const timestampDate = moment.unix(trade.timestamp)
           const formattedDate = timestampDate.format('MMM D, YYYY')
-          const dayDiff = moment().diff(timestampDate, 'days')
-
-          // Don't show today or days past
-          if (dayDiff >= query.days) {
-            return
-          }
-
           tradesByDay[formattedDate] += trade.ethAmount || 0
         }
       })
@@ -63,35 +78,66 @@ const makeGetTradeVolumeByDate = createSelector(
 )
 
 const makeGetTradeVolumeByToken = createSelector(
-  getAllTrades,
-  allTrades => (days: number) => {
+  makeGetTradesForDate,
+  getTradesForDate => (days: number) => {
     const tradesByToken = {}
+    const filteredTrades = getTradesForDate(days)
 
-    allTrades.forEach((trade: SwapEvent) => {
+    filteredTrades.forEach((trade: SwapEvent) => {
       if (trade.timestamp) {
-        const timestampDate = moment.unix(trade.timestamp)
-        const dayDiff = moment().diff(timestampDate, 'days')
-
-        // Don't show today or days past
-        if (dayDiff >= days) {
-          return
-        }
-
         if (tradesByToken[trade.makerSymbol]) {
-          tradesByToken[trade.makerSymbol] += trade.ethAmount
+          tradesByToken[trade.makerSymbol] += trade.ethAmount || 0
         } else {
-          tradesByToken[trade.makerSymbol] = trade.ethAmount
+          tradesByToken[trade.makerSymbol] = trade.ethAmount || 0
         }
 
         if (tradesByToken[trade.takerSymbol]) {
-          tradesByToken[trade.takerSymbol] += trade.ethAmount
+          tradesByToken[trade.takerSymbol] += trade.ethAmount || 0
         } else {
-          tradesByToken[trade.takerSymbol] = trade.ethAmount
+          tradesByToken[trade.takerSymbol] = trade.ethAmount || 0
         }
       }
     })
 
     return tradesByToken
+  },
+)
+
+const makeGetTradeVolumeByTrader = createSelector(
+  makeGetTradesForDate,
+  getTradesForDate => (query: TradeQuery) => {
+    const tradeVolumeByTrader = {}
+    const filteredTrades = getTradesForDate(query.days)
+
+    filteredTrades.forEach((trade: SwapEvent) => {
+      if (trade.timestamp) {
+        if (tradeVolumeByTrader[trade.makerAddress]) {
+          tradeVolumeByTrader[trade.makerAddress] = {
+            totalTrades: tradeVolumeByTrader[trade.makerAddress].totalTrades + 1,
+            volume: tradeVolumeByTrader[trade.makerAddress].volume + trade.ethAmount || 0,
+          }
+        } else {
+          tradeVolumeByTrader[trade.makerAddress] = {
+            totalTrades: 1,
+            volume: trade.ethAmount || 0,
+          }
+        }
+
+        if (tradeVolumeByTrader[trade.takerAddress]) {
+          tradeVolumeByTrader[trade.takerAddress] = {
+            totalTrades: tradeVolumeByTrader[trade.takerAddress].totalTrades + 1,
+            volume: tradeVolumeByTrader[trade.takerAddress].volume + trade.ethAmount || 0,
+          }
+        } else {
+          tradeVolumeByTrader[trade.takerAddress] = {
+            totalTrades: 1,
+            volume: trade.ethAmount || 0,
+          }
+        }
+      }
+    })
+
+    return tradeVolumeByTrader
   },
 )
 
@@ -101,4 +147,5 @@ export const selectors = {
   getAllTrades,
   makeGetTradeVolumeByDate,
   makeGetTradeVolumeByToken,
+  makeGetTradeVolumeByTrader,
 }

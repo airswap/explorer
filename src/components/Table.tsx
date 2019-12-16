@@ -41,7 +41,7 @@ export default function Table(props: TableProps) {
       <thead>
         <TableRowEl>
           {props.columns.map(column => (
-            <TableHeader>
+            <TableHeader key={column}>
               <TableHeaderText>{column}</TableHeaderText>
             </TableHeader>
           ))}

@@ -46,7 +46,7 @@ export default function SearchWidget() {
       </SearchWidgetContainer>
       <SearchChipContainer>
         {tokens.map(token => (
-          <TokenChip tokenSymbol={token} onDismiss={() => removeToken(token)} />
+          <TokenChip key={token} tokenSymbol={token} onDismiss={() => removeToken(token)} />
         ))}
       </SearchChipContainer>
     </WidgetCard>

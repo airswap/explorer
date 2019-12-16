@@ -126,7 +126,7 @@ export default function Dropdown(props: DropdownProps) {
       <DropdownContainer isOpen={isOpen}>
         <DropdownContent isOpen={isOpen}>
           {props.options.map(option => (
-            <DropdownItem onClick={() => selectDropdownItem(option)}>
+            <DropdownItem onClick={() => selectDropdownItem(option)} key={option}>
               <H7 color="white">{option}</H7>
             </DropdownItem>
           ))}

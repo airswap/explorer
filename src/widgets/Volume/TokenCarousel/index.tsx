@@ -73,7 +73,7 @@ function TokenCarousel(props: TokenCarouselProps) {
       <Divider />
       <Carousel settings={carouselSettings}>
         {tokenVolumes.map(tokenVolume => (
-          <div>
+          <div key={tokenVolume.token.address}>
             <TokenCarouselItem onClick={() => onTokenClick(tokenVolume.token)}>
               <Flex>
                 <Image
