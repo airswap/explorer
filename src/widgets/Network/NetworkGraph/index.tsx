@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import ForceGraph3D from 'react-force-graph-3d'
 import styled from 'styled-components'
 
+import { QueryContext, TimeframeDaysMap } from '../../../app/context/QueryContext'
 import WithLoading from '../../../components/WithLoading'
+import { SwapEvent } from '../../../types/Swap'
 import Container, { NetworkGraphProps } from './Container'
 
 const GraphContainer = styled.div`
@@ -40,6 +42,8 @@ function NetworkGraph(props: NetworkGraphProps) {
   const [graphData, setGraphData] = useState<GraphData>()
   const [width, setWidth] = useState<number>(0)
   const [height, setHeight] = useState<number>(0)
+  const [trades, setTrades] = useState<SwapEvent[]>([])
+  const { timeframe, tokens } = useContext(QueryContext)
 
   const onWindowResize = () => {
     if (graphRef.current) {
@@ -49,23 +53,30 @@ function NetworkGraph(props: NetworkGraphProps) {
   }
 
   useEffect(() => {
-    onWindowResize()
-    window.addEventListener('resize', onWindowResize)
-    return () => window.removeEventListener('resize', onWindowResize)
-  }, [graphRef.current])
+    const tradesByQuery = props.getTradesByQuery({
+      days: TimeframeDaysMap[timeframe],
+      tokens,
+    })
 
-  useEffect(() => {
     const nodeSet = new Set<string>()
     const links: GraphDataLink[] = []
 
-    props.trades.forEach(trade => {
+    tradesByQuery.forEach(trade => {
       nodeSet.add(trade.makerAddress)
       nodeSet.add(trade.takerAddress)
       links.push({ source: trade.makerAddress, target: trade.takerAddress })
     })
     const nodes = Array.from(nodeSet).map((address: string) => ({ id: address }))
+
+    setTrades(tradesByQuery)
     setGraphData({ nodes, links })
-  }, [props.trades])
+  }, [timeframe, tokens, props.getTradesByQuery])
+
+  useEffect(() => {
+    onWindowResize()
+    window.addEventListener('resize', onWindowResize)
+    return () => window.removeEventListener('resize', onWindowResize)
+  }, [graphRef.current])
 
   const onNodeClick = node => {
     window.open(`https://etherscan.io/address/${node.id}`)
@@ -79,7 +90,7 @@ function NetworkGraph(props: NetworkGraphProps) {
 
   return (
     <GraphContainer ref={graphRef}>
-      <WithLoading isLoading={!props.trades || !props.trades.length}>
+      <WithLoading isLoading={!trades || !trades.length}>
         <ForceGraph3D
           width={width}
           height={height}

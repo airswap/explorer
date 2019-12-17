@@ -10,11 +10,7 @@ import VolumeWidget from '../widgets/Volume'
 import WidgetGrid from '../widgets/WidgetComponents/WidgetGrid'
 import { ScreenContainer } from './styles'
 
-interface DashboardProps {
-  temp?: string
-}
-
-export default function Dashboard(props: DashboardProps) {
+export default function Dashboard() {
   const { timeframe, tokens } = useContext(QueryContext)
 
   return (
@@ -25,7 +21,7 @@ export default function Dashboard(props: DashboardProps) {
       <WidgetGrid>
         <VolumeWidget />
         <TopTradersWidget timeframe={timeframe} tokens={tokens} />
-        <PeerDistributionWidget />
+        <PeerDistributionWidget timeframe={timeframe} tokens={tokens} />
         <NetworkWidget />
         <RecentSwapsWidget />
       </WidgetGrid>
