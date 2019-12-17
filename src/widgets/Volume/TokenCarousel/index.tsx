@@ -19,6 +19,12 @@ const TokenCarouselContainer = styled.div`
 const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
   width: 140px;
   cursor: pointer;
+  opacity: 0.75;
+  transition: 0.5s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 `
 
 const Divider = styled.div`

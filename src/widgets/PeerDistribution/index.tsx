@@ -10,6 +10,7 @@ import { VerticalSpacer } from '../../components/Spacer'
 import { H5, H7 } from '../../components/Typography'
 import { WidgetTitle } from '../styles'
 import WidgetCard from '../WidgetComponents/WidgetCard'
+import Container, { PeerDistributionWidgetProps } from './Container'
 
 const PeerDistributionWidgetContainer = styled(Flex).attrs({ expand: true, justify: 'space-between' })`
   height: 100%;
@@ -25,19 +26,8 @@ const PieChartSubheader = styled(H7)`
   color: white;
 `
 
-export default function PeerDistributionWidget() {
+function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
   const [expanded, setExpanded] = useState(false)
-
-  const tempData = [
-    {
-      name: 'Makers',
-      value: 450,
-    },
-    {
-      name: 'Takers',
-      value: 550,
-    },
-  ]
 
   return (
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
@@ -46,7 +36,7 @@ export default function PeerDistributionWidget() {
           <FormattedMessage defaultMessage="Peer Distribution" />
         </WidgetTitle>
         <Flex expand justify="center">
-          <PieChart strokeWidth={10} size={150} data={tempData} colors={theme.colors.blue}>
+          <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={theme.colors.blue}>
             <PieChartHeader>
               <FormattedMessage defaultMessage="150" />
             </PieChartHeader>
@@ -56,8 +46,10 @@ export default function PeerDistributionWidget() {
             </PieChartSubheader>
           </PieChart>
         </Flex>
-        <ChartLegend data={tempData} colors={theme.colors.blue} />
+        <ChartLegend data={props.volumeDistributionBySource} colors={theme.colors.blue} />
       </PeerDistributionWidgetContainer>
     </WidgetCard>
   )
 }
+
+export default Container(PeerDistributionWidget)
