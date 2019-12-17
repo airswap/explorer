@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
 
 import ArrowButton from '../../components/Button/ArrowButton'
 import Flex from '../../components/Flex'
@@ -8,20 +7,31 @@ import { VerticalSpacer } from '../../components/Spacer'
 import Table, { TableRow, TableRowItem } from '../../components/Table'
 import { H6 } from '../../components/Typography'
 import WithLoading from '../../components/WithLoading'
+import { ReactComponent as Trader1Image } from '../../static/trader-1.svg'
+import { ReactComponent as Trader2Image } from '../../static/trader-2.svg'
+import { ReactComponent as Trader3Image } from '../../static/trader-3.svg'
+import { ReactComponent as Trader4Image } from '../../static/trader-4.svg'
 import { WidgetTitle } from '../styles'
 import WidgetCard from '../WidgetComponents/WidgetCard'
 import Container, { TopTradersWidgetProps } from './Container'
 
-const TraderImage = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.palette.primaryColor};
-`
-
 function TopTradersWidget(props: TopTradersWidgetProps) {
   const [expanded, setExpanded] = useState(false)
   const columns = ['Trader', 'Total Trades', 'Trade Volume']
+
+  const getTraderImage = index => {
+    switch (index) {
+      case 0:
+        return <Trader1Image />
+      case 1:
+        return <Trader2Image />
+      case 2:
+        return <Trader3Image />
+      case 3:
+      default:
+        return <Trader4Image />
+    }
+  }
 
   const expandedContent = (
     <>
@@ -32,9 +42,7 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
       <Table columns={columns}>
         {props.tradeVolumeByTrader.map((trader, index) => (
           <TableRow fadeIn index={index} key={trader.address}>
-            <TableRowItem>
-              <TraderImage />
-            </TableRowItem>
+            <TableRowItem>{getTraderImage(index)}</TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.5}>
                 {trader.totalTrades}
@@ -65,9 +73,7 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
           {props.tradeVolumeByTrader.slice(0, 4).map((trader, index) => (
             <TableRow fadeIn index={index} key={trader.address}>
               <TableRowItem>
-                <Flex>
-                  <TraderImage />
-                </Flex>
+                <Flex>{getTraderImage(index)}</Flex>
               </TableRowItem>
               <TableRowItem>
                 <H6 color="white" opacity={0.5}>

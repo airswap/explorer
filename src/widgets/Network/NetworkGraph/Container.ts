@@ -1,21 +1,21 @@
 import { connect } from 'react-redux'
 
 import { selectors as tradeSelectors } from '../../../state/trades'
-import { SwapEvent } from '../../../types/Swap'
+import { SwapEvent, TradeQuery } from '../../../types/Swap'
 
-const { getAllTrades } = tradeSelectors
+const { makeGetTradesByQuery } = tradeSelectors
 
 interface PassedProps {}
 
 interface ReduxProps {
-  trades: SwapEvent[]
+  getTradesByQuery(query: TradeQuery): SwapEvent[]
 }
 
 export type NetworkGraphProps = PassedProps & ReduxProps
 
 const mapStateToProps = (state, ownProps: PassedProps) => {
   return {
-    trades: getAllTrades(state),
+    getTradesByQuery: makeGetTradesByQuery(state),
     ...ownProps,
   }
 }

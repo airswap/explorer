@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { QueryContext } from '../../../app/context/QueryContext'
-import FadeIn from '../../../components/FadeIn'
-import Flex from '../../../components/Flex'
 import { VerticalSpacer } from '../../../components/Spacer'
 import { H6 } from '../../../components/Typography'
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg'
@@ -28,7 +26,7 @@ function SearchInput(props: SearchInputProps) {
   const [showDropdown, setShowDropdown] = useState<boolean>(false)
   const [stablecoinTokens, setStablecoinTokens] = useState<TokenMetadata[]>(props.stablecoinTokens)
   const [allOtherTokens, setAllOtherTokens] = useState<TokenMetadata[]>(props.allOtherTokens)
-  const { tokens, addToken, removeToken } = useContext(QueryContext)
+  const { addToken } = useContext(QueryContext)
 
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault()
@@ -71,10 +69,6 @@ function SearchInput(props: SearchInputProps) {
   }, [showDropdown])
 
   useEffect(() => {
-    // console.log(tokens)
-  }, [tokens])
-
-  useEffect(() => {
     setStablecoinTokens(props.stablecoinTokens)
   }, [props.stablecoinTokens])
 
@@ -95,7 +89,7 @@ function SearchInput(props: SearchInputProps) {
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
         <DropdownContent showDropdown={showDropdown}>
-          {stablecoinTokens.length > 0 && (
+          {stablecoinTokens.length && (
             <TokenTypeHeaderContainer>
               <H6 expand color="white" textAlign="left">
                 <FormattedMessage defaultMessage="Stablecoins" />
@@ -111,8 +105,8 @@ function SearchInput(props: SearchInputProps) {
               onClick={() => selectToken(token.symbol)}
             />
           ))}
-          {stablecoinTokens.length > 0 && <VerticalSpacer units={4} />}
-          {allOtherTokens.length > 0 && (
+          {stablecoinTokens.length && <VerticalSpacer units={4} />}
+          {allOtherTokens.length && (
             <TokenTypeHeaderContainer>
               <H6 expand color="white" textAlign="left">
                 <FormattedMessage defaultMessage="Other tokens" />

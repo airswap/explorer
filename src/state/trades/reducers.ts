@@ -1,3 +1,4 @@
+import { TRADER_AFFILIATE_ADDRESS } from 'airswap.js/src/constants'
 import moment from 'moment'
 import { createSelector } from 'reselect'
 
@@ -41,6 +42,30 @@ const makeGetTradesForDate = createSelector(
       return false
     })
     //
+  },
+)
+
+const makeGetTradesByQuery = createSelector(
+  getAllTrades,
+  allTrades => (query: TradeQuery) => {
+    return allTrades.filter((trade: SwapEvent) => {
+      // Filter by date
+      if (trade.timestamp && query.days) {
+        const timestampDate = moment.unix(trade.timestamp)
+        const dayDiff = moment().diff(timestampDate, 'days')
+
+        if (dayDiff >= query.days) {
+          return false
+        }
+      }
+
+      // Filter by tokens
+      if (query.tokens && query.tokens.length) {
+        return query.tokens.indexOf(trade.makerSymbol) !== -1 || query.tokens.indexOf(trade.takerSymbol) !== -1
+      }
+
+      return true
+    })
   },
 )
 
@@ -109,35 +134,66 @@ const makeGetTradeVolumeByTrader = createSelector(
     const tradeVolumeByTrader = {}
     const filteredTrades = getTradesForDate(query.days)
 
-    filteredTrades.forEach((trade: SwapEvent) => {
-      if (trade.timestamp) {
-        if (tradeVolumeByTrader[trade.makerAddress]) {
-          tradeVolumeByTrader[trade.makerAddress] = {
-            totalTrades: tradeVolumeByTrader[trade.makerAddress].totalTrades + 1,
-            volume: tradeVolumeByTrader[trade.makerAddress].volume + trade.ethAmount || 0,
-          }
-        } else {
-          tradeVolumeByTrader[trade.makerAddress] = {
-            totalTrades: 1,
-            volume: trade.ethAmount || 0,
-          }
+    filteredTrades
+      .filter((trade: SwapEvent) => {
+        if (query.tokens && query.tokens.length) {
+          return query.tokens.includes(trade.takerSymbol) || query.tokens.includes(trade.makerSymbol)
         }
+        return true
+      })
+      .forEach((trade: SwapEvent) => {
+        if (trade.timestamp) {
+          if (tradeVolumeByTrader[trade.makerAddress]) {
+            tradeVolumeByTrader[trade.makerAddress] = {
+              totalTrades: tradeVolumeByTrader[trade.makerAddress].totalTrades + 1,
+              volume: tradeVolumeByTrader[trade.makerAddress].volume + trade.ethAmount || 0,
+            }
+          } else {
+            tradeVolumeByTrader[trade.makerAddress] = {
+              totalTrades: 1,
+              volume: trade.ethAmount || 0,
+            }
+          }
 
-        if (tradeVolumeByTrader[trade.takerAddress]) {
-          tradeVolumeByTrader[trade.takerAddress] = {
-            totalTrades: tradeVolumeByTrader[trade.takerAddress].totalTrades + 1,
-            volume: tradeVolumeByTrader[trade.takerAddress].volume + trade.ethAmount || 0,
-          }
-        } else {
-          tradeVolumeByTrader[trade.takerAddress] = {
-            totalTrades: 1,
-            volume: trade.ethAmount || 0,
+          if (tradeVolumeByTrader[trade.takerAddress]) {
+            tradeVolumeByTrader[trade.takerAddress] = {
+              totalTrades: tradeVolumeByTrader[trade.takerAddress].totalTrades + 1,
+              volume: tradeVolumeByTrader[trade.takerAddress].volume + trade.ethAmount || 0,
+            }
+          } else {
+            tradeVolumeByTrader[trade.takerAddress] = {
+              totalTrades: 1,
+              volume: trade.ethAmount || 0,
+            }
           }
         }
+      })
+
+    return tradeVolumeByTrader
+  },
+)
+
+const makeGetVolumeDistributionBySource = createSelector(
+  makeGetTradesByQuery,
+  getTradesByQuery => (query: TradeQuery) => {
+    const volumeDistributionBySource = {}
+    const filteredTrades = getTradesByQuery(query)
+
+    filteredTrades.forEach(trade => {
+      if (trade.source) {
+        if (trade.source === TRADER_AFFILIATE_ADDRESS) {
+          volumeDistributionBySource['AirSwap Trader'] =
+            (volumeDistributionBySource['AirSwap Trader'] || 0) + trade.ethAmount
+        } else {
+          volumeDistributionBySource[trade.source] = (volumeDistributionBySource[trade.source] || 0) + trade.ethAmount
+        }
+      } else {
+        volumeDistributionBySource['AirSwap Instant'] =
+          (volumeDistributionBySource['AirSwap Instant'] || 0) + trade.ethAmount
       }
     })
 
-    return tradeVolumeByTrader
+    return volumeDistributionBySource
   },
 )
 
@@ -145,7 +201,9 @@ const makeGetTradeVolumeByTrader = createSelector(
 
 export const selectors = {
   getAllTrades,
+  makeGetTradesByQuery,
   makeGetTradeVolumeByDate,
   makeGetTradeVolumeByToken,
   makeGetTradeVolumeByTrader,
+  makeGetVolumeDistributionBySource,
 }
