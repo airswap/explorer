@@ -78,7 +78,6 @@ const breakpoints = {
   xl: [1200],
 }
 
-
 const theme = {
   animation,
   fixed,
@@ -87,7 +86,7 @@ const theme = {
   text,
   spacing,
   line,
-  breakpoints
+  breakpoints,
 }
 
 export default theme

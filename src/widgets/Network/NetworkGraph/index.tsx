@@ -71,15 +71,15 @@ function NetworkGraph(props: NetworkGraphProps) {
     window.open(`https://etherscan.io/address/${node.id}`)
   }
 
-  const onNodeHover = (node, prevNode) => {
+  const onNodeHover = node => {
     if (graphRef.current) {
       graphRef.current.style.cursor = node ? 'pointer' : 'default'
     }
   }
 
   const getNodeColor = node => {
-  return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)];
-}
+    return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)]
+  }
 
   return (
     <GraphContainer ref={graphRef}>
