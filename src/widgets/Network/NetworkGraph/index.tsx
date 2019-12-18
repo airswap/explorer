@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import ForceGraph3D from 'react-force-graph-3d'
 import styled from 'styled-components'
-
 import { QueryContext, TimeframeDaysMap } from '../../../app/context/QueryContext'
 import WithLoading from '../../../components/WithLoading'
 import { SwapEvent } from '../../../types/Swap'
 import Container, { NetworkGraphProps } from './Container'
+import { GRAPH_COLOR_PALLETE } from '../../../constants'
 
 const GraphContainer = styled.div`
   position: relative;
@@ -88,6 +88,10 @@ function NetworkGraph(props: NetworkGraphProps) {
     }
   }
 
+  const getNodeColor = node => {
+    return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)]
+  }
+
   return (
     <GraphContainer ref={graphRef}>
       <WithLoading isLoading={!trades || !trades.length}>
@@ -96,7 +100,14 @@ function NetworkGraph(props: NetworkGraphProps) {
           height={height}
           graphData={graphData}
           backgroundColor="#30303b"
+          nodeColor={node => getNodeColor(node)}
           nodeAutoColorBy="id"
+          nodeResolution={10}
+          showNavInfo={false}
+          nodeOpacity={1}
+          linkDirectionalParticles={2}
+          linkDirectionalParticleWidth={0.2}
+          linkDirectionalParticleSpeed={0.004}
           nodeLabel={node => node.id}
           onNodeHover={onNodeHover}
           onNodeClick={onNodeClick}

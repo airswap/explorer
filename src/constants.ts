@@ -17,3 +17,6 @@ export const AIRSWAP_TRADER_URL = 'https://trader.airswap.io/'
 
 // Data
 export const STABLECOIN_SYMBOLS = ['DAI', 'USDC', 'USDT', 'TUSD', 'PAX', 'KRWB', 'GUSD']
+
+// Styles
+export const GRAPH_COLOR_PALLETE = ['#C58A80', '#DB6C33', '#304CD2', '#416A75']
