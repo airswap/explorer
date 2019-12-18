@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import { QueryContext, TimeframeDaysMap } from '../../app/context/QueryContext'
+import { QueryContext } from '../../app/context/QueryContext'
 import { VerticalSpacer } from '../../components/Spacer'
 import WithLoading from '../../components/WithLoading'
 import { TradeVolumeByDay } from '../../types/Swap'
@@ -35,7 +35,7 @@ function VolumeWidget(props: VolumeWidgetProps) {
   })
 
   useEffect(() => {
-    const volume = props.getTradeVolumeByDate({ days: TimeframeDaysMap[timeframe], tokens })
+    const volume = props.getTradeVolumeByDate({ days: timeframe, tokens })
     setTradeVolume(volume)
   }, [tokens, timeframe, props.getTradeVolumeByDate])
 

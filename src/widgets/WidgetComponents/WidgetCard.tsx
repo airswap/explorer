@@ -18,6 +18,7 @@ const Close = styled(Flex)`
   top: 40px;
   right: 40px;
   cursor: pointer;
+  z-index: 4;
 
   svg {
     width: 15px;
@@ -61,7 +62,7 @@ const ExpandedBackgroundOverlay = styled.div`
 `
 
 const ExpandedCard = styled.div`
-  z-index: 2;
+  z-index: 4;
   border-radius: 20px;
   background-color: #30303b;
   position: fixed;

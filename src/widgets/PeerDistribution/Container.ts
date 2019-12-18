@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import { Timeframe, TimeframeDaysMap } from '../../app/context/QueryContext'
 import { selectors as tradeSelectors } from '../../state/trades'
 
 const { makeGetVolumeDistributionBySource } = tradeSelectors
@@ -11,7 +10,7 @@ interface SourceVolume {
 }
 
 interface PassedProps {
-  timeframe: Timeframe
+  timeframe: number
   tokens?: string[]
 }
 
@@ -24,7 +23,7 @@ export type PeerDistributionWidgetProps = PassedProps & ReduxProps
 const mapStateToProps = (state, ownProps: PassedProps) => {
   const getVolumeDistributionBySource = makeGetVolumeDistributionBySource(state)
   const volumeDistributionBySource = getVolumeDistributionBySource({
-    days: TimeframeDaysMap[ownProps.timeframe],
+    days: ownProps.timeframe,
     tokens: ownProps.tokens,
   })
   const formattedVolumeDistribution = Object.keys(volumeDistributionBySource).map(source => ({

@@ -1,7 +1,6 @@
 import { selectors as tokenSelectors } from 'airswap.js/src/tokens/redux'
 import { connect } from 'react-redux'
 
-import { Timeframe, TimeframeDaysMap } from '../../../app/context/QueryContext'
 import { selectors as tradeSelectors } from '../../../state/trades'
 import { TradeVolumeByToken } from '../../../types/Swap'
 import { TokenMetadata } from '../../../types/Tokens'
@@ -17,7 +16,7 @@ export interface TokenVolume {
 }
 
 interface PassedProps {
-  timeframe: Timeframe
+  timeframe: number
 }
 
 interface ReduxProps {
@@ -30,8 +29,7 @@ export type TokenCarouselProps = PassedProps & ReduxProps
 const mapStateToProps = (state, ownProps: PassedProps) => {
   const tokens: TokenMetadata[] = getTokensBySymbol(state)
   const getTradeVolumeByToken = makeGetTradeVolumeByToken(state)
-  const tradeVolumeByToken = getTradeVolumeByToken(TimeframeDaysMap[ownProps.timeframe])
-  // const tradeVolumeByToken = getTradeVolumeByToken(30)
+  const tradeVolumeByToken = getTradeVolumeByToken(ownProps.timeframe)
   const tokenVolumes = Object.keys(tradeVolumeByToken)
     .filter(symbol => tokens[symbol])
     .sort((volume1, volume2) => (tradeVolumeByToken[volume1] > tradeVolumeByToken[volume2] ? -1 : 1))

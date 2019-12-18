@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import ForceGraph3D from 'react-force-graph-3d'
 import styled from 'styled-components'
-import { QueryContext, TimeframeDaysMap } from '../../../app/context/QueryContext'
+
+import { QueryContext } from '../../../app/context/QueryContext'
 import WithLoading from '../../../components/WithLoading'
+import { GRAPH_COLOR_PALLETE } from '../../../constants'
 import { SwapEvent } from '../../../types/Swap'
 import Container, { NetworkGraphProps } from './Container'
-import { GRAPH_COLOR_PALLETE } from '../../../constants'
 
 const GraphContainer = styled.div`
   position: relative;
@@ -54,7 +55,7 @@ function NetworkGraph(props: NetworkGraphProps) {
 
   useEffect(() => {
     const tradesByQuery = props.getTradesByQuery({
-      days: TimeframeDaysMap[timeframe],
+      days: timeframe,
       tokens,
     })
 

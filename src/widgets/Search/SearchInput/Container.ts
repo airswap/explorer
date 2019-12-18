@@ -1,5 +1,3 @@
-import { selectors as swapSelectors } from 'airswap.js/src/swap/redux/'
-import { selectors as swapLegacySelectors } from 'airswap.js/src/swapLegacy/redux/'
 import { selectors as tokenSelectors } from 'airswap.js/src/tokens/redux'
 import { connect } from 'react-redux'
 

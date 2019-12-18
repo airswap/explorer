@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { QueryContext, Timeframe, TimeframeDisplayMap } from '../../app/context/QueryContext'
+import { QueryContext } from '../../app/context/QueryContext'
 import Dropdown from '../../components/Dropdown'
 import Flex from '../../components/Flex'
 import { HorizontalSpacer } from '../../components/Spacer'
 import WidgetCard from '../WidgetComponents/WidgetCard'
 import SearchInput from './SearchInput'
+import TimeframeSlider from './TimeframeSlider'
 import TokenChip from './TokenChip'
 
 const SearchWidgetContainer = styled(Flex).attrs({ expand: true, justify: 'center', direction: 'row' })`
@@ -24,25 +25,30 @@ const TimeframeDropdownContainer = styled(Flex)`
   flex-shrink: 0;
 `
 
-export default function SearchWidget() {
-  const { removeToken, tokens, timeframe, setTimeframe } = useContext(QueryContext)
+const SearchSection = styled(Flex)`
+  width: 50%;
+  flex-grow: 1;
+`
 
-  const selectTimeframe = timeframeDisplayValue => {
-    setTimeframe(TimeframeDisplayMap[timeframeDisplayValue])
-  }
+const SearchSectionDivider = styled(Flex)`
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 0 40px;
+`
+
+export default function SearchWidget() {
+  const { removeToken, tokens } = useContext(QueryContext)
 
   return (
-    <WidgetCard width="50%" height="120px">
+    <WidgetCard width="880px" height="120px">
       <SearchWidgetContainer>
-        <SearchInput />
-        <HorizontalSpacer units={2} />
-        <TimeframeDropdownContainer>
-          <Dropdown
-            value={TimeframeDisplayMap[timeframe]}
-            options={Object.values(Timeframe).map(value => TimeframeDisplayMap[value])}
-            selectValue={selectTimeframe}
-          />
-        </TimeframeDropdownContainer>
+        <SearchSection>
+          <SearchInput />
+        </SearchSection>
+        <SearchSectionDivider />
+        <SearchSection>
+          <TimeframeSlider />
+        </SearchSection>
       </SearchWidgetContainer>
       <SearchChipContainer>
         {tokens.map(token => (

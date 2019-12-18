@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import { Timeframe, TimeframeDaysMap } from '../../app/context/QueryContext'
 import { selectors as tradeSelectors } from '../../state/trades'
 import { TradeVolumeByToken } from '../../types/Swap'
 import { getFormattedNumber } from '../../utils/transformations'
@@ -14,7 +13,7 @@ export interface TradeVolumeByTrader {
 }
 
 interface PassedProps {
-  timeframe: Timeframe
+  timeframe: number
   tokens?: string[]
 }
 
@@ -28,7 +27,7 @@ export type TopTradersWidgetProps = PassedProps & ReduxProps
 const mapStateToProps = (state, ownProps: PassedProps) => {
   const getTradeVolumeByTrader = makeGetTradeVolumeByTrader(state)
   const tradeVolumeByTrader = getTradeVolumeByTrader({
-    days: TimeframeDaysMap[ownProps.timeframe],
+    days: ownProps.timeframe,
     tokens: ownProps.tokens,
   })
 
