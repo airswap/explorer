@@ -1,14 +1,14 @@
-import _ from 'lodash'
-import locale2 from 'locale2'
-import { LocaleType, LocaleMessageType } from '../types/Locale'
-import en_us from './messages/en_US.json'
-import zh_cn from './messages/zh_CN.json'
-import zh_tw from './messages/zh_TW.json'
-import ja_jp from './messages/ja.json'
-import fr_fr from './messages/fr_FR.json'
-import ru_ru from './messages/ru_RU.json'
-import de_de from './messages/de_DE.json'
-import ko_kr from './messages/ko.json'
+import _ from 'lodash';
+import locale2 from 'locale2';
+import { LocaleType, LocaleMessageType } from '../types/Locale';
+import en_us from './messages/en_US.json';
+import zh_cn from './messages/zh_CN.json';
+import zh_tw from './messages/zh_TW.json';
+import ja_jp from './messages/ja.json';
+import fr_fr from './messages/fr_FR.json';
+import ru_ru from './messages/ru_RU.json';
+import de_de from './messages/de_DE.json';
+import ko_kr from './messages/ko.json';
 
 const messages = {
   en_us,
@@ -19,7 +19,7 @@ const messages = {
   ru_ru,
   de_de,
   ko_kr,
-}
+};
 
 const localeAliases = {
   // browsers don't always define the specificity required for the locale packs
@@ -28,9 +28,9 @@ const localeAliases = {
   ru: 'ru-RU',
   de: 'de-DE',
   ko: 'ko-KR',
-}
+};
 
-export const getAliasedLocale = (locale: LocaleType) => localeAliases[locale]
+export const getAliasedLocale = (locale: LocaleType) => localeAliases[locale];
 
 export const localeMetadata = {
   en_us: {
@@ -69,27 +69,27 @@ export const localeMetadata = {
     locale: 'ja-JP',
     name: 'Japanese',
   },
-}
+};
 
-type LocaleAliasType = 'en-US' | 'ja-JP' | 'ru-RU' | 'de-DE' | 'ko-KR'
+type LocaleAliasType = 'en-US' | 'ja-JP' | 'ru-RU' | 'de-DE' | 'ko-KR';
 
 export const formatLocaleSnakeCase = (locale: LocaleAliasType | LocaleType): LocaleMessageType => {
-  const newLocale = locale.replace(/-/g, '_').toLocaleLowerCase() as LocaleMessageType
+  const newLocale = locale.replace(/-/g, '_').toLocaleLowerCase() as LocaleMessageType;
 
-  return newLocale
-}
+  return newLocale;
+};
 
-export const checkLocale = (locale: LocaleType) => _.has(messages, formatLocaleSnakeCase(locale))
+export const checkLocale = (locale: LocaleType) => _.has(messages, formatLocaleSnakeCase(locale));
 
-const userLocale = checkLocale(locale2) ? locale2 : getAliasedLocale(locale2)
+const userLocale = checkLocale(locale2) ? locale2 : getAliasedLocale(locale2);
 
 if (userLocale) {
-  console.log(`Using user default locale: ${userLocale}`)
+  console.log(`Using user default locale: ${userLocale}`);
 } else {
   // fall back to 'en-US'
-  console.log('Defaulting to locale: en-US')
+  console.log('Defaulting to locale: en-US');
 }
 
-export const applicationLocale = userLocale || 'en-US'
+export const applicationLocale = userLocale || 'en-US';
 
-export default messages
+export default messages;
