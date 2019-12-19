@@ -1,25 +1,25 @@
-import { distanceInWordsStrict } from 'date-fns'
+import { distanceInWordsStrict } from 'date-fns';
 
 export const willFormatNumber = (num: number, digits: number, decimals?: number) => {
-  const amount = num.toString()
-  return amount.length > digits || (amount.includes('.') && (decimals && amount.split('.')[1].length > decimals))
-}
+  const amount = num.toString();
+  return amount.length > digits || (amount.includes('.') && (decimals && amount.split('.')[1].length > decimals));
+};
 
 export const getFormattedNumber = (num: number, digits: number, decimals?: number, noEllipsis?: boolean) => {
-  let amount = num.toString()
-  if (!amount.includes('.')) return amount
-  if (amount.length <= digits && (!decimals || amount.split('.')[1].length <= decimals)) return amount
+  let amount = num.toString();
+  if (!amount.includes('.')) return amount;
+  if (amount.length <= digits && (!decimals || amount.split('.')[1].length <= decimals)) return amount;
 
-  amount = num.toFixed(decimals).toString()
-  return `${amount.substring(0, digits)}${noEllipsis ? '' : '...'}`
-}
+  amount = num.toFixed(decimals).toString();
+  return `${amount.substring(0, digits)}${noEllipsis ? '' : '...'}`;
+};
 
 export const calculateDifferenceInTrade = (timestamp: string | number) => {
-  const now = Date.now()
-  const t = parseInt(`${timestamp}`, 10)
+  const now = Date.now();
+  const t = parseInt(`${timestamp}`, 10);
 
-  const distanceInWords = distanceInWordsStrict(now, t)
-  const distanceInWordsArr = distanceInWords.split(' ')
+  const distanceInWords = distanceInWordsStrict(now, t);
+  const distanceInWordsArr = distanceInWords.split(' ');
 
   const localMap = {
     seconds: 's',
@@ -34,12 +34,12 @@ export const calculateDifferenceInTrade = (timestamp: string | number) => {
     month: 'M',
     years: 'y',
     year: 'y',
-  }
+  };
 
-  const key = distanceInWordsArr[1]
+  const key = distanceInWordsArr[1];
 
   if (key in localMap) {
-    distanceInWordsArr[1] = localMap[key]
+    distanceInWordsArr[1] = localMap[key];
   }
-  return `${distanceInWordsArr.join('')} ago`
-}
+  return `${distanceInWordsArr.join('')} ago`;
+};

@@ -1,4 +1,4 @@
 export interface ChartDataType {
-  name: string
-  value: number
+  name: string;
+  value: number;
 }

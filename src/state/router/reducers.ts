@@ -1,5 +1,5 @@
-import { connectRouter } from 'connected-react-router'
+import { connectRouter } from 'connected-react-router';
 
-import history from './history'
+import history from './history';
 
-export default connectRouter(history)
+export default connectRouter(history);

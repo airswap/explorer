@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import Flex from '../../../components/Flex'
-import Image from '../../../components/Image'
-import { HorizontalSpacer } from '../../../components/Spacer'
-import { H4, H6 } from '../../../components/Typography'
+import Flex from '../../../components/Flex';
+import Image from '../../../components/Image';
+import { HorizontalSpacer } from '../../../components/Spacer';
+import { H4, H6 } from '../../../components/Typography';
 
 const ItemContainer = styled(Flex).attrs({
   expand: true,
@@ -19,13 +19,13 @@ const ItemContainer = styled(Flex).attrs({
   &:hover {
     background-color: #292937;
   }
-`
+`;
 
 interface SearchInputItemProps {
-  image?: string
-  title: string
-  description?: string
-  onClick(): void
+  image?: string;
+  title: string;
+  description?: string;
+  onClick(): void;
 }
 
 export default function SearchInputItem(props: SearchInputItemProps) {
@@ -43,5 +43,5 @@ export default function SearchInputItem(props: SearchInputItemProps) {
       <HorizontalSpacer units={1} />
       <H6 color="white">{props.description}</H6>
     </ItemContainer>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts'
-import styled from 'styled-components'
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { Line, LineChart, ResponsiveContainer, Tooltip } from 'recharts';
+import styled from 'styled-components';
 
-import Flex from '../../components/Flex'
-import { VerticalSpacer } from '../../components/Spacer'
-import { H7, H8 } from '../../components/Typography'
-import { getFormattedNumber } from '../../utils/transformations'
+import Flex from '../../components/Flex';
+import { VerticalSpacer } from '../../components/Spacer';
+import { H7, H8 } from '../../components/Typography';
+import { getFormattedNumber } from '../../utils/transformations';
 
 const ChartContainer = styled.div`
   width: 100%;
   height: 100%;
-`
+`;
 
 const VolumeChartTooltip = ({ active, payload }) => {
   if (active) {
@@ -26,17 +26,17 @@ const VolumeChartTooltip = ({ active, payload }) => {
         <VerticalSpacer units={1} />
         <H8 color="white">{payload[0].payload.date}</H8>
       </Flex>
-    )
+    );
   }
-  return null
-}
+  return null;
+};
 
 interface VolumeChartProps {
-  data: any
+  data: any;
 }
 
 export default function VolumeChart(props: VolumeChartProps) {
-  if (!props.data) return null
+  if (!props.data) return null;
 
   return (
     <ChartContainer>
@@ -65,5 +65,5 @@ export default function VolumeChart(props: VolumeChartProps) {
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>
-  )
+  );
 }

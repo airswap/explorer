@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react'
-import { Transition } from 'react-transition-group'
-import styled from 'styled-components'
+import React, { useRef, useState } from 'react';
+import { Transition } from 'react-transition-group';
+import styled from 'styled-components';
 
-import { FadeInOutTransition } from '../utils/animations'
-import Flex from './Flex'
+import { FadeInOutTransition } from '../utils/animations';
+import Flex from './Flex';
 
 const Container = styled(Flex)`
   position: relative;
-`
+`;
 
 interface TooltipContainerProps {
-  maxWidth?: number
+  maxWidth?: number;
 }
 
 const TooltipContainer = styled(Flex)<TooltipContainerProps>`
@@ -25,9 +25,9 @@ const TooltipContainer = styled(Flex)<TooltipContainerProps>`
   width: auto;
   border-radius: 5px;
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
-`
+`;
 
-const ChildContainer = styled(Flex)``
+const ChildContainer = styled(Flex)``;
 
 enum TooltipPosition {
   TOP = 'top',
@@ -35,14 +35,14 @@ enum TooltipPosition {
 }
 
 interface TooltipProps {
-  position?: TooltipPosition
-  maxWidth?: number
-  tooltipContent: React.ReactNode
-  children: React.ReactNode
+  position?: TooltipPosition;
+  maxWidth?: number;
+  tooltipContent: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Tooltip(props: TooltipProps) {
-  const [showTooltip, setShowTooltip] = useState<boolean>(false)
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   return (
     <Container>
@@ -57,5 +57,5 @@ export default function Tooltip(props: TooltipProps) {
         {props.children}
       </ChildContainer>
     </Container>
-  )
+  );
 }

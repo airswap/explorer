@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Transition } from 'react-transition-group'
-import styled from 'styled-components'
+import React, { useEffect, useRef, useState } from 'react';
+import { Transition } from 'react-transition-group';
+import styled from 'styled-components';
 
-import theme from '../../app/theme'
-import Flex from '../../components/Flex'
-import useWindowSize from '../../hooks/useWindowSize'
-import { ReactComponent as CloseIcon } from '../../static/close-icon.svg'
-import { FadeIn, FadeInOutTransition } from '../../utils/animations'
+import theme from '../../app/theme';
+import Flex from '../../components/Flex';
+import useWindowSize from '../../hooks/useWindowSize';
+import { ReactComponent as CloseIcon } from '../../static/close-icon.svg';
+import { FadeIn, FadeInOutTransition } from '../../utils/animations';
 
 interface ContainerProps {
-  width: string
-  noPadding?: boolean
+  width: string;
+  noPadding?: boolean;
 }
 
 const Close = styled(Flex)`
@@ -28,7 +28,7 @@ const Close = styled(Flex)`
       stroke: ${theme.palette.primaryColor};
     }
   }
-`
+`;
 
 export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
@@ -47,7 +47,7 @@ export const WidgetCardContainer = styled(Flex)<ContainerProps>`
     max-width: 100%;
     margin: 0 0 20px 0;
   }
-`
+`;
 
 const ExpandedBackgroundOverlay = styled.div`
   position: fixed;
@@ -59,7 +59,7 @@ const ExpandedBackgroundOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.25);
   transition: ${theme.animation.defaultTransition}s ease;
   will-change: auto;
-`
+`;
 
 const ExpandedCard = styled.div`
   z-index: 4;
@@ -68,7 +68,7 @@ const ExpandedCard = styled.div`
   position: fixed;
   transition: ${theme.animation.defaultTransition}s ease;
   will-change: auto;
-`
+`;
 
 const ExpandedCardContent = styled(Flex).attrs({
   expand: true,
@@ -78,7 +78,7 @@ const ExpandedCardContent = styled(Flex).attrs({
   height: 100%;
   transition: ${theme.animation.defaultTransition}s ease;
   animation: ${FadeIn} 2s ease;
-`
+`;
 
 export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
   flex: auto;
@@ -92,11 +92,11 @@ export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
     min-width: 100%;
     margin: 0 0 20px 0;
   }
-`
+`;
 
 interface WidgetCardElProps {
-  height?: string
-  noPadding?: boolean
+  height?: string;
+  noPadding?: boolean;
 }
 
 const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })<WidgetCardElProps>`
@@ -115,53 +115,53 @@ const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column'
       : `
     height: 100%;
   `}
-`
+`;
 
 interface BaseWidgetCardProps {
-  expanded?: boolean
-  expandedContent?: React.ReactNode
-  children: React.ReactNode
-  noPadding?: boolean
-  setExpanded?(expanded: boolean): void
+  expanded?: boolean;
+  expandedContent?: React.ReactNode;
+  children: React.ReactNode;
+  noPadding?: boolean;
+  setExpanded?(expanded: boolean): void;
 }
 
 interface WidgetCardProps extends BaseWidgetCardProps {
-  grouped?: false
-  height?: string
-  width: string
+  grouped?: false;
+  height?: string;
+  width: string;
 }
 
 interface GroupedWidgetCardProps extends BaseWidgetCardProps {
-  height?: string
-  grouped: true
+  height?: string;
+  grouped: true;
 }
 
-type Props = WidgetCardProps | GroupedWidgetCardProps
+type Props = WidgetCardProps | GroupedWidgetCardProps;
 
 export default function WidgetCard(props: Props) {
-  const [cardTransitionStyles, setCardTransitionStyles] = useState({})
-  const cardRef = useRef<HTMLDivElement>(null)
-  const windowSize = useWindowSize()
+  const [cardTransitionStyles, setCardTransitionStyles] = useState({});
+  const cardRef = useRef<HTMLDivElement>(null);
+  const windowSize = useWindowSize();
 
   const transitionTimeout = {
     appear: theme.animation.defaultTransition * 100,
-  }
+  };
 
   const closeExpandedCard = () => {
     if (props.setExpanded) {
-      props.setExpanded(false)
+      props.setExpanded(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (cardRef.current) {
-      const dimensions = cardRef.current.getBoundingClientRect()
+      const dimensions = cardRef.current.getBoundingClientRect();
       const matchDimensions = {
         top: `${dimensions.top}px`,
         left: `${dimensions.left}px`,
         width: `${dimensions.width}px`,
         height: `${dimensions.height}px`,
-      }
+      };
 
       const transitionStyles = {
         entering: {
@@ -184,10 +184,10 @@ export default function WidgetCard(props: Props) {
           visibility: 'hidden',
           ...matchDimensions,
         },
-      }
-      setCardTransitionStyles(transitionStyles)
+      };
+      setCardTransitionStyles(transitionStyles);
     }
-  }, [windowSize, props.expanded, cardRef.current])
+  }, [windowSize, props.expanded, cardRef.current]);
 
   return (
     <>
@@ -227,5 +227,5 @@ export default function WidgetCard(props: Props) {
         </WidgetCardContainer>
       )}
     </>
-  )
+  );
 }

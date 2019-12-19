@@ -1,14 +1,14 @@
-import { transparentize } from 'polished'
-import styled from 'styled-components'
+import { transparentize } from 'polished';
+import styled from 'styled-components';
 
-import Flex from '../../../components/Flex'
+import Flex from '../../../components/Flex';
 
 export const SearchInputContainer = styled(Flex).attrs({ expand: true })`
   position: relative;
-`
+`;
 
 interface InputContainerProps {
-  showDropdown: boolean
+  showDropdown: boolean;
 }
 
 export const InputContainer = styled.form<InputContainerProps>`
@@ -28,7 +28,7 @@ export const InputContainer = styled.form<InputContainerProps>`
     showDropdown ? transparentize(0.5, theme.palette.primaryColor) : '#3e3e49'};
   transition: ${({ theme }) => theme.animation.defaultTransition}s;
   will-change: auto;
-`
+`;
 
 export const IconContainer = styled(Flex)`
   flex-shrink: 0;
@@ -42,7 +42,7 @@ export const IconContainer = styled(Flex)`
       stroke: ${({ theme }) => theme.palette.primaryColor};
     }
   }
-`
+`;
 
 export const InputEl = styled.input`
   font-size: ${({ theme }) => theme.text.fontSize.h7};
@@ -51,10 +51,10 @@ export const InputEl = styled.input`
   background-color: transparent;
   border: none;
   outline: none;
-`
+`;
 
 interface DropdownContainerProps {
-  showDropdown: boolean
+  showDropdown: boolean;
 }
 
 export const DropdownContainer = styled(Flex)<DropdownContainerProps>`
@@ -72,15 +72,15 @@ export const DropdownContainer = styled(Flex)<DropdownContainerProps>`
   will-change: auto;
   padding: ${({ showDropdown }) => (showDropdown ? '40px 0' : '0')};
   overflow-y: auto;
-`
+`;
 
 export const DropdownContent = styled(Flex)<DropdownContainerProps>`
   width: 100%;
   height: 100%;
   opacity: ${({ showDropdown }) => (showDropdown ? 1 : 0)};
   transition: ${({ theme }) => theme.animation.defaultTransition}s;
-`
+`;
 
 export const TokenTypeHeaderContainer = styled(Flex).attrs({ expand: true })`
   padding: 5px 30px;
-`
+`;

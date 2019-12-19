@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const LinkEl = styled.a`
   cursor: pointer;
@@ -9,11 +9,11 @@ const LinkEl = styled.a`
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.25);
   }
-`
+`;
 
 interface LinkProps {
-  url: string
-  children: React.ReactNode
+  url: string;
+  children: React.ReactNode;
 }
 
 export default function Link(props: LinkProps) {
@@ -21,5 +21,5 @@ export default function Link(props: LinkProps) {
     <LinkEl href={props.url} target="_blank">
       {props.children}
     </LinkEl>
-  )
+  );
 }

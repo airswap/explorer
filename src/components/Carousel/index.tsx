@@ -1,14 +1,14 @@
-import './styles.scss'
+import './styles.scss';
 
-import React from 'react'
-import Slider, { Settings } from 'react-slick'
-import styled from 'styled-components'
+import React from 'react';
+import Slider, { Settings } from 'react-slick';
+import styled from 'styled-components';
 
-import { ReactComponent as ChevronRightIcon } from '../../static/chevron-right-icon.svg'
-import Flex from '../Flex'
+import { ReactComponent as ChevronRightIcon } from '../../static/chevron-right-icon.svg';
+import Flex from '../Flex';
 
 interface ArrowContainerProps {
-  isReverse?: boolean
+  isReverse?: boolean;
 }
 
 const ArrowContainer = styled(Flex)<ArrowContainerProps>`
@@ -32,15 +32,15 @@ const ArrowContainer = styled(Flex)<ArrowContainerProps>`
       opacity: 1;
     }
   }
-`
+`;
 
 interface CarouselProps {
-  ref?: React.RefObject<Slider>
-  settings?: Partial<Settings>
-  children: React.ReactNode
-  setCarouselObject?(ref: any): void
-  beforeChange?(index: number): void
-  afterChange?(index: number): void
+  ref?: React.RefObject<Slider>;
+  settings?: Partial<Settings>;
+  children: React.ReactNode;
+  setCarouselObject?(ref: any): void;
+  beforeChange?(index: number): void;
+  afterChange?(index: number): void;
 }
 
 export default function Carousel(props: CarouselProps) {
@@ -64,20 +64,20 @@ export default function Carousel(props: CarouselProps) {
     ),
     beforeChange: (current, next) => props.beforeChange && props.beforeChange(next),
     afterChange: current => props.afterChange && props.afterChange(current),
-  }
+  };
 
-  const settings = Object.assign({}, defaultSettings, props.settings)
+  const settings = Object.assign({}, defaultSettings, props.settings);
 
   return (
     <Slider
       ref={ref => {
         if (props.setCarouselObject) {
-          props.setCarouselObject(ref)
+          props.setCarouselObject(ref);
         }
       }}
       {...settings}
     >
       {props.children}
     </Slider>
-  )
+  );
 }

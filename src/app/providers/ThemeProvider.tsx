@@ -1,8 +1,8 @@
-import React from 'react'
-import { createGlobalStyle, ThemeProvider as BaseThemeProvider } from 'styled-components'
-import reset from 'styled-reset'
+import React from 'react';
+import { createGlobalStyle, ThemeProvider as BaseThemeProvider } from 'styled-components';
+import reset from 'styled-reset';
 
-import theme from '../theme'
+import theme from '../theme';
 
 const BaseStyles = createGlobalStyle`
   ${reset}
@@ -41,9 +41,9 @@ const BaseStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-`
+`;
 
-theme.palette.borderColor = '#E5E5E5'
+theme.palette.borderColor = '#E5E5E5';
 
 const Theme = Component => props => (
   <BaseThemeProvider theme={theme}>
@@ -52,6 +52,6 @@ const Theme = Component => props => (
       <BaseStyles />
     </>
   </BaseThemeProvider>
-)
+);
 
-export default Theme
+export default Theme;

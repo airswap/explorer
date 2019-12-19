@@ -1,3 +1,3 @@
-import reducers, { selectors } from './reducers'
+import reducers, { selectors } from './reducers';
 
-export { reducers, selectors }
+export { reducers, selectors };

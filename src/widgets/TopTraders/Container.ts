@@ -1,35 +1,35 @@
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
-import { selectors as tradeSelectors } from '../../state/trades'
-import { TradeVolumeByToken } from '../../types/Swap'
-import { getFormattedNumber } from '../../utils/transformations'
+import { selectors as tradeSelectors } from '../../state/trades';
+import { TradeVolumeByToken } from '../../types/Swap';
+import { getFormattedNumber } from '../../utils/transformations';
 
-const { makeGetTradeVolumeByTrader } = tradeSelectors
+const { makeGetTradeVolumeByTrader } = tradeSelectors;
 
 export interface TradeVolumeByTrader {
-  address: string
-  totalTrades: number
-  volume: string
+  address: string;
+  totalTrades: number;
+  volume: string;
 }
 
 interface PassedProps {
-  timeframe: number
-  tokens?: string[]
+  timeframe: number;
+  tokens?: string[];
 }
 
 interface ReduxProps {
-  tradeVolumeByTrader: TradeVolumeByTrader[]
-  getTradeVolumeByToken(days: number): TradeVolumeByToken[]
+  tradeVolumeByTrader: TradeVolumeByTrader[];
+  getTradeVolumeByToken(days: number): TradeVolumeByToken[];
 }
 
-export type TopTradersWidgetProps = PassedProps & ReduxProps
+export type TopTradersWidgetProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state, ownProps: PassedProps) => {
-  const getTradeVolumeByTrader = makeGetTradeVolumeByTrader(state)
+  const getTradeVolumeByTrader = makeGetTradeVolumeByTrader(state);
   const tradeVolumeByTrader = getTradeVolumeByTrader({
     days: ownProps.timeframe,
     tokens: ownProps.tokens,
-  })
+  });
 
   const tradeVolumes = Object.keys(tradeVolumeByTrader)
     .sort((address1, address2) =>
@@ -39,18 +39,18 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
       address,
       totalTrades: tradeVolumeByTrader[address].totalTrades,
       volume: `${getFormattedNumber(tradeVolumeByTrader[address].volume, 10, 2, true)} ETH`,
-    }))
+    }));
 
   return {
     tradeVolumeByTrader: tradeVolumes,
     ...ownProps,
-  }
-}
+  };
+};
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {};
 
 export default Component =>
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(Component)
+  )(Component);

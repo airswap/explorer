@@ -1,24 +1,24 @@
-import { openEtherscanLink } from 'airswap.js/src/utils/etherscan'
-import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import { openEtherscanLink } from 'airswap.js/src/utils/etherscan';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 
-import theme from '../../app/theme'
-import ArrowButton from '../../components/Button/ArrowButton'
-import Flex from '../../components/Flex'
-import MediaQuery from '../../components/MediaQuery'
-import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer'
-import Table, { TableRow, TableRowItem } from '../../components/Table'
-import Tooltip from '../../components/Tooltip'
-import { H6, H7 } from '../../components/Typography'
-import WithLoading from '../../components/WithLoading'
-import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg'
-import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg'
-import { calculateDifferenceInTrade, getFormattedNumber } from '../../utils/transformations'
-import { WidgetTitle } from '../styles'
-import TokenPairIcon from '../WidgetComponents/TokenPairIcon'
-import WidgetCard from '../WidgetComponents/WidgetCard'
-import Container, { RecentSwapProps } from './Container'
+import theme from '../../app/theme';
+import ArrowButton from '../../components/Button/ArrowButton';
+import Flex from '../../components/Flex';
+import MediaQuery from '../../components/MediaQuery';
+import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
+import Table, { TableRow, TableRowItem } from '../../components/Table';
+import Tooltip from '../../components/Tooltip';
+import { H6, H7 } from '../../components/Typography';
+import WithLoading from '../../components/WithLoading';
+import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg';
+import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg';
+import { calculateDifferenceInTrade, getFormattedNumber } from '../../utils/transformations';
+import { WidgetTitle } from '../styles';
+import TokenPairIcon from '../WidgetComponents/TokenPairIcon';
+import WidgetCard from '../WidgetComponents/WidgetCard';
+import Container, { RecentSwapProps } from './Container';
 
 const EtherscanIcon = styled.a`
   display: flex;
@@ -34,19 +34,19 @@ const EtherscanIcon = styled.a`
       stroke: ${theme.palette.primaryColor};
     }
   }
-`
+`;
 
 const MobileSwapEvent = styled(Flex).attrs({ expand: true, direction: 'row' })`
   padding: 20px 0;
-`
+`;
 
 function RecentSwapsWidget(props: RecentSwapProps) {
-  const [expanded, setExpanded] = useState(false)
-  const columns = ['Trade', 'Sender Token', '', 'Signer Token', 'Value', 'Time', 'Details']
+  const [expanded, setExpanded] = useState(false);
+  const columns = ['Trade', 'Sender Token', '', 'Signer Token', 'Value', 'Time', 'Details'];
 
   const getDisplayAmount = (amount, symbol) => {
-    return `${getFormattedNumber(Number(amount), 6, 6)} ${symbol}`
-  }
+    return `${getFormattedNumber(Number(amount), 6, 6)} ${symbol}`;
+  };
 
   return (
     <WidgetCard width="650px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
@@ -133,7 +133,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         </MediaQuery>
       </WithLoading>
     </WidgetCard>
-  )
+  );
 }
 
-export default Container(RecentSwapsWidget)
+export default Container(RecentSwapsWidget);

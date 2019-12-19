@@ -1,18 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 
-import { QueryContext } from '../app/context/QueryContext'
-import NetworkWidget from '../widgets/Network'
-import PeerDistributionWidget from '../widgets/PeerDistribution'
-import RecentSwapsWidget from '../widgets/RecentSwaps'
-import ResourcesWidget from '../widgets/Resources'
-import SearchWidget from '../widgets/Search'
-import TopTradersWidget from '../widgets/TopTraders'
-import VolumeWidget from '../widgets/Volume'
-import WidgetGrid from '../widgets/WidgetComponents/WidgetGrid'
-import { ScreenContainer } from './styles'
+import { QueryContext } from '../app/context/QueryContext';
+import NetworkWidget from '../widgets/Network';
+import PeerDistributionWidget from '../widgets/PeerDistribution';
+import RecentSwapsWidget from '../widgets/RecentSwaps';
+import ResourcesWidget from '../widgets/Resources';
+import SearchWidget from '../widgets/Search';
+import TopTradersWidget from '../widgets/TopTraders';
+import VolumeWidget from '../widgets/Volume';
+import WidgetGrid from '../widgets/WidgetComponents/WidgetGrid';
+import { ScreenContainer } from './styles';
 
 export default function Dashboard() {
-  const { timeframe, tokens } = useContext(QueryContext)
+  const { timeframe, tokens } = useContext(QueryContext);
 
   return (
     <ScreenContainer>
@@ -28,5 +28,5 @@ export default function Dashboard() {
         <RecentSwapsWidget />
       </WidgetGrid>
     </ScreenContainer>
-  )
+  );
 }

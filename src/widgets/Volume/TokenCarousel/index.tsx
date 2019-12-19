@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import React, { useContext, useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 
-import { QueryContext } from '../../../app/context/QueryContext'
-import Carousel from '../../../components/Carousel'
-import Flex from '../../../components/Flex'
-import Image from '../../../components/Image'
-import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer'
-import { H7, H8 } from '../../../components/Typography'
-import { TokenMetadata } from '../../../types/Tokens'
-import Container, { TokenCarouselProps, TokenVolume } from './Container'
+import { QueryContext } from '../../../app/context/QueryContext';
+import Carousel from '../../../components/Carousel';
+import Flex from '../../../components/Flex';
+import Image from '../../../components/Image';
+import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer';
+import { H7, H8 } from '../../../components/Typography';
+import { TokenMetadata } from '../../../types/Tokens';
+import Container, { TokenCarouselProps, TokenVolume } from './Container';
 
 const TokenCarouselContainer = styled.div`
   width: 100%;
   height: 100%;
-`
+`;
 
 const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
   width: 140px;
@@ -25,7 +25,7 @@ const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
   &:hover {
     opacity: 1;
   }
-`
+`;
 
 const Divider = styled.div`
   padding-bottom: 10px;
@@ -33,11 +33,11 @@ const Divider = styled.div`
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   width: 100%;
   height: 1px;
-`
+`;
 
 function TokenCarousel(props: TokenCarouselProps) {
-  const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes)
-  const { tokens, addToken, removeToken } = useContext(QueryContext)
+  const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes);
+  const { tokens, addToken, removeToken } = useContext(QueryContext);
 
   const carouselSettings = {
     className: 'token-carousel',
@@ -45,27 +45,47 @@ function TokenCarousel(props: TokenCarouselProps) {
     arrows: true,
     slidesToShow: 4,
     slidesToScroll: 2,
-  }
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
+  };
 
   const onTokenClick = (token: TokenMetadata) => {
     if (tokens.indexOf(token.symbol) !== -1) {
-      removeToken(token.symbol)
+      removeToken(token.symbol);
     } else {
-      addToken(token.symbol)
+      addToken(token.symbol);
     }
-  }
+  };
 
   useEffect(() => {
     if (tokens && tokens.length) {
       // filter
       const filteredTokenVolumes = props.tokenVolumes.filter(
         tokenVolume => tokens.indexOf(tokenVolume.token.symbol) !== -1,
-      )
-      setTokenVolumes(filteredTokenVolumes)
+      );
+      setTokenVolumes(filteredTokenVolumes);
     } else {
-      setTokenVolumes(props.tokenVolumes)
+      setTokenVolumes(props.tokenVolumes);
     }
-  }, [tokens, props.tokenVolumes])
+  }, [tokens, props.tokenVolumes]);
 
   return (
     <TokenCarouselContainer>
@@ -102,7 +122,7 @@ function TokenCarousel(props: TokenCarouselProps) {
         ))}
       </Carousel>
     </TokenCarouselContainer>
-  )
+  );
 }
 
-export default Container(TokenCarousel)
+export default Container(TokenCarousel);

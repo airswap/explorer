@@ -1,18 +1,18 @@
-import { transparentize } from 'polished'
-import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import { transparentize } from 'polished';
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { ReactComponent as ChevronRightIcon } from '../static/chevron-right-icon.svg'
-import Flex from './Flex'
-import { H7 } from './Typography'
+import { ReactComponent as ChevronRightIcon } from '../static/chevron-right-icon.svg';
+import Flex from './Flex';
+import { H7 } from './Typography';
 
 interface OpenableProps {
-  isOpen: boolean
+  isOpen: boolean;
 }
 
 const Container = styled(Flex).attrs({ expand: true })`
   position: relative;
-`
+`;
 
 const Toggle = styled(Flex)<OpenableProps>`
   cursor: pointer;
@@ -31,7 +31,7 @@ const Toggle = styled(Flex)<OpenableProps>`
   border-color: ${({ isOpen, theme }) => (isOpen ? transparentize(0.5, theme.palette.primaryColor) : '#3e3e49')};
   transition: ${({ theme }) => theme.animation.defaultTransition}s;
   will-change: auto;
-`
+`;
 
 const DropdownContainer = styled(Flex)<OpenableProps>`
   position: absolute;
@@ -48,14 +48,14 @@ const DropdownContainer = styled(Flex)<OpenableProps>`
   will-change: auto;
   padding: ${({ isOpen }) => (isOpen ? '20px 0 0 0' : '0')};
   overflow-y: auto;
-`
+`;
 
 const DropdownContent = styled(Flex)<OpenableProps>`
   width: 100%;
   height: 100%;
   opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
   transition: ${({ theme }) => theme.animation.defaultTransition}s;
-`
+`;
 
 const DropdownItem = styled(Flex).attrs({ expand: true })`
   padding: 6px 0;
@@ -64,7 +64,7 @@ const DropdownItem = styled(Flex).attrs({ expand: true })`
   &:hover {
     background-color: #292937;
   }
-`
+`;
 
 const DropdownArrowContainer = styled(Flex)`
   svg {
@@ -76,44 +76,44 @@ const DropdownArrowContainer = styled(Flex)`
       stroke: ${({ theme }) => theme.palette.primaryColor};
     }
   }
-`
+`;
 
 interface DropdownProps {
-  value: string
-  options: string[]
-  selectValue(value: string): void
+  value: string;
+  options: string[];
+  selectValue(value: string): void;
 }
 
 export default function Dropdown(props: DropdownProps) {
-  const dropdownRef = useRef<HTMLDivElement>(null)
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClickOutside = (evt: MouseEvent) => {
     if (evt.target instanceof HTMLDivElement) {
       if (dropdownRef.current && !dropdownRef.current.contains(evt.target)) {
-        setIsOpen(false)
+        setIsOpen(false);
       }
     }
-  }
+  };
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const selectDropdownItem = (option: string) => {
-    props.selectValue(option)
-    setIsOpen(false)
-  }
+    props.selectValue(option);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isOpen])
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   return (
     <Container ref={dropdownRef}>
@@ -133,5 +133,5 @@ export default function Dropdown(props: DropdownProps) {
         </DropdownContent>
       </DropdownContainer>
     </Container>
-  )
+  );
 }

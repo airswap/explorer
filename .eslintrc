@@ -23,7 +23,7 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "max-len": "off",
-    "semi": ["error", "never"],
+    "semi": "error",
     "comma-dangle": 0,
     "import/prefer-default-export": "off",
     "no-console": "off",

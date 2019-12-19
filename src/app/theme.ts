@@ -7,7 +7,7 @@ const colors = {
   red: ['#FF0000', '#FF6245'],
   brown: ['#B27C00'],
   gray: ['#FFFFFF', '#FDFDFD', '#FAFAFA', '#F7F7F7', '#F2F2F2', '#EAEAEA', '#AAAAAA', '#7D7D7D', '#151212'],
-}
+};
 
 const palette = {
   primaryColor: colors.blue[2],
@@ -22,7 +22,7 @@ const palette = {
   warningColor: colors.yellow[0],
   iconColor: colors.gray[4],
   primaryBlue: colors.blue[3],
-}
+};
 
 const text = {
   fontFamily: 'proxima-nova, sans-serif',
@@ -48,16 +48,16 @@ const text = {
     h8: '12px',
     h9: '11px',
   },
-}
+};
 
 const spacing = (multiplier = 1) => {
-  const unit = 5
-  return `${unit * multiplier}px`
-}
+  const unit = 5;
+  return `${unit * multiplier}px`;
+};
 
 const fixed = {
   maxWidth: '1240px',
-}
+};
 
 const line = {
   weight: {
@@ -65,18 +65,18 @@ const line = {
     normal: '2px',
     heavy: '3px',
   },
-}
+};
 
 const animation = {
   defaultTransition: 0.3,
-}
+};
 
 const breakpoints = {
   sm: [0, 767],
   md: [768, 991],
   lg: [992, 1199],
   xl: [1200],
-}
+};
 
 const theme = {
   animation,
@@ -87,6 +87,6 @@ const theme = {
   spacing,
   line,
   breakpoints,
-}
+};
 
-export default theme
+export default theme;

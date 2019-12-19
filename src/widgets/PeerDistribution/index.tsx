@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 
-import theme from '../../app/theme'
-import ChartLegend from '../../components/ChartLegend'
-import Flex from '../../components/Flex'
-import PieChart from '../../components/PieChart'
-import { VerticalSpacer } from '../../components/Spacer'
-import { H5, H7 } from '../../components/Typography'
-import { WidgetTitle } from '../styles'
-import WidgetCard from '../WidgetComponents/WidgetCard'
-import Container, { PeerDistributionWidgetProps } from './Container'
+import theme from '../../app/theme';
+import ChartLegend from '../../components/ChartLegend';
+import Flex from '../../components/Flex';
+import PieChart from '../../components/PieChart';
+import { VerticalSpacer } from '../../components/Spacer';
+import { H5, H7 } from '../../components/Typography';
+import { WidgetTitle } from '../styles';
+import WidgetCard from '../WidgetComponents/WidgetCard';
+import Container, { PeerDistributionWidgetProps } from './Container';
 
 const PeerDistributionWidgetContainer = styled(Flex).attrs({ expand: true, justify: 'space-between' })`
   height: 100%;
-`
+`;
 
 const PieChartHeader = styled(H5)`
   font-weight: ${theme.text.fontWeight.medium};
   color: white;
-`
+`;
 
 const PieChartSubheader = styled(H7)`
   font-weight: ${theme.text.fontWeight.thin};
   color: white;
-`
+`;
 
 function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
@@ -49,7 +49,7 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
         <ChartLegend data={props.volumeDistributionBySource} colors={theme.colors.blue} />
       </PeerDistributionWidgetContainer>
     </WidgetCard>
-  )
+  );
 }
 
-export default Container(PeerDistributionWidget)
+export default Container(PeerDistributionWidget);

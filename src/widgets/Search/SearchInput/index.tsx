@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { QueryContext } from '../../../app/context/QueryContext'
-import { VerticalSpacer } from '../../../components/Spacer'
-import { H6 } from '../../../components/Typography'
-import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg'
-import { TokenMetadata } from '../../../types/Tokens'
-import { findTokens } from '../../../utils/tokens'
-import { SearchLabel } from '../styles'
-import Container, { SearchInputProps } from './Container'
-import SearchInputItem from './SearchInputItem'
+import { QueryContext } from '../../../app/context/QueryContext';
+import { VerticalSpacer } from '../../../components/Spacer';
+import { H6 } from '../../../components/Typography';
+import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg';
+import { TokenMetadata } from '../../../types/Tokens';
+import { findTokens } from '../../../utils/tokens';
+import { SearchLabel } from '../styles';
+import Container, { SearchInputProps } from './Container';
+import SearchInputItem from './SearchInputItem';
 import {
   DropdownContainer,
   DropdownContent,
@@ -18,63 +18,63 @@ import {
   InputEl,
   SearchInputContainer,
   TokenTypeHeaderContainer,
-} from './styles'
+} from './styles';
 
 function SearchInput(props: SearchInputProps) {
-  const searchInputRef = useRef<HTMLDivElement>(null)
-  const [searchString, setSearchString] = useState<string>('')
-  const [showDropdown, setShowDropdown] = useState<boolean>(false)
-  const [stablecoinTokens, setStablecoinTokens] = useState<TokenMetadata[]>(props.stablecoinTokens)
-  const [allOtherTokens, setAllOtherTokens] = useState<TokenMetadata[]>(props.allOtherTokens)
-  const { addToken } = useContext(QueryContext)
+  const searchInputRef = useRef<HTMLDivElement>(null);
+  const [searchString, setSearchString] = useState<string>('');
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [stablecoinTokens, setStablecoinTokens] = useState<TokenMetadata[]>(props.stablecoinTokens);
+  const [allOtherTokens, setAllOtherTokens] = useState<TokenMetadata[]>(props.allOtherTokens);
+  const { addToken } = useContext(QueryContext);
 
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    evt.preventDefault()
-    setSearchString(evt.target.value)
+    evt.preventDefault();
+    setSearchString(evt.target.value);
 
-    setStablecoinTokens(findTokens(evt.target.value, props.stablecoinTokens))
-    setAllOtherTokens(findTokens(evt.target.value, props.allOtherTokens))
-  }
+    setStablecoinTokens(findTokens(evt.target.value, props.stablecoinTokens));
+    setAllOtherTokens(findTokens(evt.target.value, props.allOtherTokens));
+  };
 
   const onEnter = (evt: React.FormEvent) => {
-    evt.preventDefault()
-    addToken(searchString)
-  }
+    evt.preventDefault();
+    addToken(searchString);
+  };
 
   const handleClickOutside = (evt: MouseEvent) => {
     if (evt.target instanceof HTMLDivElement) {
       if (searchInputRef.current && !searchInputRef.current.contains(evt.target)) {
-        setShowDropdown(false)
+        setShowDropdown(false);
       }
     }
-  }
+  };
 
   const selectToken = (tokenSymbol: string) => {
-    addToken(tokenSymbol)
-    setShowDropdown(false)
-  }
+    addToken(tokenSymbol);
+    setShowDropdown(false);
+  };
 
   const onInputFocus = () => {
-    setShowDropdown(true)
-  }
+    setShowDropdown(true);
+  };
 
   useEffect(() => {
     if (showDropdown) {
-      document.addEventListener('mousedown', handleClickOutside)
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [showDropdown])
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showDropdown]);
 
   useEffect(() => {
-    setStablecoinTokens(props.stablecoinTokens)
-  }, [props.stablecoinTokens])
+    setStablecoinTokens(props.stablecoinTokens);
+  }, [props.stablecoinTokens]);
 
   useEffect(() => {
-    setAllOtherTokens(props.allOtherTokens)
-  }, [props.allOtherTokens])
+    setAllOtherTokens(props.allOtherTokens);
+  }, [props.allOtherTokens]);
 
   return (
     <SearchInputContainer ref={searchInputRef}>
@@ -125,7 +125,7 @@ function SearchInput(props: SearchInputProps) {
         </DropdownContent>
       </DropdownContainer>
     </SearchInputContainer>
-  )
+  );
 }
 
-export default Container(SearchInput)
+export default Container(SearchInput);

@@ -1,4 +1,4 @@
-import { keyframes } from 'styled-components'
+import { keyframes } from 'styled-components';
 
 export const FadeIn = keyframes`
   0% {
@@ -8,7 +8,7 @@ export const FadeIn = keyframes`
   100% {
     opacity: 1;
   }
-`
+`;
 
 export const FadeInOutTransition = {
   entering: {
@@ -25,4 +25,4 @@ export const FadeInOutTransition = {
     opacity: 0,
     visibility: 'hidden',
   },
-}
+};

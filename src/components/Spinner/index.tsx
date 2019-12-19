@@ -1,10 +1,10 @@
-import './style.scss'
+import './style.scss';
 
-import React from 'react'
+import React from 'react';
 
 interface SpinnerProps {
-  size?: number
-  strokeWidth?: number
+  size?: number;
+  strokeWidth?: number;
 }
 
 export default function Spinner(props: SpinnerProps) {
@@ -12,7 +12,7 @@ export default function Spinner(props: SpinnerProps) {
     width: `${props.size || 20}px`,
     height: `${props.size || 20}px`,
     borderWidth: `${props.strokeWidth || 5}px`,
-  }
+  };
 
-  return <div className="airswap-spinner" style={styles} />
+  return <div className="airswap-spinner" style={styles} />;
 }

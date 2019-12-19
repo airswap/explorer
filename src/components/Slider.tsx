@@ -1,13 +1,13 @@
-import RCSlider from 'rc-slider'
-import React from 'react'
-import styled from 'styled-components'
+import RCSlider from 'rc-slider';
+import React from 'react';
+import styled from 'styled-components';
 
-import theme from '../app/theme'
-import Flex from './Flex'
-import { H8 } from './Typography'
+import theme from '../app/theme';
+import Flex from './Flex';
+import { H8 } from './Typography';
 
 interface HandleContainerProps {
-  offset: string
+  offset: string;
 }
 
 const SliderContainer = styled(Flex).attrs({ expand: true })`
@@ -19,26 +19,26 @@ const SliderContainer = styled(Flex).attrs({ expand: true })`
   &:focus {
     opacity: 1;
   }
-`
+`;
 
 const HandleContainer = styled(Flex)<HandleContainerProps>`
   position: absolute;
   left: ${({ offset }) => offset};
   top: 50%;
   transform: translateY(-50%);
-`
+`;
 
 const HandleContent = styled(Flex)`
   position: relative;
   cursor: pointer;
-`
+`;
 
 const BlueCircle = styled(Flex)`
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background-color: ${theme.palette.primaryColor};
-`
+`;
 
 const SliderLabel = styled(Flex)`
   width: 100px;
@@ -46,20 +46,20 @@ const SliderLabel = styled(Flex)`
   left: 0;
   transform: translateX(calc(-50% + 6px));
   bottom: calc(100% + 2px);
-`
+`;
 
 interface SliderProps {
-  min: number
-  max: number
-  value: number
-  getLabelText(value: number): string
-  onChange(value: number): void
-  onAfterChange?(value: number): void
+  min: number;
+  max: number;
+  value: number;
+  getLabelText(value: number): string;
+  onChange(value: number): void;
+  onAfterChange?(value: number): void;
 }
 
 export default function Slider(props: SliderProps) {
   const handle = handleProps => {
-    const leftOffset = `calc(${handleProps.offset}% - 6px)`
+    const leftOffset = `calc(${handleProps.offset}% - 6px)`;
 
     return (
       <HandleContainer offset={leftOffset}>
@@ -70,8 +70,8 @@ export default function Slider(props: SliderProps) {
           <BlueCircle />
         </HandleContent>
       </HandleContainer>
-    )
-  }
+    );
+  };
 
   return (
     <SliderContainer>
@@ -86,5 +86,5 @@ export default function Slider(props: SliderProps) {
         handle={handle}
       />
     </SliderContainer>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 
-import Flex from '../../components/Flex'
-import { H4 } from '../../components/Typography'
-import { ReactComponent as ExpandIcon } from '../../static/expand-icon.svg'
-import WidgetCard from '../WidgetComponents/WidgetCard'
-import NetworkGraph from './NetworkGraph'
+import Flex from '../../components/Flex';
+import { H4 } from '../../components/Typography';
+import { ReactComponent as ExpandIcon } from '../../static/expand-icon.svg';
+import WidgetCard from '../WidgetComponents/WidgetCard';
+import NetworkGraph from './NetworkGraph';
 
 const TitleContainer = styled(Flex)`
   z-index: 2;
@@ -14,7 +14,7 @@ const TitleContainer = styled(Flex)`
   top: 0;
   left: 0;
   padding: 40px;
-`
+`;
 
 const ExpandIconContainer = styled(Flex)`
   cursor: pointer;
@@ -23,10 +23,10 @@ const ExpandIconContainer = styled(Flex)`
     width: 20px;
     height: 20px;
   }
-`
+`;
 
 export default function Network() {
-  const [expanded, setExpanded] = useState<boolean>(false)
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   return (
     <WidgetCard
@@ -46,5 +46,5 @@ export default function Network() {
       </TitleContainer>
       <NetworkGraph />
     </WidgetCard>
-  )
+  );
 }

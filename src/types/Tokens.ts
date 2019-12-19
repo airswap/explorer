@@ -4,22 +4,22 @@ export enum TokenKind {
 }
 
 export interface TokenQuery {
-  symbol?: string
-  address?: string
+  symbol?: string;
+  address?: string;
 }
 
 export interface TokenMetadata {
-  address: string
-  airswapUI: 'yes' | 'no'
-  airswap_img_url: string
-  banned: boolean
-  cmc_id: string
-  cmc_img_url: string
-  cmc_url: string
-  colors: string[]
-  decimals: string
-  name: string
-  kind?: TokenKind
-  security: boolean
-  symbol: string
+  address: string;
+  airswapUI: 'yes' | 'no';
+  airswap_img_url: string;
+  banned: boolean;
+  cmc_id: string;
+  cmc_img_url: string;
+  cmc_url: string;
+  colors: string[];
+  decimals: string;
+  name: string;
+  kind?: TokenKind;
+  security: boolean;
+  symbol: string;
 }

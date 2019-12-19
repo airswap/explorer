@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import ForceGraph3D from 'react-force-graph-3d'
-import styled from 'styled-components'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import ForceGraph3D from 'react-force-graph-3d';
+import styled from 'styled-components';
 
-import { QueryContext } from '../../../app/context/QueryContext'
-import WithLoading from '../../../components/WithLoading'
-import { GRAPH_COLOR_PALLETE } from '../../../constants'
-import { SwapEvent } from '../../../types/Swap'
-import Container, { NetworkGraphProps } from './Container'
+import { QueryContext } from '../../../app/context/QueryContext';
+import WithLoading from '../../../components/WithLoading';
+import { GRAPH_COLOR_PALLETE } from '../../../constants';
+import { SwapEvent } from '../../../types/Swap';
+import Container, { NetworkGraphProps } from './Container';
 
 const GraphContainer = styled.div`
   position: relative;
@@ -22,76 +22,76 @@ const GraphContainer = styled.div`
   .graph-info-msg {
     display: none;
   }
-`
+`;
 
 interface GraphDataNode {
-  id: string
+  id: string;
 }
 
 interface GraphDataLink {
-  source: string
-  target: string
+  source: string;
+  target: string;
 }
 
 interface GraphData {
-  nodes: GraphDataNode[]
-  links: GraphDataLink[]
+  nodes: GraphDataNode[];
+  links: GraphDataLink[];
 }
 
 function NetworkGraph(props: NetworkGraphProps) {
-  const graphRef = useRef<HTMLDivElement>(null)
-  const [graphData, setGraphData] = useState<GraphData>()
-  const [width, setWidth] = useState<number>(0)
-  const [height, setHeight] = useState<number>(0)
-  const [trades, setTrades] = useState<SwapEvent[]>([])
-  const { timeframe, tokens } = useContext(QueryContext)
+  const graphRef = useRef<HTMLDivElement>(null);
+  const [graphData, setGraphData] = useState<GraphData>();
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  const [trades, setTrades] = useState<SwapEvent[]>([]);
+  const { timeframe, tokens } = useContext(QueryContext);
 
   const onWindowResize = () => {
     if (graphRef.current) {
-      setWidth(graphRef.current.getBoundingClientRect().width)
-      setHeight(graphRef.current.getBoundingClientRect().height)
+      setWidth(graphRef.current.getBoundingClientRect().width);
+      setHeight(graphRef.current.getBoundingClientRect().height);
     }
-  }
+  };
 
   useEffect(() => {
     const tradesByQuery = props.getTradesByQuery({
       days: timeframe,
       tokens,
-    })
+    });
 
-    const nodeSet = new Set<string>()
-    const links: GraphDataLink[] = []
+    const nodeSet = new Set<string>();
+    const links: GraphDataLink[] = [];
 
     tradesByQuery.forEach(trade => {
-      nodeSet.add(trade.makerAddress)
-      nodeSet.add(trade.takerAddress)
-      links.push({ source: trade.makerAddress, target: trade.takerAddress })
-    })
-    const nodes = Array.from(nodeSet).map((address: string) => ({ id: address }))
+      nodeSet.add(trade.makerAddress);
+      nodeSet.add(trade.takerAddress);
+      links.push({ source: trade.makerAddress, target: trade.takerAddress });
+    });
+    const nodes = Array.from(nodeSet).map((address: string) => ({ id: address }));
 
-    setTrades(tradesByQuery)
-    setGraphData({ nodes, links })
-  }, [timeframe, tokens, props.getTradesByQuery])
+    setTrades(tradesByQuery);
+    setGraphData({ nodes, links });
+  }, [timeframe, tokens, props.getTradesByQuery]);
 
   useEffect(() => {
-    onWindowResize()
-    window.addEventListener('resize', onWindowResize)
-    return () => window.removeEventListener('resize', onWindowResize)
-  }, [graphRef.current])
+    onWindowResize();
+    window.addEventListener('resize', onWindowResize);
+    return () => window.removeEventListener('resize', onWindowResize);
+  }, [graphRef.current]);
 
   const onNodeClick = node => {
-    window.open(`https://etherscan.io/address/${node.id}`)
-  }
+    window.open(`https://etherscan.io/address/${node.id}`);
+  };
 
   const onNodeHover = node => {
     if (graphRef.current) {
-      graphRef.current.style.cursor = node ? 'pointer' : 'default'
+      graphRef.current.style.cursor = node ? 'pointer' : 'default';
     }
-  }
+  };
 
   const getNodeColor = node => {
-    return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)]
-  }
+    return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)];
+  };
 
   return (
     <GraphContainer ref={graphRef}>
@@ -115,7 +115,7 @@ function NetworkGraph(props: NetworkGraphProps) {
         />
       </WithLoading>
     </GraphContainer>
-  )
+  );
 }
 
-export default Container(NetworkGraph)
+export default Container(NetworkGraph);

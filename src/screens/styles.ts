@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import Flex from '../components/Flex'
+import Flex from '../components/Flex';
 
 export const ScreenContainer = styled(Flex).attrs({
   expand: true,
@@ -8,4 +8,4 @@ export const ScreenContainer = styled(Flex).attrs({
   margin: auto;
   padding: 0 20px;
   max-width: 1440px;
-`
+`;
