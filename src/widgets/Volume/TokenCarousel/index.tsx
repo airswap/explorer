@@ -109,7 +109,7 @@ function TokenCarousel(props: TokenCarouselProps) {
                   src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url}
                 />
               </Flex>
-              <HorizontalSpacer units={4} />
+              <HorizontalSpacer units={3} />
               <Flex align="flex-start">
                 <H7 color="white">{tokenVolume.token.symbol}</H7>
                 <VerticalSpacer units={1} />

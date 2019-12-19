@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { QueryContext } from '../../app/context/QueryContext';
+import { QueryContext, TimeframeDisplayMap } from '../../app/context/QueryContext';
 import Flex from '../../components/Flex';
+import MediaQuery from '../../components/MediaQuery';
 import WidgetCard from '../WidgetComponents/WidgetCard';
+import MobileTimeframe from './MobileTimeframe';
 import SearchInput from './SearchInput';
 import TimeframeSlider from './TimeframeSlider';
 import TokenChip from './TokenChip';
@@ -27,6 +29,16 @@ const SearchSectionDivider = styled(Flex)`
   height: 100%;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   margin: 0 40px;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+    margin: 0 15px;
+  }
+`;
+
+const MobileTimeframeContainer = styled(Flex)`
+  position: absolute;
+  right: 40px;
+  top: 35px;
 `;
 
 export default function SearchWidget() {
@@ -35,13 +47,21 @@ export default function SearchWidget() {
   return (
     <WidgetCard width="880px" height="150px">
       <SearchWidgetContainer>
-        <SearchSection>
+        <MediaQuery size="sm">
           <SearchInput />
-        </SearchSection>
-        <SearchSectionDivider />
-        <SearchSection>
-          <TimeframeSlider />
-        </SearchSection>
+          <MobileTimeframeContainer>
+            <MobileTimeframe />
+          </MobileTimeframeContainer>
+        </MediaQuery>
+        <MediaQuery size="md-up">
+          <SearchSection>
+            <SearchInput />
+          </SearchSection>
+          <SearchSectionDivider />
+          <SearchSection>
+            <TimeframeSlider />
+          </SearchSection>
+        </MediaQuery>
       </SearchWidgetContainer>
       <SearchChipContainer>
         {tokens.map(token => (

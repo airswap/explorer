@@ -30,7 +30,7 @@ export default function Network() {
 
   return (
     <WidgetCard
-      width="580px"
+      width="630px"
       noPadding
       expanded={expanded}
       setExpanded={setExpanded}

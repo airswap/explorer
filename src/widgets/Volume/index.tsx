@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { QueryContext } from '../../app/context/QueryContext';
+import MediaQuery from '../../components/MediaQuery';
 import { VerticalSpacer } from '../../components/Spacer';
 import WithLoading from '../../components/WithLoading';
 import { TradeVolumeByDay } from '../../types/Swap';
@@ -51,7 +52,9 @@ function VolumeWidget(props: VolumeWidgetProps) {
         </VolumeHeaderContainer>
         <VolumeChart data={tradeVolume} />
         <VolumeFooterContainer>
-          <TokenCarousel timeframe={timeframe} />
+          <MediaQuery size="md-up">
+            <TokenCarousel timeframe={timeframe} />
+          </MediaQuery>
         </VolumeFooterContainer>
       </WithLoading>
     </WidgetCard>

@@ -2,6 +2,15 @@ import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
+export const TimeframeDisplayMap = {
+  7: '1 Week',
+  14: '2 Weeks',
+  30: '1 Month',
+  '1 Week': 7,
+  '2 Weeks': 14,
+  '1 Month': 30,
+};
+
 interface QueryContextType {
   tokens: string[];
   addToken(token: string): void;
