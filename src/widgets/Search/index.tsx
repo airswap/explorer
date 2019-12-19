@@ -2,9 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { QueryContext } from '../../app/context/QueryContext'
-import Dropdown from '../../components/Dropdown'
 import Flex from '../../components/Flex'
-import { HorizontalSpacer } from '../../components/Spacer'
 import WidgetCard from '../WidgetComponents/WidgetCard'
 import SearchInput from './SearchInput'
 import TimeframeSlider from './TimeframeSlider'
@@ -40,7 +38,7 @@ export default function SearchWidget() {
   const { removeToken, tokens } = useContext(QueryContext)
 
   return (
-    <WidgetCard width="880px" height="120px">
+    <WidgetCard width="880px" height="150px">
       <SearchWidgetContainer>
         <SearchSection>
           <SearchInput />
