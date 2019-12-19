@@ -72,7 +72,7 @@ export default function Resources() {
   };
 
   return (
-    <WidgetCard width="420px" height="150px">
+    <WidgetCard width="420px" height="140px">
       <WidgetTitle>
         <FormattedMessage defaultMessage="Resources" />
       </WidgetTitle>

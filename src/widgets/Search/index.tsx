@@ -38,14 +38,14 @@ const SearchSectionDivider = styled(Flex)`
 const MobileTimeframeContainer = styled(Flex)`
   position: absolute;
   right: 40px;
-  top: 35px;
+  top: 30px;
 `;
 
 export default function SearchWidget() {
   const { removeToken, tokens } = useContext(QueryContext);
 
   return (
-    <WidgetCard width="880px" height="150px">
+    <WidgetCard width="880px" height="140px">
       <SearchWidgetContainer>
         <MediaQuery size="sm">
           <SearchInput />

@@ -15,7 +15,7 @@ export const InputContainer = styled.form<InputContainerProps>`
   display: flex;
   z-index: 3;
   align-items: center;
-  height: 30px;
+  height: 35px;
   width: 100%;
   flex-direction: row;
   background-color: #3e3e49;
