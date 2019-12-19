@@ -1,5 +1,7 @@
+import { openEtherscanLink } from 'airswap.js/src/utils/etherscan'
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import styled from 'styled-components'
 
 import ArrowButton from '../../components/Button/ArrowButton'
 import Flex from '../../components/Flex'
@@ -14,6 +16,10 @@ import { ReactComponent as Trader4Image } from '../../static/trader-4.svg'
 import { WidgetTitle } from '../styles'
 import WidgetCard from '../WidgetComponents/WidgetCard'
 import Container, { TopTradersWidgetProps } from './Container'
+
+const TraderImageContainer = styled(Flex)`
+  cursor: pointer;
+`
 
 function TopTradersWidget(props: TopTradersWidgetProps) {
   const [expanded, setExpanded] = useState(false)
@@ -42,7 +48,11 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
       <Table columns={columns}>
         {props.tradeVolumeByTrader.map((trader, index) => (
           <TableRow fadeIn index={index} key={trader.address}>
-            <TableRowItem>{getTraderImage(index)}</TableRowItem>
+            <TableRowItem>
+              <TraderImageContainer onClick={() => openEtherscanLink(trader.address, 'address')}>
+                {getTraderImage(index)}
+              </TraderImageContainer>
+            </TableRowItem>
             <TableRowItem>
               <H6 color="white" opacity={0.5}>
                 {trader.totalTrades}
@@ -73,7 +83,9 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
           {props.tradeVolumeByTrader.slice(0, 4).map((trader, index) => (
             <TableRow fadeIn index={index} key={trader.address}>
               <TableRowItem>
-                <Flex>{getTraderImage(index)}</Flex>
+                <TraderImageContainer onClick={() => openEtherscanLink(trader.address, 'address')}>
+                  {getTraderImage(index)}
+                </TraderImageContainer>
               </TableRowItem>
               <TableRowItem>
                 <H6 color="white" opacity={0.5}>

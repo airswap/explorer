@@ -18,11 +18,6 @@ const SearchChipContainer = styled(Flex).attrs({ expand: true, direction: 'row' 
   left: 40px;
 `
 
-const TimeframeDropdownContainer = styled(Flex)`
-  width: 95px;
-  flex-shrink: 0;
-`
-
 const SearchSection = styled(Flex)`
   width: 50%;
   flex-grow: 1;

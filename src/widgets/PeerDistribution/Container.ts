@@ -26,10 +26,12 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
     days: ownProps.timeframe,
     tokens: ownProps.tokens,
   })
-  const formattedVolumeDistribution = Object.keys(volumeDistributionBySource).map(source => ({
-    name: source,
-    value: volumeDistributionBySource[source],
-  }))
+  const formattedVolumeDistribution = Object.keys(volumeDistributionBySource)
+    .map(source => ({
+      name: source,
+      value: volumeDistributionBySource[source],
+    }))
+    .sort((distribution1, distribution2) => (distribution1.name < distribution2.name ? -1 : 1))
 
   return {
     volumeDistributionBySource: formattedVolumeDistribution,

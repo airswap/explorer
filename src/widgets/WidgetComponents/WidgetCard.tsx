@@ -33,9 +33,9 @@ const Close = styled(Flex)`
 export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
   position: relative;
-  min-width: ${({ width }) => width};
+  width: ${({ width }) => width};
+  max-width: 100%;
   padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
-  max-width: 50%;
   height: ${({ height }) => height || '450px'};
   background-color: #30303b;
   border-radius: 20px;
