@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { QueryContext, TimeframeDisplayMap } from '../../app/context/QueryContext';
+import { QueryContext } from '../../app/context/QueryContext';
 import Flex from '../../components/Flex';
 import MediaQuery from '../../components/MediaQuery';
 import WidgetCard from '../WidgetComponents/WidgetCard';
