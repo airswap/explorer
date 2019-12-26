@@ -45,7 +45,7 @@ export default function SearchWidget() {
   const { removeToken, tokens } = useContext(QueryContext);
 
   return (
-    <WidgetCard width="880px" height="140px">
+    <WidgetCard width="880px" height="110px">
       <SearchWidgetContainer>
         <MediaQuery size="sm">
           <SearchInput />

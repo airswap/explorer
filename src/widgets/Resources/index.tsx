@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import Carousel from '../../components/Carousel';
 import Flex from '../../components/Flex';
 import Link from '../../components/Link';
-import { HorizontalSpacer } from '../../components/Spacer';
-import { H7 } from '../../components/Typography';
+import { VerticalSpacer } from '../../components/Spacer';
+import { H4, H7 } from '../../components/Typography';
 import {
   AIRSWAP_DISCORD_URL,
   AIRSWAP_DOCS_URL,
@@ -15,7 +15,6 @@ import {
   AIRSWAP_TRADER_URL,
   AIRSWAP_TWITTER_URL,
 } from '../../constants';
-import { WidgetTitle } from '../styles';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 
 const LinkContainer = styled(Flex).attrs({ expand: true, direction: 'row' })`
@@ -24,6 +23,13 @@ const LinkContainer = styled(Flex).attrs({ expand: true, direction: 'row' })`
 
 const LinkText = styled(H7)`
   color: rgba(255, 255, 255, 0.25);
+`;
+
+const ResourcesTitle = styled(H4)`
+  color: white;
+  position: absolute;
+  top: 15px;
+  left: 40px;
 `;
 
 interface ResourceLinkProps {
@@ -72,10 +78,11 @@ export default function Resources() {
   };
 
   return (
-    <WidgetCard width="420px" height="140px">
-      <WidgetTitle>
+    <WidgetCard width="420px" height="110px">
+      <ResourcesTitle>
         <FormattedMessage defaultMessage="Resources" />
-      </WidgetTitle>
+      </ResourcesTitle>
+      <VerticalSpacer units={3} />
       <LinkContainer>
         <Carousel settings={carouselSettings}>
           <ResourceLink label="Instant" url={AIRSWAP_INSTANT_URL} />
