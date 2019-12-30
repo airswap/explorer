@@ -25,12 +25,3 @@ export const VolumeWidgetContainer = styled(Flex)`
   width: 100%;
   height: 100%;
 `;
-
-interface ChartContainerProps {
-  height?: number;
-}
-
-export const ChartContainer = styled.div<ChartContainerProps>`
-  width: 100%;
-  height: ${({ height }) => (height ? `${height}px` : '100%')};
-`;
