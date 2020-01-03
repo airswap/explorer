@@ -5,7 +5,6 @@ import { QueryContext } from '../../app/context/QueryContext';
 import Flex from '../../components/Flex';
 import MediaQuery from '../../components/MediaQuery';
 import WidgetCard from '../WidgetComponents/WidgetCard';
-import MobileTimeframe from './MobileTimeframe';
 import SearchInput from './SearchInput';
 import TimeframeSlider from './TimeframeSlider';
 import TokenChip from './TokenChip';
@@ -35,12 +34,6 @@ const SearchSectionDivider = styled(Flex)`
   }
 `;
 
-const MobileTimeframeContainer = styled(Flex)`
-  position: absolute;
-  right: 40px;
-  top: 30px;
-`;
-
 export default function SearchWidget() {
   const { removeToken, tokens } = useContext(QueryContext);
 
@@ -49,9 +42,6 @@ export default function SearchWidget() {
       <SearchWidgetContainer>
         <MediaQuery size="sm">
           <SearchInput />
-          <MobileTimeframeContainer>
-            <MobileTimeframe />
-          </MobileTimeframeContainer>
         </MediaQuery>
         <MediaQuery size="md-up">
           <SearchSection>

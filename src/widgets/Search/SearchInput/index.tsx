@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { QueryContext } from '../../../app/context/QueryContext';
+import MediaQuery from '../../../components/MediaQuery';
 import { VerticalSpacer } from '../../../components/Spacer';
 import { H6 } from '../../../components/Typography';
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg';
 import { TokenMetadata } from '../../../types/Tokens';
 import { findTokens } from '../../../utils/tokens';
-import { SearchLabel } from '../styles';
+import MobileTimeframe from '../MobileTimeframe';
+import { SearchLabel, SearchLabelContainer } from '../styles';
 import Container, { SearchInputProps } from './Container';
 import SearchInputItem from './SearchInputItem';
 import {
@@ -78,9 +80,14 @@ function SearchInput(props: SearchInputProps) {
 
   return (
     <SearchInputContainer ref={searchInputRef}>
-      <SearchLabel>
-        <FormattedMessage defaultMessage="Filter by token" />
-      </SearchLabel>
+      <SearchLabelContainer>
+        <SearchLabel>
+          <FormattedMessage defaultMessage="Filter by token" />
+        </SearchLabel>
+        <MediaQuery size="sm">
+          <MobileTimeframe />
+        </MediaQuery>
+      </SearchLabelContainer>
       <InputContainer onSubmit={onEnter} showDropdown={showDropdown}>
         <IconContainer>
           <SearchIcon />

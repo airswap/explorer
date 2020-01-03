@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ import { QueryContext } from '../../app/context/QueryContext';
 import Flex from '../../components/Flex';
 import Slider from '../../components/Slider';
 import { H9 } from '../../components/Typography';
-import { SearchLabel } from './styles';
+import { SearchLabel, SearchLabelContainer } from './styles';
 
 const SliderContainer = styled(Flex).attrs({ expand: true, justify: 'center' })`
   height: 30px;
@@ -42,9 +42,11 @@ export default function TimeframeSlider() {
 
   return (
     <SliderContainer expand>
-      <SearchLabel>
-        <FormattedMessage defaultMessage="Filter by time" />
-      </SearchLabel>
+      <SearchLabelContainer>
+        <SearchLabel>
+          <FormattedMessage defaultMessage="Filter by time" />
+        </SearchLabel>
+      </SearchLabelContainer>
       <Slider
         min={7}
         max={30}

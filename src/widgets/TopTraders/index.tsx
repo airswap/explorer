@@ -22,7 +22,6 @@ const TraderImageContainer = styled(Flex)`
 `;
 
 function TopTradersWidget(props: TopTradersWidgetProps) {
-  const [expanded, setExpanded] = useState(false);
   const columns = ['Trader', 'Total Trades', 'Trade Volume'];
 
   const getTraderImage = index => {
@@ -39,44 +38,13 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
     }
   };
 
-  const expandedContent = (
-    <>
-      <WidgetTitle>
-        <FormattedMessage defaultMessage="Top Traders" />
-      </WidgetTitle>
-      <VerticalSpacer units={6} />
-      <Table columns={columns}>
-        {props.tradeVolumeByTrader.map((trader, index) => (
-          <TableRow fadeIn index={index} key={trader.address}>
-            <TableRowItem>
-              <TraderImageContainer onClick={() => openEtherscanLink(trader.address, 'address')}>
-                {getTraderImage(index)}
-              </TraderImageContainer>
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.5}>
-                {trader.totalTrades}
-              </H6>
-            </TableRowItem>
-            <TableRowItem>
-              <H6 color="white" opacity={0.75} textAlign="right">
-                {trader.volume}
-              </H6>
-            </TableRowItem>
-          </TableRow>
-        ))}
-      </Table>
-    </>
-  );
-
   return (
-    <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={expandedContent}>
+    <WidgetCard width="315px">
       <WithLoading isLoading={!props.tradeVolumeByTrader || !props.tradeVolumeByTrader.length}>
         <Flex expand direction="row" justify="space-between">
           <WidgetTitle>
             <FormattedMessage defaultMessage="Top Traders" />
           </WidgetTitle>
-          <ArrowButton text="View All" onClick={() => setExpanded(true)} />
         </Flex>
         <VerticalSpacer units={6} />
         <Table columns={columns}>
