@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start:dev": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='development' react-app-rewired start",
-    "start:prod": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='production' react-app-rewired start",
+    "start:prod": "HTTPS=true PORT=3001 REACT_APP_ENVIRONMENT='production' react-app-rewired start",
     "start": "yarn start:dev",
     "build": "react-app-rewired build",
     "build:production": "REACT_APP_SERVER_ENV=production REACT_APP_ENVIRONMENT=production ENV=production GENERATE_SOURCEMAP=false CI=false yarn build",
@@ -42,7 +42,7 @@
     "@types/styled-components": "^4.1.16",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "airswap.js": "0.1.81",
+    "airswap.js": "0.1.110",
     "auth0-js": "^9.8.1",
     "babel-loader": "8.0.4",
     "babel-plugin-react-intl-auto": "^1.7.0",

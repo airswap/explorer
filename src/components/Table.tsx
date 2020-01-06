@@ -30,6 +30,8 @@ const TableHeaderText = styled(H8)`
   color: rgba(255, 255, 255, 0.25);
 `;
 
+const TableBody = styled.tbody``;
+
 interface TableProps {
   columns: string[];
   children: React.ReactNode;
@@ -47,7 +49,7 @@ export default function Table(props: TableProps) {
           ))}
         </TableRowEl>
       </thead>
-      <tbody>{props.children}</tbody>
+      <TableBody>{props.children}</TableBody>
     </TableContainer>
   );
 }

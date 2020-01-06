@@ -70,14 +70,20 @@ const ExpandedCard = styled.div`
   will-change: auto;
 `;
 
-const ExpandedCardContent = styled(Flex).attrs({
+const ExpandedCardContentContainer = styled(Flex).attrs({
   expand: true,
 })`
   padding: 40px;
   position: relative;
   height: 100%;
   transition: ${theme.animation.defaultTransition}s ease;
-  animation: ${FadeIn} 2s ease;
+`;
+
+const ExpandedCardContent = styled(Flex).attrs({
+  expand: true,
+})`
+  height: 100%;
+  animation: ${FadeIn} 1s ease;
 `;
 
 export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
@@ -139,6 +145,7 @@ interface GroupedWidgetCardProps extends BaseWidgetCardProps {
 type Props = WidgetCardProps | GroupedWidgetCardProps;
 
 export default function WidgetCard(props: Props) {
+  const [completedTransition, setCompletedTransition] = useState<boolean>(false);
   const [cardTransitionStyles, setCardTransitionStyles] = useState({});
   const cardRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindowSize();
@@ -152,6 +159,12 @@ export default function WidgetCard(props: Props) {
       props.setExpanded(false);
     }
   };
+
+  useEffect(() => {
+    if (!props.expanded) {
+      setCompletedTransition(false);
+    }
+  }, [props.expanded]);
 
   useEffect(() => {
     if (cardRef.current) {
@@ -203,14 +216,18 @@ export default function WidgetCard(props: Props) {
             {state => (
               <ExpandedCard style={{ ...cardTransitionStyles[state] }}>
                 {props.expanded && (
-                  <ExpandedCardContent>
+                  <ExpandedCardContentContainer
+                    onTransitionEnd={() => {
+                      setCompletedTransition(true);
+                    }}
+                  >
                     {props.setExpanded && (
                       <Close onClick={closeExpandedCard}>
                         <CloseIcon />
                       </Close>
                     )}
-                    {props.expandedContent}
-                  </ExpandedCardContent>
+                    {completedTransition && <ExpandedCardContent>{props.expandedContent}</ExpandedCardContent>}
+                  </ExpandedCardContentContainer>
                 )}
               </ExpandedCard>
             )}

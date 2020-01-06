@@ -20,9 +20,11 @@ const TooltipContainer = styled(Flex)<TooltipContainerProps>`
   transform: translateX(-50%);
   z-index: 1;
   padding: 5px 10px;
+  box-sizing: border-box;
   background-color: black;
   opacity: 0.75;
   width: auto;
+  max-width: ${({ maxWidth }) => (maxWidth ? `${maxWidth}px` : 'auto')};
   border-radius: 5px;
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
 `;

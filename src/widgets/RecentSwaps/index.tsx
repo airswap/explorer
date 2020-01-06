@@ -44,8 +44,12 @@ function RecentSwapsWidget(props: RecentSwapProps) {
   const [expanded, setExpanded] = useState(false);
   const columns = ['Trade', 'Sender Token', '', 'Signer Token', 'Value', 'Time', 'Details'];
 
-  const getDisplayAmount = (amount, symbol) => {
+  const getDisplayAmountFormatted = (amount, symbol) => {
     return `${getFormattedNumber(Number(amount), 6, 6)} ${symbol}`;
+  };
+
+  const getDisplayAmount = (amount, symbol) => {
+    return `${amount} ${symbol}`;
   };
 
   return (
@@ -72,11 +76,11 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                 <VerticalSpacer units={1} />
                 <Flex direction="row" justify="space-between" expand>
                   <H6 color="white" opacity={0.75}>
-                    {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                    {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
                   </H6>
                   <SwapIcon />
                   <H6 color="white" opacity={0.75}>
-                    {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                    {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
                   </H6>
                 </Flex>
               </Flex>
@@ -95,12 +99,15 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                 </TableRowItem>
                 <TableRowItem>
                   <Tooltip
+                    maxWidth={150}
                     tooltipContent={
-                      <H6 color="white">{getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}</H6>
+                      <H7 expand color="white">
+                        {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                      </H7>
                     }
                   >
                     <H6 color="white" opacity={0.75}>
-                      {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                      {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
                     </H6>
                   </Tooltip>
                 </TableRowItem>
@@ -108,14 +115,32 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                   <SwapIcon />
                 </TableRowItem>
                 <TableRowItem>
-                  <H6 color="white" opacity={0.75}>
-                    {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
-                  </H6>
+                  <Tooltip
+                    maxWidth={150}
+                    tooltipContent={
+                      <H7 expand color="white">
+                        {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                      </H7>
+                    }
+                  >
+                    <H6 color="white" opacity={0.75}>
+                      {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
+                    </H6>
+                  </Tooltip>
                 </TableRowItem>
                 <TableRowItem>
-                  <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                    {getDisplayAmount(swap.ethAmount, 'ETH')}
-                  </H6>
+                  <Tooltip
+                    maxWidth={150}
+                    tooltipContent={
+                      <H7 expand color="white">
+                        {getDisplayAmount(swap.ethAmount, 'ETH')}
+                      </H7>
+                    }
+                  >
+                    <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                      {getDisplayAmountFormatted(swap.ethAmount, 'ETH')}
+                    </H6>
+                  </Tooltip>
                 </TableRowItem>
                 <TableRowItem>
                   <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
