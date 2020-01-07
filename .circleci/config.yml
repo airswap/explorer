@@ -45,6 +45,7 @@ references:
             ;;
           "production")
             aws cloudfront create-invalidation --distribution-id E1UBU3JYJ5Q8MU --paths "/*"
+            aws cloudfront create-invalidation --distribution-id EOYJ8E6J9WMBT --paths "/*"
             ;;
           "development")
             aws cloudfront create-invalidation --distribution-id E1Z3CVJCR72Y5W --paths "/*"
