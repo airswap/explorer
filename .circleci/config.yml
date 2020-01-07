@@ -44,10 +44,10 @@ references:
             #aws cloudfront create-invalidation --distribution-id E1U9KAL5XKT2XE --paths "/*"
             ;;
           "production")
-            #aws cloudfront create-invalidation --distribution-id E3RQU0UOQ0Z2HI --paths "/*"
+            aws cloudfront create-invalidation --distribution-id E1UBU3JYJ5Q8MU --paths "/*"
             ;;
           "development")
-            #aws cloudfront create-invalidation --distribution-id EXQQB1MAZAWWN --paths "/*"
+            aws cloudfront create-invalidation --distribution-id E1Z3CVJCR72Y5W --paths "/*"
             ;;
         esac
 
