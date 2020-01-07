@@ -26,7 +26,7 @@ export function useDebouncedCallback<A extends any[]>(callback: (...args: A) => 
     }
   }, []);
 
-  return function debouncedCallback(...args: A) {
+  return (...args: A) => {
     argsRef.current = args;
 
     if (timeout.current) {
