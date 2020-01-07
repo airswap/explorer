@@ -59,7 +59,7 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
         setTokens([query.tokens]);
       }
     }
-    if (query.timeframe && Number(query.timeframe)) {
+    if (query.timeframe && Number(query.timeframe) && Number(query.timeframe) > 0 && Number(query.timeframe) <= 30) {
       setTimeframe(Number(query.timeframe));
     }
   }, []);

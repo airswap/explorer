@@ -18,7 +18,7 @@ const BaseStyles = createGlobalStyle`
     cursor: default;
     height: 100%;
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   *,
   div,

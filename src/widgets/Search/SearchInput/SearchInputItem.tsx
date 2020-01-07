@@ -1,10 +1,11 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 import Flex from '../../../components/Flex';
 import Image from '../../../components/Image';
 import { HorizontalSpacer } from '../../../components/Spacer';
-import { H4, H6 } from '../../../components/Typography';
+import { H6, H7 } from '../../../components/Typography';
 
 const ItemContainer = styled(Flex).attrs({
   expand: true,
@@ -39,9 +40,11 @@ export default function SearchInputItem(props: SearchInputItemProps) {
           <HorizontalSpacer units={3} />
         </>
       )}
-      <H4 color="white">{props.title}</H4>
+      <H6 color="white">{props.title}</H6>
       <HorizontalSpacer units={1} />
-      <H6 color="white">{props.description}</H6>
+      <H7 color="white">
+        <FormattedMessage defaultMessage="({description})" values={{ description: props.description }} />
+      </H7>
     </ItemContainer>
   );
 }

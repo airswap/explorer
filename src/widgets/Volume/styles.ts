@@ -17,7 +17,7 @@ export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true })`
 `;
 
 export const VolumeFooterContainer = styled(Flex).attrs({ expand: true })`
-  padding: 15px 40px 40px 40px;
+  padding: 15px 40px 30px 40px;
   flex-shrink: 0;
 `;
 

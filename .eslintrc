@@ -49,7 +49,6 @@
     "no-underscore-dangle": "off",
     "no-template-curly-in-string": "off",
     "prefer-destructuring": "off",
-    "react/jsx-no-literals": "error",
     "react/destructuring-assignment": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
