@@ -12,13 +12,24 @@ export const VolumeAmount = styled(H2).attrs({ expand: true, textAlign: 'left' }
 `;
 
 export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true })`
-  padding: 40px 40px 15px 40px;
   flex-shrink: 0;
+  padding: ${({ theme }) => theme.spacing.widgetPadding};
+  padding-bottom: 15px;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+    padding: ${({ theme }) => theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 export const VolumeFooterContainer = styled(Flex).attrs({ expand: true })`
-  padding: 15px 40px 30px 40px;
   flex-shrink: 0;
+  padding: 0 ${({ theme }) => theme.spacing.widgetPadding};
+  padding-top: 15px;
+  padding-bottom: 30px;
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+    padding: 0 ${({ theme }) => theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 export const VolumeWidgetContainer = styled(Flex)`

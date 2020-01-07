@@ -5,6 +5,7 @@ import { H8 } from '../../components/Typography';
 
 export const HeaderContainer = styled(Flex).attrs({ direction: 'row', expand: true })`
   height: 50px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 `;
 
 interface ListItemProps {

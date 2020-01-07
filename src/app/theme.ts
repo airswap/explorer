@@ -50,11 +50,6 @@ const text = {
   },
 };
 
-const spacing = (multiplier = 1) => {
-  const unit = 5;
-  return `${unit * multiplier}px`;
-};
-
 const fixed = {
   maxWidth: '1240px',
 };
@@ -76,6 +71,11 @@ const breakpoints = {
   md: [768, 991],
   lg: [992, 1199],
   xl: [1200],
+};
+
+const spacing = {
+  widgetPadding: '40px',
+  mobileWidgetPadding: '30px',
 };
 
 const theme = {

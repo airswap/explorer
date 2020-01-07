@@ -16,7 +16,11 @@ const SearchWidgetContainer = styled(Flex).attrs({ expand: true, justify: 'cente
 const SearchChipContainer = styled(Flex).attrs({ expand: true, direction: 'row' })`
   position: absolute;
   bottom: 15px;
-  left: 40px;
+  left: ${({ theme }) => theme.spacing.widgetPadding};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+    left: ${({ theme }) => theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 const SearchSection = styled(Flex)`
@@ -27,7 +31,7 @@ const SearchSection = styled(Flex)`
 const SearchSectionDivider = styled(Flex)`
   height: 100%;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
-  margin: 0 40px;
+  margin: 0 ${({ theme }) => theme.spacing.widgetPadding};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
     margin: 0 15px;

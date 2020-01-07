@@ -15,8 +15,8 @@ interface ContainerProps {
 
 const Close = styled(Flex)`
   position: absolute;
-  top: 40px;
-  right: 40px;
+  top: ${theme.spacing.widgetPadding};
+  right: ${theme.spacing.widgetPadding};
   cursor: pointer;
   z-index: 4;
 
@@ -28,6 +28,11 @@ const Close = styled(Flex)`
       stroke: ${theme.palette.primaryColor};
     }
   }
+
+  @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
+    top: ${theme.spacing.mobileWidgetPadding};
+    right: ${theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 export const WidgetCardContainer = styled(Flex)<ContainerProps>`
@@ -35,7 +40,7 @@ export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   position: relative;
   width: ${({ width }) => width};
   max-width: 100%;
-  padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
+  padding: ${({ noPadding }) => (noPadding ? '0' : theme.spacing.widgetPadding)};
   height: ${({ height }) => height || '450px'};
   background-color: #30303b;
   border-radius: 20px;
@@ -46,6 +51,7 @@ export const WidgetCardContainer = styled(Flex)<ContainerProps>`
     min-width: 100%;
     max-width: 100%;
     margin: 0 0 20px 0;
+    padding: ${({ noPadding }) => (noPadding ? '0' : theme.spacing.mobileWidgetPadding)};
   }
 `;
 
@@ -73,10 +79,14 @@ const ExpandedCard = styled.div`
 const ExpandedCardContentContainer = styled(Flex).attrs({
   expand: true,
 })`
-  padding: 40px;
+  padding: ${theme.spacing.widgetPadding};
   position: relative;
   height: 100%;
   transition: ${theme.animation.defaultTransition}s ease;
+
+  @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
+    padding: ${theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 const ExpandedCardContent = styled(Flex).attrs({
@@ -86,65 +96,17 @@ const ExpandedCardContent = styled(Flex).attrs({
   animation: ${FadeIn} 1s ease;
 `;
 
-export const GroupedWidgetContainer = styled(Flex)<ContainerProps>`
-  flex: auto;
-  min-width: ${({ width }) => width};
-  max-width: 100%;
-  height: 450px;
-  margin: 0 20px 20px 0;
-
-  @media (max-width: ${`${theme.breakpoints.sm[1]}px`}) {
-    width: 100%;
-    min-width: 100%;
-    margin: 0 0 20px 0;
-  }
-`;
-
-interface WidgetCardElProps {
-  height?: string;
-  noPadding?: boolean;
-}
-
-const GroupedWidgetCard = styled(Flex).attrs({ expand: true, direction: 'column' })<WidgetCardElProps>`
-  background-color: #30303b;
-  position: relative;
-  padding: ${({ noPadding }) => (noPadding ? '0' : '40px')};
-  border-radius: 20px;
-
-  ${({ height }) =>
-    height
-      ? `
-    height: ${height}px;
-    flex-shrink: 0;
-    margin-bottom: 20px;
-  `
-      : `
-    height: 100%;
-  `}
-`;
-
-interface BaseWidgetCardProps {
+interface WidgetCardProps {
   expanded?: boolean;
   expandedContent?: React.ReactNode;
   children: React.ReactNode;
   noPadding?: boolean;
+  height?: string;
+  width: string;
   setExpanded?(expanded: boolean): void;
 }
 
-interface WidgetCardProps extends BaseWidgetCardProps {
-  grouped?: false;
-  height?: string;
-  width: string;
-}
-
-interface GroupedWidgetCardProps extends BaseWidgetCardProps {
-  height?: string;
-  grouped: true;
-}
-
-type Props = WidgetCardProps | GroupedWidgetCardProps;
-
-export default function WidgetCard(props: Props) {
+export default function WidgetCard(props: WidgetCardProps) {
   const [completedTransition, setCompletedTransition] = useState<boolean>(false);
   const [cardTransitionStyles, setCardTransitionStyles] = useState({});
   const cardRef = useRef<HTMLDivElement>(null);
@@ -234,15 +196,9 @@ export default function WidgetCard(props: Props) {
           </Transition>
         </>
       )}
-      {props.grouped ? (
-        <GroupedWidgetCard height={props.height} ref={cardRef} noPadding={props.noPadding}>
-          {props.children}
-        </GroupedWidgetCard>
-      ) : (
-        <WidgetCardContainer height={props.height} width={props.width} ref={cardRef} noPadding={props.noPadding}>
-          {props.children}
-        </WidgetCardContainer>
-      )}
+      <WidgetCardContainer height={props.height} width={props.width} ref={cardRef} noPadding={props.noPadding}>
+        {props.children}
+      </WidgetCardContainer>
     </>
   );
 }

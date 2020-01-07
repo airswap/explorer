@@ -13,7 +13,11 @@ const TitleContainer = styled(Flex)`
   position: absolute;
   top: 0;
   left: 0;
-  padding: 40px;
+  padding: ${({ theme }) => theme.spacing.widgetPadding};
+
+  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
+    padding: ${({ theme }) => theme.spacing.mobileWidgetPadding};
+  }
 `;
 
 const ExpandIconContainer = styled(Flex)`

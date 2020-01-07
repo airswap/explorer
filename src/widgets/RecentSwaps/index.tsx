@@ -3,11 +3,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import theme from '../../app/theme';
-import FadeIn from '../../components/FadeIn';
 import Flex from '../../components/Flex';
 import MediaQuery from '../../components/MediaQuery';
+import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
 import Tooltip from '../../components/Tooltip';
-import { H6, H7 } from '../../components/Typography';
+import { H6, H7, H8 } from '../../components/Typography';
 import WithLoading from '../../components/WithLoading';
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg';
 import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg';
@@ -75,6 +75,9 @@ function RecentSwapsWidget(props: RecentSwapProps) {
       </Flex>
       <SwapListContainer>
         <WithLoading isLoading={!props.trades || props.trades.length < 5}>
+          <MediaQuery size="sm">
+            <VerticalSpacer units={3} />
+          </MediaQuery>
           <MediaQuery size="md-up">
             <HeaderContainer>
               {tableConfig.map(config => (
@@ -86,7 +89,25 @@ function RecentSwapsWidget(props: RecentSwapProps) {
             {props.trades.map(swap => (
               <SwapListItem key={`swap-list-item-${swap.transactionHash}`}>
                 <MediaQuery size="sm">
-                  <div />
+                  <Flex shrink={0} direction="row">
+                    <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                    <HorizontalSpacer units={2} />
+                  </Flex>
+                  <Flex expand grow={1} align="flex-start">
+                    <H8 color="white" opacity={0.25}>
+                      {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                    </H8>
+                    <VerticalSpacer units={1} />
+                    <Flex expand direction="row" justify="space-between">
+                      <H8 color="white" opacity={0.75}>
+                        {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
+                      </H8>
+                      <SwapIcon />
+                      <H8 color="white" opacity={0.75}>
+                        {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
+                      </H8>
+                    </Flex>
+                  </Flex>
                 </MediaQuery>
                 <MediaQuery size="md-up">
                   <ItemContainer width={tableConfig[0].width}>
