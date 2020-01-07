@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { QueryContext } from '../../../app/context/QueryContext';
 import WithLoading from '../../../components/WithLoading';
 import { GRAPH_COLOR_PALLETE } from '../../../constants';
+import { useDebouncedCallback } from '../../../hooks/useDebounce';
 import { SwapEvent } from '../../../types/Swap';
 import Container, { NetworkGraphProps } from './Container';
 
@@ -46,12 +47,12 @@ function NetworkGraph(props: NetworkGraphProps) {
   const [trades, setTrades] = useState<SwapEvent[]>([]);
   const { timeframe, tokens } = useContext(QueryContext);
 
-  const onWindowResize = () => {
+  const onWindowResize = useDebouncedCallback(() => {
     if (graphRef.current) {
       setWidth(graphRef.current.getBoundingClientRect().width);
       setHeight(graphRef.current.getBoundingClientRect().height);
     }
-  };
+  }, 150);
 
   useEffect(() => {
     const tradesByQuery = props.getTradesByQuery({

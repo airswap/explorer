@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useDebouncedCallback } from './useDebounce';
+
 export default function useWindowSize() {
   const isClient = typeof window === 'object';
 
@@ -10,14 +12,14 @@ export default function useWindowSize() {
 
   const [windowSize, setWindowSize] = useState(getSize);
 
+  const onResize = useDebouncedCallback(() => {
+    setWindowSize(getSize());
+  }, 150);
+
   useEffect(() => {
     if (!isClient) {
       return;
     }
-
-    const onResize = () => {
-      setWindowSize(getSize());
-    };
 
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
