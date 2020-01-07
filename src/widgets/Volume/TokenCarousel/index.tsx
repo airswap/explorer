@@ -101,14 +101,12 @@ function TokenCarousel(props: TokenCarouselProps) {
         {tokenVolumes.map(tokenVolume => (
           <div key={tokenVolume.token.address}>
             <TokenCarouselItem onClick={() => onTokenClick(tokenVolume.token)}>
-              <Flex>
-                <Image
-                  circle
-                  width={30}
-                  height={30}
-                  src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url}
-                />
-              </Flex>
+              <Image
+                circle
+                width={30}
+                height={30}
+                src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url}
+              />
               <HorizontalSpacer units={3} />
               <Flex align="flex-start">
                 <H7 color="white">{tokenVolume.token.symbol}</H7>

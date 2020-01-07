@@ -34,9 +34,7 @@ export default function SearchInputItem(props: SearchInputItemProps) {
     <ItemContainer onClick={props.onClick}>
       {props.image && (
         <>
-          <Flex>
-            <Image src={props.image} circle width={25} height={25} />
-          </Flex>
+          <Image src={props.image} circle width={25} height={25} />
           <HorizontalSpacer units={3} />
         </>
       )}

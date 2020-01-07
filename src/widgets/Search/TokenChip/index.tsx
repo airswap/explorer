@@ -46,9 +46,7 @@ function TokenChip(props: TokenChipProps) {
 
   return (
     <ChipContainer color={props.token.colors ? props.token.colors[0] : theme.palette.primaryColor}>
-      <Flex>
-        <Image src={props.token.airswap_img_url || props.token.cmc_img_url} width={14} height={14} circle />
-      </Flex>
+      <Image src={props.token.airswap_img_url || props.token.cmc_img_url} width={14} height={14} circle />
       <HorizontalSpacer units={1} />
       <H8 color="rgba(255, 255, 255, 0.75)">{props.token.symbol}</H8>
       <HorizontalSpacer units={1} />

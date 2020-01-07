@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Flex from './Flex';
+
 interface AspectRatioProps {
   width?: number;
   height?: number;
@@ -46,8 +48,10 @@ export default function Image(props: ImageProps) {
   };
 
   return (
-    <AspectRatioContainer width={props.width} height={props.height} ratio={getRatio()}>
-      <ImageEl src={props.src} circle={props.circle} />
-    </AspectRatioContainer>
+    <Flex>
+      <AspectRatioContainer width={props.width} height={props.height} ratio={getRatio()}>
+        <ImageEl src={props.src} circle={props.circle} />
+      </AspectRatioContainer>
+    </Flex>
   );
 }

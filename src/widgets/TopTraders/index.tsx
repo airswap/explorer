@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
-import ArrowButton from '../../components/Button/ArrowButton';
 import Flex from '../../components/Flex';
+import Image from '../../components/Image';
 import { VerticalSpacer } from '../../components/Spacer';
 import Table, { TableRow, TableRowItem } from '../../components/Table';
 import { H6 } from '../../components/Typography';
 import WithLoading from '../../components/WithLoading';
-import { ReactComponent as Trader1Image } from '../../static/trader-1.svg';
-import { ReactComponent as Trader2Image } from '../../static/trader-2.svg';
-import { ReactComponent as Trader3Image } from '../../static/trader-3.svg';
-import { ReactComponent as Trader4Image } from '../../static/trader-4.svg';
+import Trader1Image from '../../static/trader-1.png';
+import Trader2Image from '../../static/trader-2.png';
+import Trader3Image from '../../static/trader-3.png';
+import Trader4Image from '../../static/trader-4.png';
+import Trader5Image from '../../static/trader-5.png';
 import { WidgetTitle } from '../styles';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 import Container, { TopTradersWidgetProps } from './Container';
@@ -23,20 +24,7 @@ const TraderImageContainer = styled(Flex)`
 
 function TopTradersWidget(props: TopTradersWidgetProps) {
   const columns = ['Trader', 'Total Trades', 'Trade Volume'];
-
-  const getTraderImage = index => {
-    switch (index) {
-      case 0:
-        return <Trader1Image />;
-      case 1:
-        return <Trader2Image />;
-      case 2:
-        return <Trader3Image />;
-      case 3:
-      default:
-        return <Trader4Image />;
-    }
-  };
+  const traderImages = [Trader1Image, Trader2Image, Trader3Image, Trader4Image, Trader5Image];
 
   return (
     <WidgetCard width="315px">
@@ -52,7 +40,7 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
             <TableRow fadeIn index={index} key={trader.address}>
               <TableRowItem>
                 <TraderImageContainer onClick={() => openEtherscanLink(trader.address, 'address')}>
-                  {getTraderImage(index)}
+                  <Image src={traderImages[index]} circle width={30} height={30} />
                 </TraderImageContainer>
               </TableRowItem>
               <TableRowItem>

@@ -18,6 +18,7 @@ export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true })`
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
     padding: ${({ theme }) => theme.spacing.mobileWidgetPadding};
+    padding-bottom: 15px;
   }
 `;
 
@@ -29,6 +30,8 @@ export const VolumeFooterContainer = styled(Flex).attrs({ expand: true })`
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
     padding: 0 ${({ theme }) => theme.spacing.mobileWidgetPadding};
+    padding-top: 15px;
+    padding-bottom: 30px;
   }
 `;
 
