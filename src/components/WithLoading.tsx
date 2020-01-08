@@ -47,7 +47,7 @@ export default function WithLoading(props: WithLoadingProps) {
       <Transition in={props.isLoading} timeout={0}>
         {state => (
           <LoadingContainer style={{ ...FadeInOutTransition[state] }} isLoading={props.isLoading}>
-            <Spinner size={100} />
+            <Spinner size={120} />
           </LoadingContainer>
         )}
       </Transition>

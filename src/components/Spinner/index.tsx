@@ -11,7 +11,7 @@ export default function Spinner(props: SpinnerProps) {
   const styles = {
     width: `${props.size || 20}px`,
     height: `${props.size || 20}px`,
-    borderWidth: `${props.strokeWidth || 5}px`,
+    borderWidth: `${props.strokeWidth || 7}px`,
   };
 
   return <div className="airswap-spinner" style={styles} />;

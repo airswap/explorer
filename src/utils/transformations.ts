@@ -24,8 +24,8 @@ export const calculateDifferenceInTrade = (timestamp: string | number) => {
   const localMap = {
     seconds: 's',
     second: 's',
-    minutes: 'min',
-    minute: 'min',
+    minutes: 'm',
+    minute: 'm',
     hours: 'h',
     hour: 'h',
     days: 'd',
