@@ -38,7 +38,7 @@ export default function Tooltip(props: TooltipProps) {
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   return (
-    <Container>
+    <Container onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
       <Transition in={showTooltip} timeout={0}>
         {state => (
           <TooltipContainer maxWidth={props.maxWidth} style={{ ...FadeInOutTransition[state] }}>
@@ -46,9 +46,7 @@ export default function Tooltip(props: TooltipProps) {
           </TooltipContainer>
         )}
       </Transition>
-      <Flex onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
-        {props.children}
-      </Flex>
+      <Flex>{props.children}</Flex>
     </Container>
   );
 }

@@ -4,11 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Flex from '../components/Flex';
-import Image from '../components/Image';
-import MediaQuery from '../components/MediaQuery';
 import Dashboard from '../screens/Dashboard';
 import history from '../state/router/history';
-import AirswapLogo from '../static/airswap-logo.png';
+import { ReactComponent as AirswapLogo } from '../static/airswap-logo.svg';
 import QueryContextProvider from './context/QueryContext';
 import IntlProvider from './providers/IntlProvider';
 import ReduxProvider from './providers/ReduxProvider';
@@ -24,6 +22,10 @@ const AirswapLogoContainer = styled(Flex).attrs({ align: 'flex-start' })`
   padding: 30px;
   margin: auto;
 
+  svg {
+    height: 30px;
+  }
+
   @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
     align-items: center;
   }
@@ -38,12 +40,7 @@ function App() {
     <AppContainer>
       <ConnectedRouter history={history}>
         <AirswapLogoContainer>
-          <MediaQuery size="sm">
-            <Image height={20} src={AirswapLogo} />
-          </MediaQuery>
-          <MediaQuery size="md-up">
-            <Image height={30} src={AirswapLogo} />
-          </MediaQuery>
+          <AirswapLogo height={30} />
         </AirswapLogoContainer>
         <QueryContextProvider>
           <ContentContainer>
