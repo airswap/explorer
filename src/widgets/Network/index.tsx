@@ -8,7 +8,11 @@ import { ReactComponent as ExpandIcon } from '../../static/expand-icon.svg';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 import NetworkGraph from './NetworkGraph';
 
-const TitleContainer = styled(Flex)`
+const TitleContainer = styled(Flex).attrs({
+  expand: true,
+  direction: 'row',
+  justify: 'space-between',
+})`
   z-index: 2;
   position: absolute;
   top: 0;
@@ -40,7 +44,7 @@ export default function Network() {
       setExpanded={setExpanded}
       expandedContent={<NetworkGraph />}
     >
-      <TitleContainer expand direction="row" justify="space-between">
+      <TitleContainer>
         <H4 color="white" textAlign="left">
           <FormattedMessage defaultMessage="Network" />
         </H4>

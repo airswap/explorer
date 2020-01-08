@@ -3,9 +3,12 @@ import styled from 'styled-components';
 
 import Flex from './Flex';
 
-interface AspectRatioProps {
+interface ImageSizeProps {
   width?: number;
   height?: number;
+}
+
+interface AspectRatioProps extends ImageSizeProps {
   ratio?: string;
 }
 
@@ -16,11 +19,18 @@ const AspectRatioContainer = styled.div<AspectRatioProps>`
   padding-top: ${({ ratio }) => ratio};
 `;
 
-interface ImageElProps {
+interface ImageElProps extends ImageSizeProps {
   circle?: boolean;
 }
 
 const ImageEl = styled.img<ImageElProps>`
+  border-radius: ${({ circle }) => (circle ? '50%' : 'none')};
+  object-fit: contain;
+  width: ${({ width }) => (width ? `${width}px` : 'auto')};
+  height: ${({ height }) => (height ? `${height}px` : 'auto')};
+`;
+
+const RatioImageEl = styled.img<ImageElProps>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -47,11 +57,15 @@ export default function Image(props: ImageProps) {
     return '0';
   };
 
-  return (
-    <Flex>
-      <AspectRatioContainer width={props.width} height={props.height} ratio={getRatio()}>
-        <ImageEl src={props.src} circle={props.circle} />
-      </AspectRatioContainer>
-    </Flex>
-  );
+  if (props.ratio || (props.width && props.height)) {
+    return (
+      <Flex>
+        <AspectRatioContainer width={props.width} height={props.height} ratio={getRatio()}>
+          <RatioImageEl src={props.src} circle={props.circle} />
+        </AspectRatioContainer>
+      </Flex>
+    );
+  }
+
+  return <ImageEl width={props.width} height={props.height} src={props.src} circle={props.circle} />;
 }
