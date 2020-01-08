@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
@@ -16,28 +16,19 @@ interface TooltipContainerProps {
 const TooltipContainer = styled(Flex)<TooltipContainerProps>`
   position: absolute;
   left: 50%;
-  top: -50px;
+  top: -100%;
   transform: translateX(-50%);
-  z-index: 1;
+  z-index: 3;
   padding: 5px 10px;
   box-sizing: border-box;
-  background-color: black;
-  opacity: 0.75;
+  background-color: rgba(0, 0, 0, 0.75);
   width: auto;
   max-width: ${({ maxWidth }) => (maxWidth ? `${maxWidth}px` : 'auto')};
   border-radius: 5px;
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
 `;
 
-const ChildContainer = styled(Flex)``;
-
-enum TooltipPosition {
-  TOP = 'top',
-  BOTTOM = 'bottom',
-}
-
 interface TooltipProps {
-  position?: TooltipPosition;
   maxWidth?: number;
   tooltipContent: React.ReactNode;
   children: React.ReactNode;
@@ -55,9 +46,9 @@ export default function Tooltip(props: TooltipProps) {
           </TooltipContainer>
         )}
       </Transition>
-      <ChildContainer onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
+      <Flex onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
         {props.children}
-      </ChildContainer>
+      </Flex>
     </Container>
   );
 }

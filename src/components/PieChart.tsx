@@ -63,6 +63,7 @@ export default function PieChartComponent(props: Props) {
           cornerRadius={props.strokeWidth || 2}
           innerRadius={props.size / 2 - (props.strokeWidth || 2)}
           outerRadius={props.size / 2}
+          minAngle={10}
           paddingAngle={5}
           onAnimationEnd={showChild}
         >

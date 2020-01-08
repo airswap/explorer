@@ -23,7 +23,7 @@ export const QueryContext = React.createContext<QueryContextType>({
   tokens: [],
   addToken: () => {},
   removeToken: () => {},
-  timeframe: 14,
+  timeframe: 30,
   setTimeframe: () => {},
 });
 
@@ -36,7 +36,7 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
   const location = useLocation();
 
   const [tokens, setTokens] = useState<string[]>([]);
-  const [timeframe, setTimeframe] = useState<number>(14);
+  const [timeframe, setTimeframe] = useState<number>(30);
 
   const addToken = (value: string) => {
     const newTokens = new Set(tokens);

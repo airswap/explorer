@@ -37,9 +37,7 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
         </WidgetTitle>
         <Flex expand justify="center">
           <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={theme.colors.blue}>
-            <PieChartHeader>
-              <FormattedMessage defaultMessage="150" />
-            </PieChartHeader>
+            <PieChartHeader>{props.volumeDistributionBySource.length}</PieChartHeader>
             <VerticalSpacer units={1} />
             <PieChartSubheader>
               <FormattedMessage defaultMessage="Total Peers" />
