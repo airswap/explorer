@@ -119,7 +119,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                     <Tooltip
                       maxWidth={150}
                       tooltipContent={
-                        <H7 expand color="white">
+                        <H7 noWrap color="white">
                           {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
                         </H7>
                       }
@@ -136,7 +136,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                     <Tooltip
                       maxWidth={150}
                       tooltipContent={
-                        <H7 expand color="white">
+                        <H7 noWrap color="white">
                           {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
                         </H7>
                       }
@@ -150,7 +150,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                     <Tooltip
                       maxWidth={150}
                       tooltipContent={
-                        <H7 expand color="white">
+                        <H7 noWrap color="white">
                           {getDisplayAmount(swap.ethAmount, 'ETH')}
                         </H7>
                       }

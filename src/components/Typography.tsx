@@ -5,6 +5,7 @@ interface TypographyProps {
   opacity?: 0.25 | 0.5 | 0.75 | 1;
   textAlign?: 'left' | 'center' | 'right';
   display?: 'block' | 'inline' | 'inline-block' | 'inline-flex';
+  noWrap?: boolean;
   expand?: boolean;
   decoration?: string;
 }
@@ -18,6 +19,7 @@ export const BaseText = styled.p<TypographyProps>`
   text-align: ${({ textAlign }) => textAlign || 'center'};
   color: ${({ color }) => color || 'inherit'};
   display: ${({ display }) => display || 'auto'};
+  white-space: ${({ noWrap }) => (noWrap ? 'nowrap' : 'auto')};
   cursor: inherit;
 `;
 
