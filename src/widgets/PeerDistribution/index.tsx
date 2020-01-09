@@ -33,7 +33,7 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
       <PeerDistributionWidgetContainer>
         <WidgetTitle>
-          <FormattedMessage defaultMessage="Integrators" />
+          <FormattedMessage defaultMessage="Integrations" />
         </WidgetTitle>
         <Flex expand justify="center">
           <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={theme.colors.blue}>
