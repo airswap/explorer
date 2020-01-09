@@ -33,14 +33,14 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
       <PeerDistributionWidgetContainer>
         <WidgetTitle>
-          <FormattedMessage defaultMessage="Peer Distribution" />
+          <FormattedMessage defaultMessage="Integrators" />
         </WidgetTitle>
         <Flex expand justify="center">
           <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={theme.colors.blue}>
             <PieChartHeader>{props.volumeDistributionBySource.length}</PieChartHeader>
             <VerticalSpacer units={1} />
             <PieChartSubheader>
-              <FormattedMessage defaultMessage="Total Peers" />
+              <FormattedMessage defaultMessage="Total Integrators" />
             </PieChartSubheader>
           </PieChart>
         </Flex>
