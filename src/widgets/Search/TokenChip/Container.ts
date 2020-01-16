@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import { TokenMetadata } from '../../../types/Tokens';
 
-const { getAirSwapApprovedTokensBySymbol } = tokenSelectors;
+const { getTokensByAddress } = tokenSelectors;
 
 interface PassedProps {
-  tokenSymbol: string;
+  tokenAddress: string;
   onDismiss(): void;
 }
 
@@ -18,10 +18,10 @@ interface ReduxProps {
 export type TokenChipProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state, ownProps: PassedProps) => {
-  const { tokenSymbol } = ownProps;
+  const { tokenAddress } = ownProps;
 
-  const tokensBySymbol: TokenMetadata[] = getAirSwapApprovedTokensBySymbol(state);
-  const token = tokensBySymbol[tokenSymbol];
+  const tokensByAddress: TokenMetadata[] = getTokensByAddress(state);
+  const token = tokensByAddress[tokenAddress];
 
   return {
     token,

@@ -40,7 +40,10 @@ function SearchInput(props: SearchInputProps) {
 
   const onEnter = (evt: React.FormEvent) => {
     evt.preventDefault();
-    addToken(searchString);
+    const searchedToken = props.tokensByAddress[searchString];
+    if (searchedToken) {
+      addToken(searchedToken.address);
+    }
   };
 
   const handleClickOutside = (evt: MouseEvent) => {
@@ -52,7 +55,10 @@ function SearchInput(props: SearchInputProps) {
   };
 
   const selectToken = (tokenSymbol: string) => {
-    addToken(tokenSymbol);
+    const searchedToken = props.airswapTokensBySymbol[tokenSymbol];
+    if (searchedToken) {
+      addToken(searchedToken.address);
+    }
     setShowDropdown(false);
   };
 
@@ -71,12 +77,12 @@ function SearchInput(props: SearchInputProps) {
   }, [showDropdown]);
 
   useEffect(() => {
-    setStablecoinTokens(props.stablecoinTokens);
-  }, [props.stablecoinTokens]);
+    setStablecoinTokens(findTokens(searchString, props.stablecoinTokens));
+  }, [props.stablecoinTokens, searchString]);
 
   useEffect(() => {
-    setAllOtherTokens(props.allOtherTokens);
-  }, [props.allOtherTokens]);
+    setAllOtherTokens(findTokens(searchString, props.allOtherTokens));
+  }, [props.allOtherTokens, searchString]);
 
   return (
     <SearchInputContainer ref={searchInputRef}>
@@ -96,13 +102,13 @@ function SearchInput(props: SearchInputProps) {
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
         <DropdownContent showDropdown={showDropdown}>
-          {stablecoinTokens.length && (
+          {stablecoinTokens.length ? (
             <TokenTypeHeaderContainer>
               <H6 expand color="white" textAlign="left">
                 <FormattedMessage defaultMessage="Stablecoins" />
               </H6>
             </TokenTypeHeaderContainer>
-          )}
+          ) : null}
           {stablecoinTokens.map(token => (
             <SearchInputItem
               key={token.address}
@@ -112,14 +118,14 @@ function SearchInput(props: SearchInputProps) {
               onClick={() => selectToken(token.symbol)}
             />
           ))}
-          {stablecoinTokens.length && <VerticalSpacer units={4} />}
-          {allOtherTokens.length && (
+          {stablecoinTokens.length ? <VerticalSpacer units={4} /> : null}
+          {allOtherTokens.length ? (
             <TokenTypeHeaderContainer>
               <H6 expand color="white" textAlign="left">
                 <FormattedMessage defaultMessage="Other tokens" />
               </H6>
             </TokenTypeHeaderContainer>
-          )}
+          ) : null}
           {allOtherTokens.map(token => (
             <SearchInputItem
               key={token.address}

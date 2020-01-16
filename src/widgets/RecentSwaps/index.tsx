@@ -59,7 +59,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
   ];
 
   const getDisplayAmountFormatted = (amount, symbol) => {
-    return `${getFormattedNumber(Number(amount), 6, 6)} ${symbol}`;
+    return `${getFormattedNumber({ num: Number(amount), digits: 6, minDecimals: 2, maxDecimals: 6 })} ${symbol}`;
   };
 
   const getDisplayAmount = (amount, symbol) => {

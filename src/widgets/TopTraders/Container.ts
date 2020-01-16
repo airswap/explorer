@@ -38,7 +38,13 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
     .map(address => ({
       address,
       totalTrades: tradeVolumeByTrader[address].totalTrades,
-      volume: `${getFormattedNumber(tradeVolumeByTrader[address].volume, 10, 2, true)} ETH`,
+      volume: `${getFormattedNumber({
+        num: tradeVolumeByTrader[address].volume,
+        digits: 10,
+        minDecimals: 2,
+        maxDecimals: 2,
+        noEllipsis: true,
+      })} ETH`,
     }));
 
   return {

@@ -9,23 +9,39 @@ import Container, { TokenPairIconProps } from './Container';
 const TokenPairIconContainer = styled(Flex).attrs({ align: 'flex-start' })`
   position: relative;
   width: 50px;
-  height: 30px;
+  /* height: 30px; */
 `;
 
-const SenderTokenIcon = styled(Flex)`
-  position: absolute;
+interface ColorProps {
+  color?: string;
+}
+
+const BaseTokenIcon = styled(Flex)`
+  padding: 3px;
   border-radius: 50%;
+  background-color: ${({ color }) => color || '#292937'};
   overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+const SenderTokenIcon = styled(BaseTokenIcon)`
+  width: 30px;
+  height: 30px;
+  position: absolute;
   top: 0;
   left: 20px;
 `;
 
-const SignerTokenIcon = styled(Flex)`
+const SignerTokenIcon = styled(BaseTokenIcon)`
+  width: calc(30px + 4px);
+  height: calc(30px + 4px);
   z-index: 1;
-  background-color: #30303b;
   border: 2px solid #30303b;
-  border-radius: 50%;
-  overflow: hidden;
+  box-sizing: border-box;
   margin: -2px;
 `;
 
@@ -46,11 +62,11 @@ function TokenPairIcon(props: TokenPairIconProps) {
 
   return (
     <TokenPairIconContainer>
-      <SenderTokenIcon>
-        <Image src={senderToken.airswap_img_url} width={30} height={30} />
+      <SenderTokenIcon color={senderToken.colors ? senderToken.colors[0] : undefined}>
+        <Image src={senderToken.airswap_img_url} />
       </SenderTokenIcon>
-      <SignerTokenIcon>
-        <Image src={signerToken.airswap_img_url} width={30} height={30} />
+      <SignerTokenIcon color={signerToken.colors ? signerToken.colors[0] : undefined}>
+        <Image src={signerToken.airswap_img_url} />
       </SignerTokenIcon>
     </TokenPairIconContainer>
   );

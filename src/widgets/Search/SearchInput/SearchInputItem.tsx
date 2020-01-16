@@ -22,6 +22,13 @@ const ItemContainer = styled(Flex).attrs({
   }
 `;
 
+const PlaceholderImage = styled(Flex)`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #292937;
+`;
+
 interface SearchInputItemProps {
   image?: string;
   title: string;
@@ -32,12 +39,8 @@ interface SearchInputItemProps {
 export default function SearchInputItem(props: SearchInputItemProps) {
   return (
     <ItemContainer onClick={props.onClick}>
-      {props.image && (
-        <>
-          <Image src={props.image} circle width={25} height={25} />
-          <HorizontalSpacer units={3} />
-        </>
-      )}
+      {props.image ? <Image src={props.image} circle width={25} height={25} /> : <PlaceholderImage />}
+      <HorizontalSpacer units={3} />
       <H6 color="white">{props.title}</H6>
       <HorizontalSpacer units={1} />
       <H7 color="white">

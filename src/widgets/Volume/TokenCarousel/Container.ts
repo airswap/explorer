@@ -35,7 +35,13 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
     .sort((volume1, volume2) => (tradeVolumeByToken[volume1] > tradeVolumeByToken[volume2] ? -1 : 1))
     .map(symbol => ({
       token: tokens[symbol],
-      volume: `${getFormattedNumber(tradeVolumeByToken[symbol], 10, 2, true)} ETH`,
+      volume: `${getFormattedNumber({
+        num: tradeVolumeByToken[symbol],
+        digits: 10,
+        minDecimals: 2,
+        maxDecimals: 2,
+        noEllipsis: true,
+      })} ETH`,
     }));
 
   return {

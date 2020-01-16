@@ -15,7 +15,7 @@ const SearchWidgetContainer = styled(Flex).attrs({ expand: true, justify: 'cente
 
 const SearchChipContainer = styled(Flex).attrs({ expand: true, direction: 'row' })`
   position: absolute;
-  bottom: 15px;
+  bottom: 10px;
   left: ${({ theme }) => theme.spacing.widgetPadding};
 
   @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
@@ -58,8 +58,8 @@ export default function SearchWidget() {
         </MediaQuery>
       </SearchWidgetContainer>
       <SearchChipContainer>
-        {tokens.map(token => (
-          <TokenChip key={token} tokenSymbol={token} onDismiss={() => removeToken(token)} />
+        {tokens.map(tokenAddress => (
+          <TokenChip key={tokenAddress} tokenAddress={tokenAddress} onDismiss={() => removeToken(tokenAddress)} />
         ))}
       </SearchChipContainer>
     </WidgetCard>

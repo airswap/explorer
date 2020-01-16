@@ -22,7 +22,15 @@ const VolumeChartTooltip = ({ active, payload }) => {
         <H7 color="white">
           <FormattedMessage
             defaultMessage="{amount} ETH"
-            values={{ amount: getFormattedNumber(payload[0].payload.volume, 10, 2, true) }}
+            values={{
+              amount: getFormattedNumber({
+                num: payload[0].payload.volume,
+                digits: 10,
+                minDecimals: 2,
+                maxDecimals: 2,
+                noEllipsis: true,
+              }),
+            }}
           />
         </H7>
         <VerticalSpacer units={1} />

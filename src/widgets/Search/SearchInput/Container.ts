@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { STABLECOIN_SYMBOLS } from '../../../constants';
 import { TokenMetadata, TokenQuery } from '../../../types/Tokens';
 
-const { getAirSwapApprovedTokens } = tokenSelectors;
+const { getTokensByAddress, getAirSwapApprovedTokens, getAirSwapApprovedTokensBySymbol } = tokenSelectors;
 
 interface PassedProps {}
 
 interface ReduxProps {
   stablecoinTokens: TokenMetadata[];
   allOtherTokens: TokenMetadata[];
+  tokensByAddress: Record<string, TokenMetadata>;
+  airswapTokensBySymbol: Record<string, TokenMetadata>;
   getDisplayByToken(tokenQuery: TokenQuery, tokenAmount: string): string;
 }
 
@@ -22,6 +24,8 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
   const allOtherTokens = allAirSwapTokens.filter(token => !STABLECOIN_SYMBOLS.includes(token.symbol));
 
   return {
+    tokensByAddress: getTokensByAddress(state),
+    airswapTokensBySymbol: getAirSwapApprovedTokensBySymbol(state),
     stablecoinTokens,
     allOtherTokens,
     ...ownProps,

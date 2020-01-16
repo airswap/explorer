@@ -61,7 +61,7 @@ const makeGetTradesByQuery = createSelector(
 
       // Filter by tokens
       if (query.tokens && query.tokens.length) {
-        return query.tokens.indexOf(trade.makerSymbol) !== -1 || query.tokens.indexOf(trade.takerSymbol) !== -1;
+        return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
       }
 
       return true;
@@ -87,7 +87,7 @@ const makeGetTradeVolumeByDate = createSelector(
     filteredTrades
       .filter((trade: SwapEvent) => {
         if (!query.tokens || !query.tokens.length) return true;
-        return query.tokens.indexOf(trade.makerSymbol) !== -1 || query.tokens.indexOf(trade.takerSymbol) !== -1;
+        return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
       })
       .forEach((trade: SwapEvent) => {
         if (trade.timestamp) {
@@ -137,7 +137,7 @@ const makeGetTradeVolumeByTrader = createSelector(
     filteredTrades
       .filter((trade: SwapEvent) => {
         if (query.tokens && query.tokens.length) {
-          return query.tokens.includes(trade.takerSymbol) || query.tokens.includes(trade.makerSymbol);
+          return query.tokens.includes(trade.takerToken) || query.tokens.includes(trade.makerToken);
         }
         return true;
       })
