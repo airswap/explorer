@@ -26,7 +26,13 @@ function VolumeWidget(props: VolumeWidgetProps) {
 
   const getTotalVolume = () => {
     const totalVolume = tradeVolume.reduce((result, dateVolume) => result + dateVolume.volume, 0);
-    return `${getFormattedNumber(totalVolume, 10, 2, true)} ETH`;
+    return `${getFormattedNumber({
+      num: totalVolume,
+      digits: 10,
+      minDecimals: 2,
+      maxDecimals: 2,
+      noEllipsis: true,
+    })} ETH`;
   };
 
   // Fetch trades on load

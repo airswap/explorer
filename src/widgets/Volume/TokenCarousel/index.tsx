@@ -35,6 +35,23 @@ const Divider = styled.div`
   height: 1px;
 `;
 
+interface ColorProps {
+  color?: string;
+}
+
+const TokenIconContainer = styled(Flex)<ColorProps>`
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  border-radius: 50%;
+  background-color: ${({ color }) => color || '#292937'};
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
 function TokenCarousel(props: TokenCarouselProps) {
   const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes);
   const { tokens, addToken, removeToken } = useContext(QueryContext);
@@ -68,10 +85,10 @@ function TokenCarousel(props: TokenCarouselProps) {
   };
 
   const onTokenClick = (token: TokenMetadata) => {
-    if (tokens.indexOf(token.symbol) !== -1) {
-      removeToken(token.symbol);
+    if (tokens.indexOf(token.address) !== -1) {
+      removeToken(token.address);
     } else {
-      addToken(token.symbol);
+      addToken(token.address);
     }
   };
 
@@ -79,7 +96,7 @@ function TokenCarousel(props: TokenCarouselProps) {
     if (tokens && tokens.length) {
       // filter
       const filteredTokenVolumes = props.tokenVolumes.filter(
-        tokenVolume => tokens.indexOf(tokenVolume.token.symbol) !== -1,
+        tokenVolume => tokens.indexOf(tokenVolume.token.address) !== -1,
       );
       setTokenVolumes(filteredTokenVolumes);
     } else {
@@ -101,12 +118,9 @@ function TokenCarousel(props: TokenCarouselProps) {
         {tokenVolumes.map(tokenVolume => (
           <div key={tokenVolume.token.address}>
             <TokenCarouselItem onClick={() => onTokenClick(tokenVolume.token)}>
-              <Image
-                circle
-                width={30}
-                height={30}
-                src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url}
-              />
+              <TokenIconContainer color={tokenVolume.token.colors ? tokenVolume.token.colors[0] : undefined}>
+                <Image circle src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url} />
+              </TokenIconContainer>
               <HorizontalSpacer units={3} />
               <Flex align="flex-start">
                 <H7 color="white">{tokenVolume.token.symbol}</H7>

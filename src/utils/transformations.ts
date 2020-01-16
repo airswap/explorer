@@ -5,13 +5,46 @@ export const willFormatNumber = (num: number, digits: number, decimals?: number)
   return amount.length > digits || (amount.includes('.') && (decimals && amount.split('.')[1].length > decimals));
 };
 
-export const getFormattedNumber = (num: number, digits: number, decimals?: number, noEllipsis?: boolean) => {
+export const getFormattedNumberOld = (num: number, digits: number, decimals?: number, noEllipsis?: boolean) => {
   let amount = num.toString();
-  if (!amount.includes('.')) return amount;
-  if (amount.length <= digits && (!decimals || amount.split('.')[1].length <= decimals)) return amount;
+  if (!amount.includes('.') || (amount.length <= digits && (!decimals || amount.split('.')[1].length <= decimals))) {
+    return num.toLocaleString(undefined, {
+      minimumFractionDigits: decimals || 0,
+      maximumFractionDigits: decimals || digits,
+    });
+  }
 
-  amount = num.toFixed(decimals).toString();
+  amount = num.toLocaleString(undefined, {
+    minimumFractionDigits: decimals || 0,
+    maximumFractionDigits: decimals || digits,
+  });
   return `${amount.substring(0, digits)}${noEllipsis ? '' : '...'}`;
+};
+
+interface FormattedNumberConfig {
+  num: number;
+  digits: number;
+  decimals?: number;
+  minDecimals?: number;
+  maxDecimals?: number;
+  noEllipsis?: boolean;
+}
+
+export const getFormattedNumber = (config: FormattedNumberConfig) => {
+  const { num, digits, minDecimals, maxDecimals, noEllipsis } = config;
+
+  const adjustedDigits = num.toString().indexOf('.') !== -1 ? digits + 1 : digits;
+
+  const formattedAmount = Number(num.toString().substring(0, adjustedDigits)).toLocaleString(undefined, {
+    minimumFractionDigits: minDecimals || 0,
+    maximumFractionDigits: maxDecimals || adjustedDigits,
+  });
+
+  if (num.toString().length <= adjustedDigits) {
+    return formattedAmount;
+  }
+
+  return `${formattedAmount}${noEllipsis ? '' : '...'}`;
 };
 
 export const calculateDifferenceInTrade = (timestamp: string | number) => {

@@ -26,15 +26,24 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
     days: ownProps.timeframe,
     tokens: ownProps.tokens,
   });
+  let totalVolume = 0;
   const formattedVolumeDistribution = Object.keys(volumeDistributionBySource)
-    .map(source => ({
-      name: source,
-      value: volumeDistributionBySource[source],
-    }))
-    .sort((distribution1, distribution2) => (distribution1.name < distribution2.name ? -1 : 1));
+    .map(source => {
+      totalVolume += Number(volumeDistributionBySource[source]);
+
+      return {
+        name: source,
+        value: volumeDistributionBySource[source],
+      };
+    })
+    .sort((distribution1, distribution2) => (distribution1.value > distribution2.value ? -1 : 1));
+  const filteredFormattedVolumeDistribution = formattedVolumeDistribution.filter(distribution => {
+    const percentage = (distribution.value / totalVolume) * 100;
+    return percentage >= 0.1;
+  });
 
   return {
-    volumeDistributionBySource: formattedVolumeDistribution,
+    volumeDistributionBySource: filteredFormattedVolumeDistribution,
     ...ownProps,
   };
 };

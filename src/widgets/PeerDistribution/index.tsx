@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
-import theme from '../../app/theme';
 import ChartLegend from '../../components/ChartLegend';
 import Flex from '../../components/Flex';
 import PieChart from '../../components/PieChart';
@@ -17,17 +16,19 @@ const PeerDistributionWidgetContainer = styled(Flex).attrs({ expand: true, justi
 `;
 
 const PieChartHeader = styled(H5)`
-  font-weight: ${theme.text.fontWeight.medium};
+  font-weight: ${({ theme }) => theme.text.fontWeight.medium};
   color: white;
 `;
 
 const PieChartSubheader = styled(H7)`
-  font-weight: ${theme.text.fontWeight.thin};
+  font-weight: ${({ theme }) => theme.text.fontWeight.thin};
   color: white;
 `;
 
 function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
   const [expanded, setExpanded] = useState(false);
+
+  const chartColors = ['#2B71FF', '#304CD2', '#DB6C33', '#C58A80', '#416A75'];
 
   return (
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
@@ -36,7 +37,7 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
           <FormattedMessage defaultMessage="Integrations" />
         </WidgetTitle>
         <Flex expand justify="center">
-          <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={theme.colors.blue}>
+          <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={chartColors}>
             <PieChartHeader>{props.volumeDistributionBySource.length}</PieChartHeader>
             <VerticalSpacer units={1} />
             <PieChartSubheader>
@@ -44,7 +45,7 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
             </PieChartSubheader>
           </PieChart>
         </Flex>
-        <ChartLegend data={props.volumeDistributionBySource} colors={theme.colors.blue} />
+        <ChartLegend data={props.volumeDistributionBySource} colors={chartColors} />
       </PeerDistributionWidgetContainer>
     </WidgetCard>
   );
