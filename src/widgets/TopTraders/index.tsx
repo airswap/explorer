@@ -20,6 +20,11 @@ import Container, { TopTradersWidgetProps } from './Container';
 
 const TraderImageContainer = styled(Flex)`
   cursor: pointer;
+  transition: 0.4s ease;
+
+  &:hover {
+    transform: scale(0.9);
+  }
 `;
 
 function TopTradersWidget(props: TopTradersWidgetProps) {
