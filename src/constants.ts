@@ -15,7 +15,7 @@ export const AIRSWAP_DISCORD_URL = 'https://chat.airswap.io/';
 export const AIRSWAP_TWITTER_URL = 'https://twitter.com/airswap';
 
 // Data
-export const STABLECOIN_SYMBOLS = ['DAI', 'USDC', 'USDT', 'TUSD', 'PAX', 'KRWB', 'GUSD'];
+export const STABLECOIN_SYMBOLS = ['SAI', 'DAI', 'USDC', 'USDT', 'TUSD', 'PAX', 'KRWB', 'GUSD'];
 
 // Styles
 export const GRAPH_COLOR_PALLETE = ['#C58A80', '#DB6C33', '#304CD2', '#416A75'];

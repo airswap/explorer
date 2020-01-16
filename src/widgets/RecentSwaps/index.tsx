@@ -9,8 +9,10 @@ import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
 import Tooltip from '../../components/Tooltip';
 import { H6, H7, H8 } from '../../components/Typography';
 import WithLoading from '../../components/WithLoading';
+import { STABLECOIN_SYMBOLS } from '../../constants';
 import { ReactComponent as ArrowUpRightIcon } from '../../static/arrow-up-right-icon.svg';
 import { ReactComponent as SwapIcon } from '../../static/swap-icon.svg';
+import { SwapEvent } from '../../types/Swap';
 import { calculateDifferenceInTrade, getFormattedNumber } from '../../utils/transformations';
 import { WidgetTitle } from '../styles';
 import TokenPairIcon from '../WidgetComponents/TokenPairIcon';
@@ -60,6 +62,58 @@ function RecentSwapsWidget(props: RecentSwapProps) {
 
   const getDisplayAmountFormatted = (amount, symbol) => {
     return `${getFormattedNumber({ num: Number(amount), digits: 6, minDecimals: 0, maxDecimals: 6 })} ${symbol}`;
+  };
+
+  const getSwapValue = (swap: SwapEvent) => {
+    if (
+      swap.makerSymbol === 'ETH' ||
+      swap.makerSymbol === 'WETH' ||
+      swap.takerSymbol === 'ETH' ||
+      swap.takerSymbol === 'WETH'
+    ) {
+      return `${swap.ethAmount} ETH`;
+    }
+
+    if (STABLECOIN_SYMBOLS.indexOf(swap.makerSymbol) !== -1) {
+      return `${swap.makerAmountFormatted} ${swap.makerSymbol}`;
+    }
+
+    if (STABLECOIN_SYMBOLS.indexOf(swap.takerSymbol) !== -1) {
+      return `${swap.takerAmountFormatted} ${swap.takerSymbol}`;
+    }
+
+    return 'N/A';
+  };
+
+  const getFormattedSwapValue = (swap: SwapEvent) => {
+    if (
+      swap.makerSymbol === 'ETH' ||
+      swap.makerSymbol === 'WETH' ||
+      swap.takerSymbol === 'ETH' ||
+      swap.takerSymbol === 'WETH'
+    ) {
+      return `${getFormattedNumber({ num: Number(swap.ethAmount), digits: 6, minDecimals: 0, maxDecimals: 6 })} ETH`;
+    }
+
+    if (STABLECOIN_SYMBOLS.indexOf(swap.makerSymbol) !== -1) {
+      return `${getFormattedNumber({
+        num: Number(swap.makerAmountFormatted),
+        digits: 6,
+        minDecimals: 0,
+        maxDecimals: 6,
+      })} ${swap.makerSymbol}`;
+    }
+
+    if (STABLECOIN_SYMBOLS.indexOf(swap.takerSymbol) !== -1) {
+      return `${getFormattedNumber({
+        num: Number(swap.takerAmountFormatted),
+        digits: 6,
+        minDecimals: 0,
+        maxDecimals: 6,
+      })} ${swap.takerSymbol}`;
+    }
+
+    return 'N/A';
   };
 
   const getDisplayAmount = (amount, symbol) => {
@@ -151,12 +205,12 @@ function RecentSwapsWidget(props: RecentSwapProps) {
                       maxWidth={150}
                       tooltipContent={
                         <H7 noWrap color="white">
-                          {getDisplayAmount(swap.ethAmount, 'ETH')}
+                          {getSwapValue(swap)}
                         </H7>
                       }
                     >
                       <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                        {getDisplayAmountFormatted(swap.ethAmount, 'ETH')}
+                        {getFormattedSwapValue(swap)}
                       </H6>
                     </Tooltip>
                   </ItemContainer>
