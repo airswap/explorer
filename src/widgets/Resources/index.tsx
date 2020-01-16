@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Carousel from '../../components/Carousel';
 import Flex from '../../components/Flex';
 import Link from '../../components/Link';
-import { VerticalSpacer } from '../../components/Spacer';
+import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
 import { H4, H7 } from '../../components/Typography';
 import {
   AIRSWAP_DISCORD_URL,
@@ -43,10 +43,11 @@ interface ResourceLinkProps {
 
 function ResourceLink(props: ResourceLinkProps) {
   return (
-    <Flex align="flex-start">
+    <Flex align="flex-start" direction="row">
       <Link url={props.url}>
         <LinkText>{props.label}</LinkText>
       </Link>
+      <HorizontalSpacer units={4} />
     </Flex>
   );
 }
@@ -59,6 +60,7 @@ export default function Resources() {
     slidesToShow: 6,
     slidesToScroll: 2,
     initialSlide: 0,
+    variableWidth: true,
     responsive: [
       {
         breakpoint: 1024,
