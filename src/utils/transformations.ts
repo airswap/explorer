@@ -33,22 +33,18 @@ interface FormattedNumberConfig {
 export const getFormattedNumber = (config: FormattedNumberConfig) => {
   const { num, digits, minDecimals, maxDecimals, noEllipsis } = config;
 
-  let amount = num.toString();
-  // if (
-  //   !amount.includes('.') ||
-  //   (amount.length <= digits && (!minDecimals || amount.split('.')[1].length <= minDecimals))
-  // ) {
-  //   return num.toLocaleString(undefined, {
-  //     minimumFractionDigits: minDecimals || 0,
-  //     maximumFractionDigits: maxDecimals || digits,
-  //   });
-  // }
+  const adjustedDigits = num.toString().indexOf('.') !== -1 ? digits + 1 : digits;
 
-  amount = num.toLocaleString(undefined, {
+  const formattedAmount = Number(num.toString().substring(0, adjustedDigits)).toLocaleString(undefined, {
     minimumFractionDigits: minDecimals || 0,
-    maximumFractionDigits: maxDecimals || digits,
+    maximumFractionDigits: maxDecimals || adjustedDigits,
   });
-  return `${amount.substring(0, digits)}${noEllipsis ? '' : '...'}`;
+
+  if (num.toString().length <= adjustedDigits) {
+    return formattedAmount;
+  }
+
+  return `${formattedAmount}${noEllipsis ? '' : '...'}`;
 };
 
 export const calculateDifferenceInTrade = (timestamp: string | number) => {

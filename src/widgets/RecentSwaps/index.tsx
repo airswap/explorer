@@ -46,11 +46,11 @@ function RecentSwapsWidget(props: RecentSwapProps) {
     },
     {
       label: 'Value',
-      width: '17.5%',
+      width: '20%',
     },
     {
       label: 'Time',
-      width: '17.5%',
+      width: '15%',
     },
     {
       label: 'Details',
@@ -59,7 +59,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
   ];
 
   const getDisplayAmountFormatted = (amount, symbol) => {
-    return `${getFormattedNumber({ num: Number(amount), digits: 6, minDecimals: 2, maxDecimals: 6 })} ${symbol}`;
+    return `${getFormattedNumber({ num: Number(amount), digits: 6, minDecimals: 0, maxDecimals: 6 })} ${symbol}`;
   };
 
   const getDisplayAmount = (amount, symbol) => {
