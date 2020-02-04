@@ -20,7 +20,7 @@ interface ColorProps {
 const BaseTokenIcon = styled(Flex)`
   padding: 3px;
   border-radius: 50%;
-  background-color: ${({ color }) => color || '#292937'};
+  background-color: ${({ color, theme }) => color || theme.palette.primaryColor};
   overflow: hidden;
 
   img {
