@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 import Flex from '../../../components/Flex';
-import Image from '../../../components/Image';
 import { HorizontalSpacer } from '../../../components/Spacer';
+import TokenIcon from '../../../components/TokenIcon';
 import { H6, H7 } from '../../../components/Typography';
 
 const ItemContainer = styled(Flex).attrs({
@@ -22,13 +22,6 @@ const ItemContainer = styled(Flex).attrs({
   }
 `;
 
-const PlaceholderImage = styled(Flex)`
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #292937;
-`;
-
 interface SearchInputItemProps {
   image?: string;
   title: string;
@@ -39,7 +32,7 @@ interface SearchInputItemProps {
 export default function SearchInputItem(props: SearchInputItemProps) {
   return (
     <ItemContainer onClick={props.onClick}>
-      {props.image ? <Image src={props.image} circle width={25} height={25} /> : <PlaceholderImage />}
+      <TokenIcon symbol={props.title} src={props.image} size={25} />
       <HorizontalSpacer units={3} />
       <H6 color="white">{props.title}</H6>
       <HorizontalSpacer units={1} />
