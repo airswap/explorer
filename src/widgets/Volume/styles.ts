@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
 import Flex from '../../components/Flex';
-import { H2, H4 } from '../../components/Typography';
+import { H2, H4, H8 } from '../../components/Typography';
 
-export const VolumeTitle = styled(H4).attrs({ expand: true, textAlign: 'left' })`
+export const VolumeTitle = styled(H4).attrs({ textAlign: 'left' })`
+  color: ${({ theme }) => theme.palette.primaryColor};
+  line-height: ${({ theme }) => theme.text.fontSize.h4};
+`;
+
+export const VolumeSubtitle = styled(H8)`
   color: ${({ theme }) => theme.palette.primaryColor};
 `;
 
@@ -11,7 +16,7 @@ export const VolumeAmount = styled(H2).attrs({ expand: true, textAlign: 'left' }
   color: white;
 `;
 
-export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true })`
+export const VolumeHeaderContainer = styled(Flex).attrs({ expand: true, align: 'flex-start' })`
   flex-shrink: 0;
   padding: ${({ theme }) => theme.spacing.widgetPadding};
   padding-bottom: 15px;

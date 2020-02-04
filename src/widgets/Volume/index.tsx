@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { QueryContext } from '../../app/context/QueryContext';
+import Flex from '../../components/Flex';
 import MediaQuery from '../../components/MediaQuery';
-import { VerticalSpacer } from '../../components/Spacer';
+import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
 import WithLoading from '../../components/WithLoading';
 import { TradeVolumeByDay } from '../../types/Swap';
 import { getFormattedNumber } from '../../utils/transformations';
@@ -13,6 +14,7 @@ import {
   VolumeAmount,
   VolumeFooterContainer,
   VolumeHeaderContainer,
+  VolumeSubtitle,
   VolumeTitle,
   VolumeWidgetContainer,
 } from './styles';
@@ -57,9 +59,15 @@ function VolumeWidget(props: VolumeWidgetProps) {
       <WithLoading isLoading={isLoading || !tradeVolume.length}>
         <VolumeWidgetContainer>
           <VolumeHeaderContainer>
-            <VolumeTitle>
-              <FormattedMessage defaultMessage="Volume" />
-            </VolumeTitle>
+            <Flex direction="row" align="flex-end">
+              <VolumeTitle>
+                <FormattedMessage defaultMessage="Volume" />
+              </VolumeTitle>
+              <HorizontalSpacer units={1} />
+              <VolumeSubtitle>
+                <FormattedMessage defaultMessage="({days} Days)" values={{ days: timeframe }} />
+              </VolumeSubtitle>
+            </Flex>
             <VerticalSpacer units={2} />
             <VolumeAmount>{getTotalVolume()}</VolumeAmount>
           </VolumeHeaderContainer>
