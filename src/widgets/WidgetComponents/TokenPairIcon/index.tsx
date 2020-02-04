@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import Flex from '../../../components/Flex';
 import Image from '../../../components/Image';
+import TokenIcon from '../../../components/TokenIcon';
 import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenPairIconProps } from './Container';
 
@@ -63,10 +64,10 @@ function TokenPairIcon(props: TokenPairIconProps) {
   return (
     <TokenPairIconContainer>
       <SenderTokenIcon color={senderToken.colors ? senderToken.colors[0] : undefined}>
-        <Image src={senderToken.airswap_img_url} />
+        <TokenIcon symbol={senderToken.symbol} src={senderToken.airswap_img_url || senderToken.cmc_img_url} size={30} />
       </SenderTokenIcon>
       <SignerTokenIcon color={signerToken.colors ? signerToken.colors[0] : undefined}>
-        <Image src={signerToken.airswap_img_url} />
+        <TokenIcon symbol={signerToken.symbol} src={signerToken.airswap_img_url || signerToken.cmc_img_url} size={30} />
       </SignerTokenIcon>
     </TokenPairIconContainer>
   );

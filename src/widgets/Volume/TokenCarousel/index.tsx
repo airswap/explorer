@@ -7,6 +7,7 @@ import Carousel from '../../../components/Carousel';
 import Flex from '../../../components/Flex';
 import Image from '../../../components/Image';
 import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer';
+import TokenIcon from '../../../components/TokenIcon';
 import { H7, H8 } from '../../../components/Typography';
 import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenCarouselProps, TokenVolume } from './Container';
@@ -38,19 +39,6 @@ const Divider = styled.div`
 interface ColorProps {
   color?: string;
 }
-
-const TokenIconContainer = styled(Flex)<ColorProps>`
-  width: 30px;
-  height: 30px;
-  padding: 3px;
-  border-radius: 50%;
-  background-color: ${({ color }) => color || '#292937'};
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
 
 function TokenCarousel(props: TokenCarouselProps) {
   const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes);
@@ -118,9 +106,11 @@ function TokenCarousel(props: TokenCarouselProps) {
         {tokenVolumes.map(tokenVolume => (
           <div key={tokenVolume.token.address}>
             <TokenCarouselItem onClick={() => onTokenClick(tokenVolume.token)}>
-              <TokenIconContainer color={tokenVolume.token.colors ? tokenVolume.token.colors[0] : undefined}>
-                <Image circle src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url} />
-              </TokenIconContainer>
+              <TokenIcon
+                symbol={tokenVolume.token.symbol}
+                src={tokenVolume.token.airswap_img_url || tokenVolume.token.cmc_img_url}
+                size={30}
+              />
               <HorizontalSpacer units={3} />
               <Flex align="flex-start">
                 <H7 color="white">{tokenVolume.token.symbol}</H7>
