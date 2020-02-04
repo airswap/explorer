@@ -13,6 +13,7 @@ import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenCarouselProps, TokenVolume } from './Container';
 
 const TokenCarouselContainer = styled.div`
+  overflow: hidden;
   width: 100%;
   height: 100%;
 `;

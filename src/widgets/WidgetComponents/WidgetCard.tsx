@@ -38,7 +38,6 @@ const Close = styled(Flex)`
 export const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
   position: relative;
-  overflow: hidden;
   width: ${({ width }) => width};
   max-width: 100%;
   padding: ${({ noPadding }) => (noPadding ? '0' : theme.spacing.widgetPadding)};
