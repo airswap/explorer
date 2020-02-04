@@ -5,6 +5,7 @@ import theme from '../../../app/theme';
 import Flex from '../../../components/Flex';
 import Image from '../../../components/Image';
 import { HorizontalSpacer } from '../../../components/Spacer';
+import TokenIcon from '../../../components/TokenIcon';
 import { H8 } from '../../../components/Typography';
 import { ReactComponent as CloseIcon } from '../../../static/close-icon.svg';
 import { FadeIn } from '../../../utils/animations';
@@ -46,7 +47,7 @@ function TokenChip(props: TokenChipProps) {
 
   return (
     <ChipContainer color={props.token.colors ? props.token.colors[0] : theme.palette.primaryColor}>
-      <Image src={props.token.airswap_img_url || props.token.cmc_img_url} width={14} height={14} circle />
+      <TokenIcon symbol={props.token.symbol} src={props.token.airswap_img_url || props.token.cmc_img_url} size={14} />
       <HorizontalSpacer units={1} />
       <H8 color="rgba(255, 255, 255, 0.75)">{props.token.symbol}</H8>
       <HorizontalSpacer units={1} />
