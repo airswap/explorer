@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { QueryContext } from '../../../app/context/QueryContext';
 import Carousel from '../../../components/Carousel';
 import Flex from '../../../components/Flex';
-import Image from '../../../components/Image';
 import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer';
 import TokenIcon from '../../../components/TokenIcon';
 import { H7, H8 } from '../../../components/Typography';
@@ -13,7 +12,7 @@ import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenCarouselProps, TokenVolume } from './Container';
 
 const TokenCarouselContainer = styled.div`
-  overflow: hidden;
+  max-height: 150px;
   width: 100%;
   height: 100%;
 `;
