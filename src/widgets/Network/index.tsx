@@ -63,7 +63,7 @@ export default function Network() {
           <H4 color="white" textAlign="left">
             <FormattedMessage defaultMessage="Network" />
           </H4>
-          <HorizontalSpacer units={1} />
+          <HorizontalSpacer units={2} />
           <Tooltip
             maxWidth={600}
             tooltipContent={
