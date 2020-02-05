@@ -56,7 +56,7 @@ function VolumeWidget(props: VolumeWidgetProps) {
 
   return (
     <WidgetCard width="630px" noPadding>
-      <WithLoading isLoading={isLoading || !tradeVolume.length}>
+      <WithLoading isLoading={isLoading || !tradeVolume || !tradeVolume.length}>
         <VolumeWidgetContainer>
           <VolumeHeaderContainer>
             <Flex direction="row" align="flex-end">
