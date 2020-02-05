@@ -48,6 +48,17 @@ const text = {
     h8: '12px',
     h9: '11px',
   },
+  lineHeight: {
+    h1: '50px',
+    h2: '36px',
+    h3: '28px',
+    h4: '24px',
+    h5: '22px',
+    h6: '20px',
+    h7: '18px',
+    h8: '16px',
+    h9: '13px',
+  },
 };
 
 const fixed = {
