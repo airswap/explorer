@@ -181,15 +181,14 @@ const makeGetVolumeDistributionBySource = createSelector(
 
     filteredTrades.forEach(trade => {
       if (trade.source) {
-        if (trade.source === TRADER_AFFILIATE_ADDRESS) {
-          volumeDistributionBySource['AirSwap Trader'] =
-            (volumeDistributionBySource['AirSwap Trader'] || 0) + trade.ethAmount;
+        if (trade.source === TRADER_AFFILIATE_ADDRESS || trade.source === 'AirSwap Trader') {
+          volumeDistributionBySource['AirSwap OTC'] =
+            (volumeDistributionBySource['AirSwap OTC'] || 0) + trade.ethAmount;
         } else {
           volumeDistributionBySource[trade.source] = (volumeDistributionBySource[trade.source] || 0) + trade.ethAmount;
         }
       } else {
-        volumeDistributionBySource['AirSwap Instant'] =
-          (volumeDistributionBySource['AirSwap Instant'] || 0) + trade.ethAmount;
+        volumeDistributionBySource['AirSwap'] = (volumeDistributionBySource['AirSwap'] || 0) + trade.ethAmount;
       }
     });
 
