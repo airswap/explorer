@@ -16,16 +16,17 @@ interface TooltipContainerProps {
 const TooltipContainer = styled(Flex)<TooltipContainerProps>`
   position: absolute;
   left: 50%;
-  top: -100%;
+  top: 100%;
   transform: translateX(-50%);
   z-index: 3;
   padding: 5px 10px;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.75);
-  width: auto;
-  max-width: ${({ maxWidth }) => (maxWidth ? `${maxWidth}px` : 'auto')};
+  width: ${({ maxWidth }) => (maxWidth ? `${maxWidth}px` : 'auto')};
   border-radius: 5px;
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
+  font-size: ${({ theme }) => theme.text.fontSize.h7};
+  color: white;
 `;
 
 interface TooltipProps {
