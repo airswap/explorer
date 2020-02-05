@@ -65,9 +65,9 @@ export default function Network() {
           </H4>
           <HorizontalSpacer units={2} />
           <Tooltip
-            maxWidth={600}
+            maxWidth={450}
             tooltipContent={
-              <H8 color="white">
+              <H8 expand textAlign="left" color="white">
                 <FormattedMessage defaultMessage="The network graph visualizes swaps between peers on the AirSwap network. Each node represents a wallet address, while the links between each wallet represent at least a single transaction between the two peers. Pan, zoom, and rotate to see the graph from different angles. Click on a graph node to view the wallet activity through Etherscan." />
               </H8>
             }
