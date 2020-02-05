@@ -91,12 +91,11 @@ export default function Resources() {
       <VerticalSpacer units={3} />
       <LinkContainer>
         <Carousel settings={carouselSettings}>
-          <ResourceLink label="Instant" url={AIRSWAP_INSTANT_URL} />
-          <ResourceLink label="Trader" url={AIRSWAP_TRADER_URL} />
-          <ResourceLink label="FAQ" url={AIRSWAP_FAQ_URL} />
-          <ResourceLink label="Docs" url={AIRSWAP_DOCS_URL} />
+          <ResourceLink label="AirSwap" url={AIRSWAP_INSTANT_URL} />
+          <ResourceLink label="OTC" url={AIRSWAP_TRADER_URL} />
+          <ResourceLink label="Developers" url={AIRSWAP_DOCS_URL} />
           <ResourceLink label="Discord" url={AIRSWAP_DISCORD_URL} />
-          <ResourceLink label="Twitter" url={AIRSWAP_TWITTER_URL} />
+          <ResourceLink label="FAQ" url={AIRSWAP_FAQ_URL} />
         </Carousel>
       </LinkContainer>
     </WidgetCard>
