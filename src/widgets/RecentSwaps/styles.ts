@@ -49,4 +49,5 @@ export const SwapList = styled(Flex).attrs({ expand: true })`
 
 export const SwapListItem = styled(Flex).attrs({ expand: true, direction: 'row' })`
   padding: 15px 0;
+  min-height: 60px;
 `;
