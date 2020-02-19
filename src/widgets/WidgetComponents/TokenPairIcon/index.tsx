@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Flex from '../../../components/Flex';
-import Image from '../../../components/Image';
 import TokenIcon from '../../../components/TokenIcon';
 import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenPairIconProps } from './Container';

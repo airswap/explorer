@@ -13,7 +13,6 @@ import {
   AIRSWAP_FAQ_URL,
   AIRSWAP_INSTANT_URL,
   AIRSWAP_TRADER_URL,
-  AIRSWAP_TWITTER_URL,
 } from '../../constants';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 
