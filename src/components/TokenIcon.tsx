@@ -8,13 +8,11 @@ interface SizeProps {
   size: number;
 }
 
-const TokenIconContainer = styled(Flex)<SizeProps>`
+const TokenIconContainer = styled.div<SizeProps>`
   border-radius: 50%;
   overflow: hidden;
   width: ${({ size }) => size || 20}px;
   height: ${({ size }) => size || 20}px;
-  max-width: 100%;
-  max-height: 100%;
 `;
 
 const TokenImage = styled.img`
