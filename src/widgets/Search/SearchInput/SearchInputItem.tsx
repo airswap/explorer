@@ -14,6 +14,7 @@ const ItemContainer = styled(Flex).attrs({
   justify: 'flex-start',
 })`
   padding: 10px 30px;
+  min-height: 45px;
   transition: ${({ theme }) => theme.animation.defaultTransition}s;
   cursor: pointer;
 

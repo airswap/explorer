@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import theme from '../../../app/theme';
 import Flex from '../../../components/Flex';
-import Image from '../../../components/Image';
 import { HorizontalSpacer } from '../../../components/Spacer';
 import TokenIcon from '../../../components/TokenIcon';
 import { H8 } from '../../../components/Typography';

@@ -1,5 +1,5 @@
 import { openEtherscanLink } from 'airswap.js/src/utils/etherscan';
-import React, { useState } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 

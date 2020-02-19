@@ -83,4 +83,5 @@ export const DropdownContent = styled(Flex)<DropdownContainerProps>`
 
 export const TokenTypeHeaderContainer = styled(Flex).attrs({ expand: true })`
   padding: 5px 30px;
+  min-height: 30px;
 `;
