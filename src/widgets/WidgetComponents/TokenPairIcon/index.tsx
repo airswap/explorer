@@ -49,12 +49,12 @@ function TokenPairIcon(props: TokenPairIconProps) {
   const senderToken: TokenMetadata | null = useMemo(() => {
     if (props.tokensByAddress) return props.tokensByAddress[props.senderToken];
     return null;
-  }, [props.senderToken, props.tokensByAddress]);
+  }, [props.senderToken, Object.keys(props.tokensByAddress).length]);
 
   const signerToken: TokenMetadata | null = useMemo(() => {
     if (props.tokensByAddress) return props.tokensByAddress[props.signerToken];
     return null;
-  }, [props.signerToken, props.tokensByAddress]);
+  }, [props.signerToken, Object.keys(props.tokensByAddress).length]);
 
   if (!senderToken || !signerToken) {
     return null;
