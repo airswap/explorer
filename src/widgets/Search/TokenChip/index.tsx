@@ -13,7 +13,7 @@ function TokenChip(props: TokenChipProps) {
 
   return (
     <ChipContainer color={props.token.colors ? props.token.colors[0] : theme.palette.primaryColor}>
-      <TokenIcon symbol={props.token.symbol} src={props.token.airswap_img_url || props.token.cmc_img_url} size={14} />
+      <TokenIcon symbol={props.token.symbol} src={props.token.airswap_img_url} size={14} />
       <HorizontalSpacer units={1} />
       <H8 color="rgba(255, 255, 255, 0.75)">{props.token.symbol}</H8>
       <HorizontalSpacer units={1} />

@@ -72,7 +72,7 @@ function SearchInput(props: SearchInputProps) {
             key={token.address}
             title={token.symbol}
             description={token.name}
-            image={token.airswap_img_url || token.cmc_img_url}
+            image={token.airswap_img_url}
             onClick={() => selectToken(token.symbol)}
           />
         </div>
