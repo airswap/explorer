@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList } from 'react-window';
 
 import { QueryContext } from '../../../app/context/QueryContext';
 import MediaQuery from '../../../components/MediaQuery';
-import { VerticalSpacer } from '../../../components/Spacer';
-import { H6 } from '../../../components/Typography';
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg';
 import { TokenMetadata } from '../../../types/Tokens';
 import { findTokens } from '../../../utils/tokens';
@@ -19,23 +19,20 @@ import {
   InputContainer,
   InputEl,
   SearchInputContainer,
-  TokenTypeHeaderContainer,
 } from './styles';
 
 function SearchInput(props: SearchInputProps) {
   const searchInputRef = useRef<HTMLDivElement>(null);
   const [searchString, setSearchString] = useState<string>('');
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [stablecoinTokens, setStablecoinTokens] = useState<TokenMetadata[]>(props.stablecoinTokens);
-  const [allOtherTokens, setAllOtherTokens] = useState<TokenMetadata[]>(props.allOtherTokens);
+  const [tokens, setTokens] = useState<TokenMetadata[]>(props.tokens);
   const { addToken } = useContext(QueryContext);
 
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setSearchString(evt.target.value);
 
-    setStablecoinTokens(findTokens(evt.target.value, props.stablecoinTokens));
-    setAllOtherTokens(findTokens(evt.target.value, props.allOtherTokens));
+    setTokens(findTokens(evt.target.value, props.tokens));
   };
 
   const onEnter = (evt: React.FormEvent) => {
@@ -66,6 +63,24 @@ function SearchInput(props: SearchInputProps) {
     setShowDropdown(true);
   };
 
+  const TokenListItem = useMemo(
+    () => ({ index, style }) => {
+      const token = tokens[index];
+      return (
+        <div style={style}>
+          <SearchInputItem
+            key={token.address}
+            title={token.symbol}
+            description={token.name}
+            image={token.airswap_img_url || token.cmc_img_url}
+            onClick={() => selectToken(token.symbol)}
+          />
+        </div>
+      );
+    },
+    [tokens.length],
+  );
+
   useEffect(() => {
     if (showDropdown) {
       document.addEventListener('mousedown', handleClickOutside);
@@ -77,12 +92,8 @@ function SearchInput(props: SearchInputProps) {
   }, [showDropdown]);
 
   useEffect(() => {
-    setStablecoinTokens(findTokens(searchString, props.stablecoinTokens));
-  }, [props.stablecoinTokens, searchString]);
-
-  useEffect(() => {
-    setAllOtherTokens(findTokens(searchString, props.allOtherTokens));
-  }, [props.allOtherTokens, searchString]);
+    setTokens(findTokens(searchString, props.tokens));
+  }, [props.tokens.length, searchString]);
 
   return (
     <SearchInputContainer ref={searchInputRef}>
@@ -102,39 +113,19 @@ function SearchInput(props: SearchInputProps) {
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
         <DropdownContent showDropdown={showDropdown}>
-          {stablecoinTokens.length ? (
-            <TokenTypeHeaderContainer>
-              <H6 expand color="white" textAlign="left">
-                <FormattedMessage defaultMessage="Stablecoins" />
-              </H6>
-            </TokenTypeHeaderContainer>
-          ) : null}
-          {stablecoinTokens.map(token => (
-            <SearchInputItem
-              key={token.address}
-              title={token.symbol}
-              description={token.name}
-              image={token.airswap_img_url || token.cmc_img_url}
-              onClick={() => selectToken(token.symbol)}
-            />
-          ))}
-          {stablecoinTokens.length ? <VerticalSpacer units={4} /> : null}
-          {allOtherTokens.length ? (
-            <TokenTypeHeaderContainer>
-              <H6 expand color="white" textAlign="left">
-                <FormattedMessage defaultMessage="Other tokens" />
-              </H6>
-            </TokenTypeHeaderContainer>
-          ) : null}
-          {allOtherTokens.map(token => (
-            <SearchInputItem
-              key={token.address}
-              title={token.symbol}
-              description={token.name}
-              image={token.airswap_img_url || token.cmc_img_url}
-              onClick={() => selectToken(token.symbol)}
-            />
-          ))}
+          <AutoSizer>
+            {({ width, height }) => (
+              <FixedSizeList
+                className="token-selector-list"
+                width={width}
+                height={height}
+                itemCount={tokens.length}
+                itemSize={50}
+              >
+                {TokenListItem}
+              </FixedSizeList>
+            )}
+          </AutoSizer>
         </DropdownContent>
       </DropdownContainer>
     </SearchInputContainer>

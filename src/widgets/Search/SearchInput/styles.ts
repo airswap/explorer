@@ -68,13 +68,13 @@ export const DropdownContainer = styled(Flex)<DropdownContainerProps>`
   border-radius: 10px;
   min-height: ${({ showDropdown }) => (showDropdown ? '100px' : '0')};
   max-height: ${({ showDropdown }) => (showDropdown ? '350px' : '0')};
+  height: ${({ showDropdown }) => (showDropdown ? '350px' : '0')};
   transition: ${({ theme }) => theme.animation.defaultTransition}s ease;
   will-change: auto;
-  padding: ${({ showDropdown }) => (showDropdown ? '40px 0' : '0')};
   overflow-y: auto;
 `;
 
-export const DropdownContent = styled(Flex)<DropdownContainerProps>`
+export const DropdownContent = styled(Flex).attrs({ align: 'flex-start' })<DropdownContainerProps>`
   width: 100%;
   height: 100%;
   opacity: ${({ showDropdown }) => (showDropdown ? 1 : 0)};
