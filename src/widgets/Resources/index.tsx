@@ -1,12 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
 
 import Carousel from '../../components/Carousel';
 import Flex from '../../components/Flex';
 import Link from '../../components/Link';
 import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
-import { H4, H7 } from '../../components/Typography';
 import {
   AIRSWAP_DISCORD_URL,
   AIRSWAP_DOCS_URL,
@@ -15,25 +13,7 @@ import {
   AIRSWAP_TRADER_URL,
 } from '../../constants';
 import WidgetCard from '../WidgetComponents/WidgetCard';
-
-const LinkContainer = styled(Flex).attrs({ expand: true, direction: 'row' })`
-  height: 100%;
-`;
-
-const LinkText = styled(H7)`
-  color: rgba(255, 255, 255, 0.25);
-`;
-
-const ResourcesTitle = styled(H4)`
-  color: white;
-  position: absolute;
-  top: 20px;
-  left: ${({ theme }) => theme.spacing.widgetPadding};
-
-  @media (max-width: ${({ theme }) => `${theme.breakpoints.sm[1]}px`}) {
-    left: ${({ theme }) => theme.spacing.mobileWidgetPadding};
-  }
-`;
+import { LinkContainer, LinkText, ResourcesTitle } from './styles';
 
 interface ResourceLinkProps {
   label: string;

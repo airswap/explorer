@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
 
 import { QueryContext } from '../../../app/context/QueryContext';
 import Carousel from '../../../components/Carousel';
@@ -10,35 +9,7 @@ import TokenIcon from '../../../components/TokenIcon';
 import { H7, H8 } from '../../../components/Typography';
 import { TokenMetadata } from '../../../types/Tokens';
 import Container, { TokenCarouselProps, TokenVolume } from './Container';
-
-const TokenCarouselContainer = styled.div`
-  max-height: 150px;
-  width: 100%;
-  height: 100%;
-`;
-
-const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
-  width: 140px;
-  cursor: pointer;
-  opacity: 0.75;
-  transition: 0.5s ease;
-
-  &:hover {
-    opacity: 1;
-  }
-`;
-
-const Divider = styled.div`
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  width: 100%;
-  height: 1px;
-`;
-
-interface ColorProps {
-  color?: string;
-}
+import { Divider, TokenCarouselContainer, TokenCarouselItem } from './styles';
 
 function TokenCarousel(props: TokenCarouselProps) {
   const [tokenVolumes, setTokenVolumes] = useState<TokenVolume[]>(props.tokenVolumes);

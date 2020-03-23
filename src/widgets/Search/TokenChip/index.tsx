@@ -1,45 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import theme from '../../../app/theme';
-import Flex from '../../../components/Flex';
 import { HorizontalSpacer } from '../../../components/Spacer';
 import TokenIcon from '../../../components/TokenIcon';
 import { H8 } from '../../../components/Typography';
 import { ReactComponent as CloseIcon } from '../../../static/close-icon.svg';
-import { FadeIn } from '../../../utils/animations';
 import Container, { TokenChipProps } from './Container';
-
-const ChipContainer = styled(Flex).attrs({ direction: 'row' })`
-  padding: 5px;
-  background-color: ${({ color }) => color || theme.palette.primaryColor}80;
-  border-color: ${({ color }) => color || theme.palette.primaryColor};
-  border-width: 1px;
-  border-style: solid;
-  height: 20px;
-  border-radius: 10px;
-  margin-right: 5px;
-  animation: ${FadeIn} 1s;
-`;
-
-const DismissTokenButton = styled(Flex)`
-  cursor: pointer;
-  opacity: 0.5;
-  transition: ${theme.animation.defaultTransition}s;
-
-  svg {
-    width: 8px;
-    height: 8px;
-
-    path {
-      stroke: white;
-    }
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-`;
+import { ChipContainer, DismissTokenButton } from './styles';
 
 function TokenChip(props: TokenChipProps) {
   if (!props.token) return null;
