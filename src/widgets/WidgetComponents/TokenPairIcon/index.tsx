@@ -12,10 +12,6 @@ const TokenPairIconContainer = styled(Flex).attrs({ align: 'flex-start' })`
   /* height: 30px; */
 `;
 
-interface ColorProps {
-  color?: string;
-}
-
 const BaseTokenIcon = styled(Flex)`
   padding: 3px;
   border-radius: 50%;

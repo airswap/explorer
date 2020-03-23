@@ -35,7 +35,7 @@ const Close = styled(Flex)`
   }
 `;
 
-export const WidgetCardContainer = styled(Flex)<ContainerProps>`
+const WidgetCardContainer = styled(Flex)<ContainerProps>`
   flex: auto;
   position: relative;
   width: ${({ width }) => width};

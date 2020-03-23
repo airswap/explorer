@@ -4,13 +4,13 @@ import Flex from '../../../components/Flex';
 
 export const TokenCarouselContainer = styled.div`
   max-height: 150px;
-  overflow: hidden;
   width: 100%;
   height: 100%;
 `;
 
 export const TokenCarouselItem = styled(Flex).attrs({ direction: 'row' })`
   width: 140px;
+  height: 60px;
   cursor: pointer;
   opacity: 0.75;
   transition: 0.5s ease;
