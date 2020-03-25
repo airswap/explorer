@@ -1,6 +1,8 @@
 import { openEtherscanLink } from 'airswap.js/src/utils/etherscan';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList } from 'react-window';
 
 import theme from '../../app/theme';
 import Flex from '../../components/Flex';
@@ -67,6 +69,103 @@ function RecentSwapsWidget(props: RecentSwapProps) {
     return `${amount} ${symbol}`;
   };
 
+  const RecentSwapItem = useMemo(
+    () => ({ index, style }) => {
+      const swap = props.trades[index];
+
+      return (
+        <div style={style}>
+          <SwapListItem key={`swap-list-item-${swap.transactionHash}`}>
+            <MediaQuery size="sm">
+              <Flex shrink={0} direction="row">
+                <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                <HorizontalSpacer units={2} />
+              </Flex>
+              <Flex expand grow={1} align="flex-start">
+                <H8 color="white" opacity={0.25}>
+                  {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                </H8>
+                <VerticalSpacer units={1} />
+                <Flex expand direction="row" justify="space-between">
+                  <H8 color="white" opacity={0.75}>
+                    {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
+                  </H8>
+                  <SwapIcon />
+                  <H8 color="white" opacity={0.75}>
+                    {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
+                  </H8>
+                </Flex>
+              </Flex>
+            </MediaQuery>
+            <MediaQuery size="md-up">
+              <ItemContainer width={tableConfig[0].width}>
+                <Flex>
+                  <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
+                </Flex>
+              </ItemContainer>
+              <ItemContainer width={tableConfig[1].width}>
+                <Tooltip
+                  maxWidth={150}
+                  tooltipContent={
+                    <H7 noWrap color="white">
+                      {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
+                    </H7>
+                  }
+                >
+                  <H6 color="white" opacity={0.75}>
+                    {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
+                  </H6>
+                </Tooltip>
+              </ItemContainer>
+              <ItemContainer width={tableConfig[2].width}>
+                <SwapIcon />
+              </ItemContainer>
+              <ItemContainer width={tableConfig[3].width}>
+                <Tooltip
+                  maxWidth={150}
+                  tooltipContent={
+                    <H7 noWrap color="white">
+                      {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
+                    </H7>
+                  }
+                >
+                  <H6 color="white" opacity={0.75}>
+                    {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
+                  </H6>
+                </Tooltip>
+              </ItemContainer>
+              <ItemContainer width={tableConfig[4].width}>
+                <Tooltip
+                  maxWidth={150}
+                  tooltipContent={
+                    <H7 noWrap color="white">
+                      {getSwapValue(swap)}
+                    </H7>
+                  }
+                >
+                  <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                    {getFormattedSwapValue(swap)}
+                  </H6>
+                </Tooltip>
+              </ItemContainer>
+              <ItemContainer width={tableConfig[5].width}>
+                <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
+                  {calculateDifferenceInTrade(swap.timestamp * 1000)}
+                </H6>
+              </ItemContainer>
+              <ItemContainer width={tableConfig[6].width}>
+                <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
+                  <ArrowUpRightIcon />
+                </EtherscanIcon>
+              </ItemContainer>
+            </MediaQuery>
+          </SwapListItem>
+        </div>
+      );
+    },
+    [props.trades],
+  );
+
   return (
     <WidgetCard width="700px">
       <Flex expand direction="row" justify="space-between">
@@ -87,93 +186,19 @@ function RecentSwapsWidget(props: RecentSwapProps) {
             </HeaderContainer>
           </MediaQuery>
           <SwapList>
-            {props.trades.map(swap => (
-              <SwapListItem key={`swap-list-item-${swap.transactionHash}`}>
-                <MediaQuery size="sm">
-                  <Flex shrink={0} direction="row">
-                    <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
-                    <HorizontalSpacer units={2} />
-                  </Flex>
-                  <Flex expand grow={1} align="flex-start">
-                    <H8 color="white" opacity={0.25}>
-                      {calculateDifferenceInTrade(swap.timestamp * 1000)}
-                    </H8>
-                    <VerticalSpacer units={1} />
-                    <Flex expand direction="row" justify="space-between">
-                      <H8 color="white" opacity={0.75}>
-                        {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
-                      </H8>
-                      <SwapIcon />
-                      <H8 color="white" opacity={0.75}>
-                        {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
-                      </H8>
-                    </Flex>
-                  </Flex>
-                </MediaQuery>
-                <MediaQuery size="md-up">
-                  <ItemContainer width={tableConfig[0].width}>
-                    <Flex>
-                      <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
-                    </Flex>
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[1].width}>
-                    <Tooltip
-                      maxWidth={150}
-                      tooltipContent={
-                        <H7 noWrap color="white">
-                          {getDisplayAmount(swap.makerAmountFormatted, swap.makerSymbol)}
-                        </H7>
-                      }
-                    >
-                      <H6 color="white" opacity={0.75}>
-                        {getDisplayAmountFormatted(swap.makerAmountFormatted, swap.makerSymbol)}
-                      </H6>
-                    </Tooltip>
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[2].width}>
-                    <SwapIcon />
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[3].width}>
-                    <Tooltip
-                      maxWidth={150}
-                      tooltipContent={
-                        <H7 noWrap color="white">
-                          {getDisplayAmount(swap.takerAmountFormatted, swap.takerSymbol)}
-                        </H7>
-                      }
-                    >
-                      <H6 color="white" opacity={0.75}>
-                        {getDisplayAmountFormatted(swap.takerAmountFormatted, swap.takerSymbol)}
-                      </H6>
-                    </Tooltip>
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[4].width}>
-                    <Tooltip
-                      maxWidth={150}
-                      tooltipContent={
-                        <H7 noWrap color="white">
-                          {getSwapValue(swap)}
-                        </H7>
-                      }
-                    >
-                      <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                        {getFormattedSwapValue(swap)}
-                      </H6>
-                    </Tooltip>
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[5].width}>
-                    <H6 color="white" opacity={0.5} weight={theme.text.fontWeight.thin}>
-                      {calculateDifferenceInTrade(swap.timestamp * 1000)}
-                    </H6>
-                  </ItemContainer>
-                  <ItemContainer width={tableConfig[6].width}>
-                    <EtherscanIcon onClick={() => openEtherscanLink(swap.transactionHash, 'tx')}>
-                      <ArrowUpRightIcon />
-                    </EtherscanIcon>
-                  </ItemContainer>
-                </MediaQuery>
-              </SwapListItem>
-            ))}
+            <AutoSizer>
+              {({ width, height }) => (
+                <FixedSizeList
+                  className="recent-swaps-list"
+                  width={width}
+                  height={height}
+                  itemCount={props.trades.length}
+                  itemSize={60}
+                >
+                  {RecentSwapItem}
+                </FixedSizeList>
+              )}
+            </AutoSizer>
           </SwapList>
         </WithLoading>
       </SwapListContainer>

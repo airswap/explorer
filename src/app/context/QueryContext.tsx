@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 export const TimeframeDisplayMap = {
@@ -70,7 +70,16 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
     history.push(`?${queryString.stringify(query, { arrayFormat: 'comma' })}`);
   }, [tokens, timeframe]);
 
-  const contextValue = { tokens, addToken, removeToken, timeframe, setTimeframe };
+  const contextValue = useMemo(
+    () => ({
+      tokens,
+      addToken,
+      removeToken,
+      timeframe,
+      setTimeframe,
+    }),
+    [tokens, timeframe],
+  );
 
   return <QueryContext.Provider value={contextValue}>{props.children}</QueryContext.Provider>;
 }

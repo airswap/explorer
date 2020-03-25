@@ -1,8 +1,11 @@
-import { TRADER_AFFILIATE_ADDRESS } from 'airswap.js/src/constants';
+import { selectors as swapSelectors } from 'airswap.js/src/swap/redux/';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
+import { SwapSourceMap } from '../../constants';
 import { SwapEvent, TradeQuery } from '../../types/Swap';
+
+const { getFormattedSwapFills } = swapSelectors;
 
 export const defaultState = {
   trades: [],
@@ -26,8 +29,8 @@ export default trades;
 const getAllTrades = state => state.trades.trades;
 
 const makeGetTradesForDate = createSelector(
-  getAllTrades,
-  allTrades => days => {
+  getFormattedSwapFills,
+  (allTrades: SwapEvent[]) => days => {
     return allTrades.filter((trade: SwapEvent) => {
       if (trade.timestamp) {
         const timestampDate = moment.unix(trade.timestamp);
@@ -46,8 +49,8 @@ const makeGetTradesForDate = createSelector(
 );
 
 const makeGetTradesByQuery = createSelector(
-  getAllTrades,
-  allTrades => (query: TradeQuery) => {
+  getFormattedSwapFills,
+  (allTrades: SwapEvent[]) => (query: TradeQuery) => {
     return allTrades.filter((trade: SwapEvent) => {
       // Filter by date
       if (trade.timestamp && query.days) {
@@ -180,16 +183,8 @@ const makeGetVolumeDistributionBySource = createSelector(
     const filteredTrades = getTradesByQuery(query);
 
     filteredTrades.forEach(trade => {
-      if (trade.source) {
-        if (trade.source === TRADER_AFFILIATE_ADDRESS || trade.source === 'AirSwap Trader') {
-          volumeDistributionBySource['AirSwap OTC'] =
-            (volumeDistributionBySource['AirSwap OTC'] || 0) + trade.ethAmount;
-        } else {
-          volumeDistributionBySource[trade.source] = (volumeDistributionBySource[trade.source] || 0) + trade.ethAmount;
-        }
-      } else {
-        volumeDistributionBySource['AirSwap'] = (volumeDistributionBySource['AirSwap'] || 0) + trade.ethAmount;
-      }
+      const source = SwapSourceMap[trade.affiliateWallet] || SwapSourceMap[trade.takerAddress] || 'AirSwap';
+      volumeDistributionBySource[source] = (volumeDistributionBySource[source] || 0) + trade.ethAmount;
     });
 
     return volumeDistributionBySource;

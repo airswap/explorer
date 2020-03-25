@@ -24,7 +24,7 @@ export default function Dashboard() {
         <VolumeWidget />
         <TopTradersWidget timeframe={timeframe} tokens={tokens} />
         <PeerDistributionWidget timeframe={timeframe} tokens={tokens} />
-        <RecentSwapsWidget />
+        <RecentSwapsWidget timeframe={timeframe} />
         <NetworkWidget />
       </WidgetGrid>
     </ScreenContainer>
