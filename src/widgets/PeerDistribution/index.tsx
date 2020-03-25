@@ -5,6 +5,7 @@ import ChartLegend from '../../components/ChartLegend';
 import Flex from '../../components/Flex';
 import PieChart from '../../components/PieChart';
 import { VerticalSpacer } from '../../components/Spacer';
+import WithLoading from '../../components/WithLoading';
 import { WidgetTitle } from '../styles';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 import Container, { PeerDistributionWidgetProps } from './Container';
@@ -17,21 +18,23 @@ function PeerDistributionWidget(props: PeerDistributionWidgetProps) {
 
   return (
     <WidgetCard width="315px" expanded={expanded} setExpanded={setExpanded} expandedContent={<div />}>
-      <PeerDistributionWidgetContainer>
-        <WidgetTitle>
-          <FormattedMessage defaultMessage="Integrations" />
-        </WidgetTitle>
-        <Flex expand justify="center">
-          <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={chartColors}>
-            <PieChartHeader>{props.volumeDistributionBySource.length}</PieChartHeader>
-            <VerticalSpacer units={1} />
-            <PieChartSubheader>
-              <FormattedMessage defaultMessage="Total Integrators" />
-            </PieChartSubheader>
-          </PieChart>
-        </Flex>
-        <ChartLegend data={props.volumeDistributionBySource} colors={chartColors} />
-      </PeerDistributionWidgetContainer>
+      <WithLoading isLoading={!props.volumeDistributionBySource || !props.volumeDistributionBySource.length}>
+        <PeerDistributionWidgetContainer>
+          <WidgetTitle>
+            <FormattedMessage defaultMessage="Integrations" />
+          </WidgetTitle>
+          <Flex expand justify="center">
+            <PieChart strokeWidth={10} size={150} data={props.volumeDistributionBySource} colors={chartColors}>
+              <PieChartHeader>{props.volumeDistributionBySource.length}</PieChartHeader>
+              <VerticalSpacer units={1} />
+              <PieChartSubheader>
+                <FormattedMessage defaultMessage="Total Integrators" />
+              </PieChartSubheader>
+            </PieChart>
+          </Flex>
+          <ChartLegend data={props.volumeDistributionBySource} colors={chartColors} />
+        </PeerDistributionWidgetContainer>
+      </WithLoading>
     </WidgetCard>
   );
 }

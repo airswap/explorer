@@ -23,7 +23,6 @@ import VolumeChart from './VolumeChart';
 
 function VolumeWidget(props: VolumeWidgetProps) {
   const [tradeVolume, setTradeVolume] = useState<TradeVolumeByDay[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { tokens, timeframe } = useContext(QueryContext);
 
   const getTotalVolume = () => {
@@ -37,18 +36,6 @@ function VolumeWidget(props: VolumeWidgetProps) {
     })} ETH`;
   };
 
-  // Fetch trades on load
-  useEffect(() => {
-    props.fetchTrades();
-  }, []);
-
-  // Set a minimum of 2 seconds for loading
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  });
-
   useEffect(() => {
     const volume = props.getTradeVolumeByDate({ days: timeframe, tokens });
     setTradeVolume(volume);
@@ -56,7 +43,7 @@ function VolumeWidget(props: VolumeWidgetProps) {
 
   return (
     <WidgetCard width="630px" noPadding>
-      <WithLoading isLoading={isLoading || !tradeVolume || !tradeVolume.length}>
+      <WithLoading isLoading={!tradeVolume || !tradeVolume.length}>
         <VolumeWidgetContainer>
           <VolumeHeaderContainer>
             <Flex direction="row" align="flex-end">

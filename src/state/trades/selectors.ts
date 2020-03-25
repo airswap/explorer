@@ -1,4 +1,6 @@
 import { selectors as swapSelectors } from 'airswap.js/src/swap/redux/';
+import _ from 'lodash';
+import _fp from 'lodash/fp';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 
@@ -7,68 +9,41 @@ import { SwapEvent, TradeQuery } from '../../types/Swap';
 
 const { getFormattedSwapFills } = swapSelectors;
 
-export const defaultState = {
-  trades: [],
-};
-
-const trades = (state = defaultState, action) => {
-  switch (action.type) {
-    case 'STORE_FETCHED_TRADES':
-      if (!action.trades) break;
-      return { ...state, trades: action.trades };
-    default:
-      return state;
-  }
-};
-
-export default trades;
-
-// get trade by timeframe
-// get volume by timeframe
-
-const getAllTrades = state => state.trades.trades;
-
 const makeGetTradesForDate = createSelector(
   getFormattedSwapFills,
   (allTrades: SwapEvent[]) => days => {
-    return allTrades.filter((trade: SwapEvent) => {
-      if (trade.timestamp) {
-        const timestampDate = moment.unix(trade.timestamp);
-        const dayDiff = moment().diff(timestampDate, 'days');
-
-        // Don't show today or days past
-        if (dayDiff >= days) {
-          return false;
-        }
-        return true;
-      }
-      return false;
-    });
-    //
+    const trades = allTrades.filter(({ tokenSymbol }) => !!tokenSymbol);
+    const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
+    const ts = Math.round(new Date().getTime() / 1000);
+    const timeStamp24Hour = ts - 24 * 3600 * days;
+    const [filteredTrades] = _.partition(sortedTrades, t => t.timestamp > timeStamp24Hour);
+    return filteredTrades;
   },
 );
 
 const makeGetTradesByQuery = createSelector(
   getFormattedSwapFills,
   (allTrades: SwapEvent[]) => (query: TradeQuery) => {
-    return allTrades.filter((trade: SwapEvent) => {
-      // Filter by date
-      if (trade.timestamp && query.days) {
-        const timestampDate = moment.unix(trade.timestamp);
-        const dayDiff = moment().diff(timestampDate, 'days');
+    return allTrades
+      .filter(({ tokenSymbol }) => !!tokenSymbol)
+      .filter((trade: SwapEvent) => {
+        // Filter by date
+        if (trade.timestamp && query.days) {
+          const timestampDate = moment.unix(trade.timestamp);
+          const dayDiff = moment().diff(timestampDate, 'days');
 
-        if (dayDiff >= query.days) {
-          return false;
+          if (dayDiff >= query.days) {
+            return false;
+          }
         }
-      }
 
-      // Filter by tokens
-      if (query.tokens && query.tokens.length) {
-        return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
-      }
+        // Filter by tokens
+        if (query.tokens && query.tokens.length) {
+          return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
+        }
 
-      return true;
-    });
+        return true;
+      });
   },
 );
 
@@ -78,6 +53,8 @@ const makeGetTradeVolumeByDate = createSelector(
     const tradesByDay = {};
 
     const filteredTrades = getTradesForDate(query.days);
+
+    if (!filteredTrades || !filteredTrades.length) return [];
 
     for (let i = 0; i <= query.days; i++) {
       const formattedDate = moment()
@@ -194,7 +171,7 @@ const makeGetVolumeDistributionBySource = createSelector(
 // const getAirSwapVolumeByToken = createSelector()
 
 export const selectors = {
-  getAllTrades,
+  makeGetTradesForDate,
   makeGetTradesByQuery,
   makeGetTradeVolumeByDate,
   makeGetTradeVolumeByToken,
