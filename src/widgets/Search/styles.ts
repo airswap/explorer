@@ -49,7 +49,7 @@ interface TimeframeOptionProps {
 
 export const TimeframeOption = styled(H8)<TimeframeOptionProps>`
   color: ${({ selected, theme }) => (selected ? theme.palette.primaryColor : 'rgba(255, 255, 255, 0.25)')};
-  transition: 0.4s;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s;
   cursor: pointer;
 
   &:hover {

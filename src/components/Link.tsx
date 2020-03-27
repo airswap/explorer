@@ -4,11 +4,6 @@ import styled from 'styled-components';
 const LinkEl = styled.a`
   cursor: pointer;
   text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.25);
-  }
 `;
 
 interface LinkProps {

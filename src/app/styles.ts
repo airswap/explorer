@@ -32,4 +32,9 @@ export const ResourceContainer = styled(Flex).attrs({ direction: 'row' })``;
 
 export const ResourceLinkText = styled(H6)`
   color: rgba(255, 255, 255, 0.25);
+  transition: ${({ theme }) => theme.animation.defaultTransition}s;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.primaryColor};
+  }
 `;
