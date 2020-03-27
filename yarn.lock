@@ -1737,10 +1737,10 @@ aes-js@^3.1.1:
   resolved "https://registry.yarnpkg.com/aes-js/-/aes-js-3.1.2.tgz#db9aabde85d5caabbfc0d4f2a4446960f627146a"
   integrity sha512-e5pEa2kBnBOgR4Y/p20pskXI74UEz7de8ZGVo58asOtvSVG5YAbJeELPZxOmt+Bnz3rX753YKhfIn4X4l1PPRQ==
 
-airswap.js@0.1.162:
-  version "0.1.162"
-  resolved "https://registry.yarnpkg.com/airswap.js/-/airswap.js-0.1.162.tgz#bb5e7bdb42eda67744a0c926ca9567fdd755e643"
-  integrity sha512-5S1xq1HWNTF/Pr6LknI5ZMCaGKEX1V+4JrKGqZ4HUbOyA3UiybvyLkt++gmNCUN9CpzpOm93wvGYjxQ6zJ1xfQ==
+airswap.js@0.1.164:
+  version "0.1.164"
+  resolved "https://registry.yarnpkg.com/airswap.js/-/airswap.js-0.1.164.tgz#a39dda2df6f8c53f401822cd3880af01d091f7af"
+  integrity sha512-TaAESsBirWnKv9DJFy5YvWn2xqHAlY8t+rMHnYtM2Zje/0xB2V1dRG87lk9/3JytSYM2rIaCaYNTR+E2plsfDQ==
   dependencies:
     "@airswap/order-utils" "^0.3.20"
     "@alch/alchemy-web3" "^0.1.11"
@@ -1748,7 +1748,7 @@ airswap.js@0.1.162:
     axios "^0.18.0"
     dotenv "^8.2.0"
     ethereumjs-wallet "^0.6.3"
-    ethers "^4.0.43"
+    ethers "^4.0.46"
     eventsource "^1.0.7"
     fortmatic "^0.7.4"
     hdkey "^1.1.1"
@@ -5929,10 +5929,10 @@ ethers@^4.0.27:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
-ethers@^4.0.43:
-  version "4.0.44"
-  resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.44.tgz#f2608cbc0b4d099b7e10a01c0efc3a1037013b4e"
-  integrity sha512-kCkMPkpYjBkxzqjcuYUfDY7VHDbf5EXnfRPUOazdqdf59SvXaT+w5lgauxLlk1UjxnAiNfeNS87rkIXnsTaM7Q==
+ethers@^4.0.46:
+  version "4.0.46"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.46.tgz#13cd3ed099487f43ece00194b89a8a8781f71507"
+  integrity sha512-/dPMzzpInhtiip4hKFvsDiJKeRk64IhyA+Po7CtNXneQFSOCYXg8eBFt+jXbxUQyApgWnWOtYxWdfn9+CvvxDA==
   dependencies:
     aes-js "3.0.0"
     bn.js "^4.4.0"

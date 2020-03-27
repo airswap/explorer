@@ -30,7 +30,7 @@
     "redux-devtools-extension": "^2.13.5"
   },
   "dependencies": {
-    "airswap.js": "0.1.162",
+    "airswap.js": "0.1.164",
     "@types/moment": "^2.13.0",
     "@types/rc-slider": "^8.6.5",
     "@types/react": "^16.9.11",
