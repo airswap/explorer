@@ -1,26 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
 
 import { QueryContext } from '../../app/context/QueryContext';
-import Flex from '../../components/Flex';
 import Slider from '../../components/Slider';
-import { H9 } from '../../components/Typography';
-import { SearchLabel, SearchLabelContainer } from './styles';
-
-const SliderContainer = styled(Flex).attrs({ expand: true, justify: 'center' })`
-  height: 30px;
-  position: relative;
-`;
-
-const SliderLabelContainer = styled(Flex).attrs({ expand: true, direction: 'row', justify: 'space-between' })`
-  position: absolute;
-  bottom: -10px;
-`;
-
-const SliderLabel = styled(H9)`
-  color: rgba(255, 255, 255, 0.25);
-`;
+import { SliderContainer, SliderLabel, SliderLabelContainer } from './styles';
 
 export default function TimeframeSlider() {
   const { timeframe, setTimeframe } = useContext(QueryContext);
@@ -42,11 +25,11 @@ export default function TimeframeSlider() {
 
   return (
     <SliderContainer expand>
-      <SearchLabelContainer>
+      {/* <SearchLabelContainer>
         <SearchLabel>
           <FormattedMessage defaultMessage="Filter by time" />
         </SearchLabel>
-      </SearchLabelContainer>
+      </SearchLabelContainer> */}
       <Slider
         min={7}
         max={30}

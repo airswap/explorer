@@ -20,7 +20,7 @@ import Container, { TopTradersWidgetProps } from './Container';
 
 const TraderImageContainer = styled(Flex)`
   cursor: pointer;
-  transition: 0.4s ease;
+  transition: ${({ theme }) => theme.animation.defaultTransition}s;
 
   &:hover {
     transform: scale(0.9);

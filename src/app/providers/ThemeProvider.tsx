@@ -41,6 +41,9 @@ const BaseStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+  .token-selector-list {
+    margin-top: 20px;
+  }
 `;
 
 theme.palette.borderColor = '#E5E5E5';

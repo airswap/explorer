@@ -16,18 +16,19 @@ orbs:
   aws-cli: airswap/aws-cli@volatile
   slack: circleci/slack@0.1.1
   datadog: airswap/datadog@volatile
+  ipfs: airswap/ipfs@volatile
 
 references:
 
   container_config: &container_config
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     working_directory: ~/repo
 
   npm_cache_key: &npm_cache_key
-    v3-dependencies-{{ checksum "package.json" }}
+    v4-dependencies-{{ checksum "package.json" }}
   npm_backup_cache_key: &npm_backup_cache_key
-    v3-dependencies-
+    v4-dependencies-
 
   restore_node_modules: &restore_node_modules
     restore_cache:
@@ -65,9 +66,9 @@ references:
   restore_repo: &restore_repo
     restore_cache:
       keys:
-        - v3-repo-{{ .Branch }}-{{ .Revision }}
-        - v3-repo-{{ .Branch }}
-        - v3-repo
+        - v4-repo-{{ .Branch }}-{{ .Revision }}
+        - v4-repo-{{ .Branch }}
+        - v4-repo
 
   build_and_deploy: &build_and_deploy
     <<: *container_config
@@ -104,6 +105,9 @@ references:
       - *invalidate_cloudfront
       - slack/status
       - datadog/deploy
+      - persist_to_workspace:
+            root: ~/repo
+            paths: .
 
 jobs:
   development:
@@ -112,6 +116,18 @@ jobs:
     <<: *build_and_deploy
   production:
     <<: *build_and_deploy
+  deploy_to_ipfs:
+    <<: *container_config
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - aws-cli/install
+      - airswap/assume-role:
+          role-name: StaticSiteDeployer
+      - ipfs/deploy_and_update_dns:
+          directory: "./build"
+          dns-record: "explorer.ipfs.airswap.io"
+          zone-id: "Z05966961CTDPINBDB9E7" # ipfs.airswap.io zone
 
 workflows:
   build_test_deploy:
@@ -130,6 +146,14 @@ workflows:
       #          - master
       - production:
           context: Production
+          filters:
+            branches:
+              only:
+                - master
+      - deploy_to_ipfs:
+          context: Production
+          requires:
+            - production
           filters:
             branches:
               only:

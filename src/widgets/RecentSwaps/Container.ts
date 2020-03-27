@@ -1,10 +1,13 @@
-import { selectors as swapSelectors } from 'airswap.js/src/swap/redux/';
-import _fp from 'lodash/fp';
 import { connect } from 'react-redux';
 
+import { selectors } from '../../state/trades';
 import { SwapEvent } from '../../types/Swap';
 
-interface PassedProps {}
+const { makeGetTradesForDate } = selectors;
+
+interface PassedProps {
+  timeframe: number;
+}
 
 interface ReduxProps {
   trades: SwapEvent[];
@@ -12,12 +15,12 @@ interface ReduxProps {
 
 export type RecentSwapProps = PassedProps & ReduxProps;
 
-const mapStateToProps = (state, ownProps: PassedProps) => {
-  const trades = swapSelectors.getFormattedSwapFills(state).filter(({ tokenSymbol }) => !!tokenSymbol);
-  const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
+const mapStateToProps = (state, ownProps: PassedProps): PassedProps & ReduxProps => {
+  const getTradesForDate = makeGetTradesForDate(state);
+  const trades = getTradesForDate(ownProps.timeframe);
 
   return {
-    trades: sortedTrades,
+    trades,
     ...ownProps,
   };
 };

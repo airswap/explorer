@@ -12,10 +12,6 @@ const TokenPairIconContainer = styled(Flex).attrs({ align: 'flex-start' })`
   /* height: 30px; */
 `;
 
-interface ColorProps {
-  color?: string;
-}
-
 const BaseTokenIcon = styled(Flex)`
   padding: 3px;
   border-radius: 50%;
@@ -63,10 +59,10 @@ function TokenPairIcon(props: TokenPairIconProps) {
   return (
     <TokenPairIconContainer>
       <SenderTokenIcon color={senderToken.colors ? senderToken.colors[0] : undefined}>
-        <TokenIcon symbol={senderToken.symbol} src={senderToken.airswap_img_url || senderToken.cmc_img_url} size={30} />
+        <TokenIcon symbol={senderToken.symbol} src={senderToken.airswap_img_url} size={30} />
       </SenderTokenIcon>
       <SignerTokenIcon color={signerToken.colors ? signerToken.colors[0] : undefined}>
-        <TokenIcon symbol={signerToken.symbol} src={signerToken.airswap_img_url || signerToken.cmc_img_url} size={30} />
+        <TokenIcon symbol={signerToken.symbol} src={signerToken.airswap_img_url} size={30} />
       </SignerTokenIcon>
     </TokenPairIconContainer>
   );

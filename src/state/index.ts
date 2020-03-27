@@ -4,9 +4,8 @@ import _ from 'lodash';
 
 import * as locale from './locale';
 import * as router from './router';
-import * as trades from './trades';
 
-const state = { locale, router, trades };
+const state = { locale, router };
 
 const middleware = _.filter(_.map(_.values(state), 'middleware'));
 const rootReducerObj = _.pickBy(_.mapValues(state, 'reducers'), _.identity); // the _.pickBy(*, _.identity) removes falsy object values (for state modules without reducers)

@@ -1,4 +1,4 @@
 {
-  presets: ["react-app"],
-  plugins: ["react-intl-auto"]
+  "presets": ["react-app"],
+  "plugins": ["react-intl-auto"]
 }

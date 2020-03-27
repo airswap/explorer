@@ -8,7 +8,7 @@ import { getFormattedNumber } from '../../../utils/transformations';
 
 const { makeGetTradeVolumeByToken } = tradeSelectors;
 
-const { getTokensBySymbol } = tokenSelectors;
+const { getTokensByAddress } = tokenSelectors;
 
 export interface TokenVolume {
   token: TokenMetadata;
@@ -27,16 +27,16 @@ interface ReduxProps {
 export type TokenCarouselProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state, ownProps: PassedProps) => {
-  const tokens: TokenMetadata[] = getTokensBySymbol(state);
+  const tokens: TokenMetadata[] = getTokensByAddress(state);
   const getTradeVolumeByToken = makeGetTradeVolumeByToken(state);
   const tradeVolumeByToken = getTradeVolumeByToken(ownProps.timeframe);
   const tokenVolumes = Object.keys(tradeVolumeByToken)
-    .filter(symbol => tokens[symbol])
+    .filter(address => tokens[address])
     .sort((volume1, volume2) => (tradeVolumeByToken[volume1] > tradeVolumeByToken[volume2] ? -1 : 1))
-    .map(symbol => ({
-      token: tokens[symbol],
+    .map(address => ({
+      token: tokens[address],
       volume: `${getFormattedNumber({
-        num: tradeVolumeByToken[symbol],
+        num: tradeVolumeByToken[address],
         digits: 10,
         minDecimals: 2,
         maxDecimals: 2,

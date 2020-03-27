@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import { selectors as tradeSelectors } from '../../state/trades';
-import { fetchTrades } from '../../state/trades/actions';
 import { TradeQuery, TradeVolumeByDay } from '../../types/Swap';
 
 const { makeGetTradeVolumeByDate } = tradeSelectors;
@@ -9,7 +8,6 @@ const { makeGetTradeVolumeByDate } = tradeSelectors;
 interface PassedProps {}
 
 interface ReduxProps {
-  fetchTrades(): void;
   getTradeVolumeByDate(query?: TradeQuery): TradeVolumeByDay[];
 }
 
@@ -22,7 +20,7 @@ const mapStateToProps = (state, ownProps: PassedProps) => {
   };
 };
 
-const mapDispatchToProps = { fetchTrades };
+const mapDispatchToProps = {};
 
 export default Component =>
   connect(

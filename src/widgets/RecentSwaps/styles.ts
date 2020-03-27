@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Flex from '../../components/Flex';
 import { H8 } from '../../components/Typography';
+import { FadeIn } from '../../utils/animations';
 
 export const HeaderContainer = styled(Flex).attrs({ direction: 'row', expand: true })`
   height: 50px;
@@ -42,7 +43,9 @@ export const SwapListContainer = styled(Flex).attrs({ expand: true })`
   flex: 1;
 `;
 
-export const SwapList = styled(Flex).attrs({ expand: true })`
+export const SwapList = styled(Flex).attrs({ expand: true, align: 'flex-start' })`
+  min-height: 300px;
+  height: 300px;
   height: 100%;
   overflow-y: auto;
 `;
@@ -50,4 +53,5 @@ export const SwapList = styled(Flex).attrs({ expand: true })`
 export const SwapListItem = styled(Flex).attrs({ expand: true, direction: 'row' })`
   padding: 15px 0;
   min-height: 60px;
+  animation: ${FadeIn} 1s;
 `;

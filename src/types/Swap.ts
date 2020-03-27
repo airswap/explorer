@@ -8,6 +8,7 @@ export interface SwapEvent {
   makerAmountFormatted: number;
   makerSymbol: string;
   makerToken: string;
+  makerKind: string;
   nonce: string;
   price: number;
   takerAddress: string;
@@ -15,11 +16,16 @@ export interface SwapEvent {
   takerAmountFormatted: string;
   takerSymbol: string;
   takerToken: string;
+  takerKind: string;
   timestamp: number;
   tokenAddress: string;
   tokenAmount: number;
   tokenSymbol: string;
   transactionHash: string;
+  affiliateWallet: string;
+  affiliateToken: string;
+  affiliateAmount: string;
+  affiliateKind: string;
 }
 
 export interface TradeQuery {
