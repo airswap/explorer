@@ -35,11 +35,11 @@ const Close = styled(Flex)`
   }
 `;
 
-const WidgetCardContainer = styled(Flex)<ContainerProps>`
+const WidgetCardContainer = styled(Flex).attrs({ justify: 'center' })<ContainerProps>`
   flex: auto;
   position: relative;
   width: ${({ width }) => width};
-  max-width: 100%;
+  max-width: calc(100% - 20px);
   padding: ${({ noPadding }) => (noPadding ? '0' : theme.spacing.widgetPadding)};
   height: ${({ height }) => height || '450px'};
   background-color: #30303b;

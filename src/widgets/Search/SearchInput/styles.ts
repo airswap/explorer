@@ -1,10 +1,14 @@
 import { transparentize } from 'polished';
 import styled from 'styled-components';
 
+import { H8 } from '../../../components/Typography';
 import Flex from '../../../components/Flex';
 
-export const SearchInputContainer = styled(Flex).attrs({ expand: true })`
+export const SearchInputContainer = styled(Flex).attrs({ expand: true, justify: 'center' })`
   position: relative;
+  max-height: 150px;
+  height: 100%;
+  padding: 25px 0;
 `;
 
 interface InputContainerProps {
@@ -84,4 +88,15 @@ export const DropdownContent = styled(Flex).attrs({ align: 'flex-start' })<Dropd
 export const TokenTypeHeaderContainer = styled(Flex).attrs({ expand: true })`
   padding: 5px 30px;
   min-height: 30px;
+`;
+
+export const SearchInputLabel = styled(H8)`
+  color: rgba(255, 255, 255, 0.25);
+`;
+
+export const SearchInputLabelContainer = styled(Flex).attrs({ direction: 'row', justify: 'space-between' })`
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 15px;
 `;

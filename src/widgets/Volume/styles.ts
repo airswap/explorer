@@ -43,4 +43,5 @@ export const VolumeFooterContainer = styled(Flex).attrs({ expand: true })`
 export const VolumeWidgetContainer = styled(Flex)`
   width: 100%;
   height: 100%;
+  padding-bottom: ${({ theme }) => theme.spacing.widgetPadding};
 `;

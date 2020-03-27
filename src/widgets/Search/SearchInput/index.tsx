@@ -4,12 +4,12 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
 
 import { QueryContext } from '../../../app/context/QueryContext';
-import MediaQuery from '../../../components/MediaQuery';
+import Flex from '../../../components/Flex';
 import { ReactComponent as SearchIcon } from '../../../static/search-icon.svg';
 import { TokenMetadata } from '../../../types/Tokens';
 import { findTokens } from '../../../utils/tokens';
-import MobileTimeframe from '../MobileTimeframe';
-import { SearchLabel, SearchLabelContainer } from '../styles';
+import TimeframeSelector from '../TimeframeSelector';
+import TokenChip from '../TokenChip';
 import Container, { SearchInputProps } from './Container';
 import SearchInputItem from './SearchInputItem';
 import {
@@ -19,20 +19,22 @@ import {
   InputContainer,
   InputEl,
   SearchInputContainer,
+  SearchInputLabel,
+  SearchInputLabelContainer,
 } from './styles';
 
 function SearchInput(props: SearchInputProps) {
   const searchInputRef = useRef<HTMLDivElement>(null);
   const [searchString, setSearchString] = useState<string>('');
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [tokens, setTokens] = useState<TokenMetadata[]>(props.tokens);
-  const { addToken } = useContext(QueryContext);
+  const [dropdownTokens, setDropdownTokens] = useState<TokenMetadata[]>(props.tokens);
+  const { tokens, addToken, removeToken } = useContext(QueryContext);
 
   const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
     evt.preventDefault();
     setSearchString(evt.target.value);
 
-    setTokens(findTokens(evt.target.value, props.tokens));
+    setDropdownTokens(findTokens(evt.target.value, props.tokens));
   };
 
   const onEnter = (evt: React.FormEvent) => {
@@ -65,7 +67,7 @@ function SearchInput(props: SearchInputProps) {
 
   const TokenListItem = useMemo(
     () => ({ index, style }) => {
-      const token = tokens[index];
+      const token = dropdownTokens[index];
       return (
         <div style={style}>
           <SearchInputItem
@@ -78,7 +80,7 @@ function SearchInput(props: SearchInputProps) {
         </div>
       );
     },
-    [tokens.length],
+    [tokens, dropdownTokens.length],
   );
 
   useEffect(() => {
@@ -92,24 +94,27 @@ function SearchInput(props: SearchInputProps) {
   }, [showDropdown]);
 
   useEffect(() => {
-    setTokens(findTokens(searchString, props.tokens));
+    setDropdownTokens(findTokens(searchString, props.tokens));
   }, [props.tokens.length, searchString]);
 
   return (
     <SearchInputContainer ref={searchInputRef}>
-      <SearchLabelContainer>
-        <SearchLabel>
+      <SearchInputLabelContainer>
+        <SearchInputLabel>
           <FormattedMessage defaultMessage="Filter by token" />
-        </SearchLabel>
-        <MediaQuery size="sm">
-          <MobileTimeframe />
-        </MediaQuery>
-      </SearchLabelContainer>
+        </SearchInputLabel>
+        <TimeframeSelector />
+      </SearchInputLabelContainer>
       <InputContainer onSubmit={onEnter} showDropdown={showDropdown}>
         <IconContainer>
           <SearchIcon />
         </IconContainer>
         <InputEl value={searchString} onChange={onChange} onFocus={onInputFocus} />
+        <Flex direction="row">
+          {tokens.map(token => (
+            <TokenChip tokenAddress={token} onDismiss={() => removeToken(token)} />
+          ))}
+        </Flex>
       </InputContainer>
       <DropdownContainer showDropdown={showDropdown}>
         <DropdownContent showDropdown={showDropdown}>
@@ -119,7 +124,7 @@ function SearchInput(props: SearchInputProps) {
                 className="token-selector-list"
                 width={width}
                 height={height}
-                itemCount={tokens.length}
+                itemCount={dropdownTokens.length}
                 itemSize={50}
               >
                 {TokenListItem}

@@ -18,7 +18,6 @@ import {
   VolumeTitle,
   VolumeWidgetContainer,
 } from './styles';
-import TokenCarousel from './TokenCarousel';
 import VolumeChart from './VolumeChart';
 
 function VolumeWidget(props: VolumeWidgetProps) {
@@ -59,11 +58,6 @@ function VolumeWidget(props: VolumeWidgetProps) {
             <VolumeAmount>{getTotalVolume()}</VolumeAmount>
           </VolumeHeaderContainer>
           <VolumeChart data={tradeVolume} />
-          <VolumeFooterContainer>
-            <MediaQuery size="md-up">
-              <TokenCarousel timeframe={timeframe} />
-            </MediaQuery>
-          </VolumeFooterContainer>
         </VolumeWidgetContainer>
       </WithLoading>
     </WidgetCard>

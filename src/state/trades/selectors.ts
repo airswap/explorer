@@ -90,16 +90,16 @@ const makeGetTradeVolumeByToken = createSelector(
 
     filteredTrades.forEach((trade: SwapEvent) => {
       if (trade.timestamp) {
-        if (tradesByToken[trade.makerSymbol]) {
-          tradesByToken[trade.makerSymbol] += trade.ethAmount || 0;
+        if (tradesByToken[trade.makerToken]) {
+          tradesByToken[trade.makerToken] += trade.ethAmount || 0;
         } else {
-          tradesByToken[trade.makerSymbol] = trade.ethAmount || 0;
+          tradesByToken[trade.makerToken] = trade.ethAmount || 0;
         }
 
-        if (tradesByToken[trade.takerSymbol]) {
-          tradesByToken[trade.takerSymbol] += trade.ethAmount || 0;
+        if (tradesByToken[trade.takerToken]) {
+          tradesByToken[trade.takerToken] += trade.ethAmount || 0;
         } else {
-          tradesByToken[trade.takerSymbol] = trade.ethAmount || 0;
+          tradesByToken[trade.takerToken] = trade.ethAmount || 0;
         }
       }
     });
@@ -117,7 +117,7 @@ const makeGetTradeVolumeByTrader = createSelector(
     filteredTrades
       .filter((trade: SwapEvent) => {
         if (query.tokens && query.tokens.length) {
-          return query.tokens.includes(trade.takerToken) || query.tokens.includes(trade.makerToken);
+          return query.tokens.indexOf(trade.takerToken) !== -1 || query.tokens.indexOf(trade.makerToken) !== -1;
         }
         return true;
       })

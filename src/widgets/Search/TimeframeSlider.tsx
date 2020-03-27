@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { QueryContext } from '../../app/context/QueryContext';
 import Slider from '../../components/Slider';
-import { SearchLabel, SearchLabelContainer, SliderContainer, SliderLabel, SliderLabelContainer } from './styles';
+import { SliderContainer, SliderLabel, SliderLabelContainer } from './styles';
 
 export default function TimeframeSlider() {
   const { timeframe, setTimeframe } = useContext(QueryContext);
@@ -25,11 +25,11 @@ export default function TimeframeSlider() {
 
   return (
     <SliderContainer expand>
-      <SearchLabelContainer>
+      {/* <SearchLabelContainer>
         <SearchLabel>
           <FormattedMessage defaultMessage="Filter by time" />
         </SearchLabel>
-      </SearchLabelContainer>
+      </SearchLabelContainer> */}
       <Slider
         min={7}
         max={30}

@@ -4,20 +4,18 @@ import { Route, Switch } from 'react-router-dom';
 
 import Dashboard from '../screens/Dashboard';
 import history from '../state/router/history';
-import { ReactComponent as AirswapLogo } from '../static/airswap-logo.svg';
 import QueryContextProvider from './context/QueryContext';
+import Header from './Header';
 import IntlProvider from './providers/IntlProvider';
 import ReduxProvider from './providers/ReduxProvider';
 import ThemeProvider from './providers/ThemeProvider';
-import { AirswapLogoContainer, AppContainer, ContentContainer } from './styles';
+import { AppContainer, ContentContainer } from './styles';
 
 function App() {
   return (
     <AppContainer>
       <ConnectedRouter history={history}>
-        <AirswapLogoContainer>
-          <AirswapLogo height={30} />
-        </AirswapLogoContainer>
+        <Header />
         <QueryContextProvider>
           <ContentContainer>
             <Switch>

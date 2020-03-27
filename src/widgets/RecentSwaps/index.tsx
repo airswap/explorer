@@ -74,8 +74,8 @@ function RecentSwapsWidget(props: RecentSwapProps) {
       const swap = props.trades[index];
 
       return (
-        <div style={style}>
-          <SwapListItem key={`swap-list-item-${swap.transactionHash}`}>
+        <div style={style} key={`swap-list-item-${swap.transactionHash}`}>
+          <SwapListItem>
             <MediaQuery size="sm">
               <Flex shrink={0} direction="row">
                 <TokenPairIcon senderToken={swap.takerToken} signerToken={swap.makerToken} />
