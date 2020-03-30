@@ -28,6 +28,14 @@ Discord →  [https://chat.airswap.io](http://chat.airswap.io)
 ## Run Locally
 This repository uses .nvmrc to manage node version, so run `nvm install` before `yarn` to make sure you are running the correct node version.
 
+### `yarn start:dev`
+Runs the app locally against rinkeby.
+
+### `yarn start:prod`
+Runs the app locally against mainnet.
+
+### `yarn locale`
+Re-generates locale messages.
 
 ## Contributions
 Contributions are encouraged! Simply fork this repository or create a new branch and open a pull request.
