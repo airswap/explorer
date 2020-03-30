@@ -1,6 +1,7 @@
 {
   "name": "@airswap/explorer",
   "version": "1.0.0",
+  "license": "Apache-2.0",
   "contributors": [
     "Shawn Kim <shawn.kim@fluidity.io>",
     "Sam Walker <sam.walker@fluidity.io>",
