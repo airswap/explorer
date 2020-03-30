@@ -1,9 +1,14 @@
 {
   "name": "@airswap/explorer",
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "contributors": [
+    "Shawn Kim <shawn.kim@fluidity.io>",
+    "Sam Walker <sam.walker@fluidity.io>",
+    "Gal Eldar <gal.eldar@fluidity.io>"
+  ],
   "scripts": {
-    "start:dev": "HTTPS=true PORT=3000 REACT_APP_ENVIRONMENT='development' react-app-rewired start",
+    "start:dev": "HTTPS=false PORT=3000 REACT_APP_ENVIRONMENT='development' react-app-rewired start",
     "start:prod": "HTTPS=true PORT=3001 REACT_APP_ENVIRONMENT='production' react-app-rewired start",
     "start": "yarn start:dev",
     "build": "react-app-rewired build",
