@@ -45,7 +45,7 @@ interface TokenIconProps {
 export default function TokenIcon(props: TokenIconProps) {
   return (
     <TokenIconContainer size={props.size}>
-      {props.src ? (
+      {props.src && props.src.slice(-4) !== '.svg' ? ( // Don't support svgs for now
         <TokenImage src={props.src} />
       ) : (
         <UnknownTokenIcon>

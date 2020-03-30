@@ -45,7 +45,6 @@ export const TokenCarouselLabel = styled(H8)`
 
 export const TokenCarouselLabelContainer = styled(Flex).attrs({ direction: 'row', justify: 'space-between' })`
   position: absolute;
-  width: 100%;
   left: 25px;
   top: 15px;
 `;

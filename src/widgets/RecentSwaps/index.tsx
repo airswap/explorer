@@ -163,7 +163,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         </div>
       );
     },
-    [props.trades],
+    [props.trades.length],
   );
 
   return (
