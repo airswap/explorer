@@ -2,15 +2,6 @@ import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
-export const TimeframeDisplayMap = {
-  7: '1 Week',
-  14: '2 Weeks',
-  30: '1 Month',
-  '1 Week': 7,
-  '2 Weeks': 14,
-  '1 Month': 30,
-};
-
 interface QueryContextType {
   tokens: string[];
   addToken(token: string): void;
@@ -59,8 +50,12 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
         setTokens([query.tokens]);
       }
     }
-    if (query.timeframe && Number(query.timeframe) && Number(query.timeframe) > 0 && Number(query.timeframe) <= 30) {
-      setTimeframe(Number(query.timeframe));
+    const queryTimeframe = Number(query.timeframe);
+    if (
+      queryTimeframe &&
+      (queryTimeframe === 7 || queryTimeframe === 14 || queryTimeframe === 21 || queryTimeframe === 30)
+    ) {
+      setTimeframe(queryTimeframe);
     }
   }, []);
 
