@@ -51,10 +51,7 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
       }
     }
     const queryTimeframe = Number(query.timeframe);
-    if (
-      queryTimeframe &&
-      (queryTimeframe === 7 || queryTimeframe === 14 || queryTimeframe === 21 || queryTimeframe === 30)
-    ) {
+    if (queryTimeframe && (queryTimeframe === 7 || queryTimeframe === 14 || queryTimeframe === 30)) {
       setTimeframe(queryTimeframe);
     }
   }, []);

@@ -14,7 +14,7 @@ export default function TimeframeSelector() {
     <Flex direction="row">
       <MediaQuery size="sm">
         <TimeframeOption selected={timeframe === 7} onClick={() => setTimeframe(7)}>
-          <FormattedMessage defaultMessage="1w" />
+          <FormattedMessage defaultMessage="7d" />
         </TimeframeOption>
         <HorizontalSpacer units={2} />
         <TimeframeOption selected={timeframe === 14} onClick={() => setTimeframe(14)}>
@@ -27,19 +27,15 @@ export default function TimeframeSelector() {
       </MediaQuery>
       <MediaQuery size="md-up">
         <TimeframeOption selected={timeframe === 7} onClick={() => setTimeframe(7)}>
-          <FormattedMessage defaultMessage="7 days" />
+          <FormattedMessage defaultMessage="7 Days" />
         </TimeframeOption>
         <HorizontalSpacer units={3} />
         <TimeframeOption selected={timeframe === 14} onClick={() => setTimeframe(14)}>
-          <FormattedMessage defaultMessage="2 weeks" />
-        </TimeframeOption>
-        <HorizontalSpacer units={3} />
-        <TimeframeOption selected={timeframe === 21} onClick={() => setTimeframe(21)}>
-          <FormattedMessage defaultMessage="3 weeks" />
+          <FormattedMessage defaultMessage="2 Weeks" />
         </TimeframeOption>
         <HorizontalSpacer units={3} />
         <TimeframeOption selected={timeframe === 30} onClick={() => setTimeframe(30)}>
-          <FormattedMessage defaultMessage="1 month" />
+          <FormattedMessage defaultMessage="1 Month" />
         </TimeframeOption>
       </MediaQuery>
     </Flex>
