@@ -181,7 +181,9 @@ function RecentSwapsWidget(props: RecentSwapProps) {
           <MediaQuery size="md-up">
             <HeaderContainer>
               {tableConfig.map(config => (
-                <HeaderItem width={config.width}>{config.label}</HeaderItem>
+                <HeaderItem key={config.label} width={config.width}>
+                  {config.label}
+                </HeaderItem>
               ))}
             </HeaderContainer>
           </MediaQuery>

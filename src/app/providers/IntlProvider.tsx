@@ -9,7 +9,6 @@ import { LocaleType } from '../../types/Locale';
 const { getLocale } = localeSelectors;
 
 const IntlWrapper = ({ locale, children }: { locale: LocaleType; children: React.ReactNode }): any => {
-  // TODO: consider dynamically loading messages per locale (require.context) to reduce primary bundle size
   const key = formatLocaleSnakeCase(locale);
 
   const localeMessages = messages[key];

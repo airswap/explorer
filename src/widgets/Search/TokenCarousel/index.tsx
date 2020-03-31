@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { QueryContext } from '../../../app/context/QueryContext';
 import Carousel from '../../../components/Carousel';
 import Flex from '../../../components/Flex';
-import { HorizontalSpacer, VerticalSpacer } from '../../../components/Spacer';
+import { HorizontalSpacer } from '../../../components/Spacer';
 import TokenIcon from '../../../components/TokenIcon';
 import { H7 } from '../../../components/Typography';
 import { TokenMetadata } from '../../../types/Tokens';
