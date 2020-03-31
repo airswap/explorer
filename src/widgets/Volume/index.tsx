@@ -3,21 +3,13 @@ import { FormattedMessage } from 'react-intl';
 
 import { QueryContext } from '../../app/context/QueryContext';
 import Flex from '../../components/Flex';
-import MediaQuery from '../../components/MediaQuery';
 import { HorizontalSpacer, VerticalSpacer } from '../../components/Spacer';
 import WithLoading from '../../components/WithLoading';
 import { TradeVolumeByDay } from '../../types/Swap';
 import { getFormattedNumber } from '../../utils/transformations';
 import WidgetCard from '../WidgetComponents/WidgetCard';
 import Container, { VolumeWidgetProps } from './Container';
-import {
-  VolumeAmount,
-  VolumeFooterContainer,
-  VolumeHeaderContainer,
-  VolumeSubtitle,
-  VolumeTitle,
-  VolumeWidgetContainer,
-} from './styles';
+import { VolumeAmount, VolumeHeaderContainer, VolumeSubtitle, VolumeTitle, VolumeWidgetContainer } from './styles';
 import VolumeChart from './VolumeChart';
 
 function VolumeWidget(props: VolumeWidgetProps) {

@@ -27,6 +27,7 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
   const location = useLocation();
 
   const [tokens, setTokens] = useState<string[]>([]);
+  const [network, setNetwork] = useState<number>();
   const [timeframe, setTimeframe] = useState<number>(30);
 
   const addToken = (value: string) => {
@@ -50,6 +51,9 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
         setTokens([query.tokens]);
       }
     }
+    if (Number(query.network)) {
+      setNetwork(Number(query.network));
+    }
     const queryTimeframe = Number(query.timeframe);
     if (queryTimeframe && (queryTimeframe === 7 || queryTimeframe === 14 || queryTimeframe === 30)) {
       setTimeframe(queryTimeframe);
@@ -57,10 +61,10 @@ export default function QueryContextProvider(props: QueryContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    const query = { tokens, timeframe };
+    const query = { tokens, timeframe, network };
 
     history.push(`?${queryString.stringify(query, { arrayFormat: 'comma' })}`);
-  }, [tokens, timeframe]);
+  }, [tokens, timeframe, network]);
 
   const contextValue = useMemo(
     () => ({

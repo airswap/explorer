@@ -1,8 +1,8 @@
 import { transparentize } from 'polished';
 import styled from 'styled-components';
 
-import { H8 } from '../../../components/Typography';
 import Flex from '../../../components/Flex';
+import { H8 } from '../../../components/Typography';
 
 export const SearchInputContainer = styled(Flex).attrs({ expand: true, justify: 'center' })`
   position: relative;
