@@ -1,3 +1,4 @@
+import { openEtherscanLink } from 'airswap.js/src/utils/etherscan';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import ForceGraph3D from 'react-force-graph-3d';
 import styled from 'styled-components';
@@ -48,7 +49,7 @@ function NetworkGraph(props: NetworkGraphProps) {
   const { timeframe, tokens } = useContext(QueryContext);
 
   const onNodeClick = node => {
-    window.open(`https://etherscan.io/address/${node.id}`);
+    openEtherscanLink(node.id, 'address');
   };
 
   const onNodeHover = node => {
