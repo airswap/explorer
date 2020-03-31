@@ -168,8 +168,6 @@ const makeGetVolumeDistributionBySource = createSelector(
   },
 );
 
-// const getAirSwapVolumeByToken = createSelector()
-
 export const selectors = {
   makeGetTradesForDate,
   makeGetTradesByQuery,
