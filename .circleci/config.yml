@@ -101,7 +101,7 @@ references:
       - run:
           name: deploy to s3 bucket
           command: |
-            aws s3 sync ./build s3://$S3_BUCKET --delete --acl public-read
+            aws s3 sync ./build s3://$S3_BUCKET --delete
       - *invalidate_cloudfront
       - slack/status
       - datadog/deploy
