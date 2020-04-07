@@ -31,11 +31,9 @@ This repository uses .nvmrc to manage node version, so run `nvm install` before 
 ### `yarn install`
 Install dependencies required to run the app.
 
-### `yarn start:dev`
-Runs the app locally against rinkeby.
-
-### `yarn start:prod`
-Runs the app locally against mainnet.
+### `yarn start:dev` or `yarn start:prod`
+Runs the app locally against development or production environment. Add a `network` query parameter corresponding to different [chainIds](https://github.com/airswap/airswap-protocols/blob/559f70277ba1c8c87a95a74089aa110b43bcd49c/tools/constants/index.ts#L30-L35) to access different networks.
+E.x. 'https://localhost:3001/?network=4' will show Rinkeby Network data.
 
 ### `yarn locale`
 Re-generates locale messages.
