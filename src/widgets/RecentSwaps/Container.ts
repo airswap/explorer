@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { selectors } from '../../state/trades';
 import { SwapEvent } from '../../types/Swap';
 
-const { makeGetTradesForDate } = selectors;
+const { makeGetTradesByQuery } = selectors;
 
 interface PassedProps {
   timeframe: number;
+  tokens?: string[];
 }
 
 interface ReduxProps {
@@ -16,8 +17,8 @@ interface ReduxProps {
 export type RecentSwapProps = PassedProps & ReduxProps;
 
 const mapStateToProps = (state, ownProps: PassedProps): PassedProps & ReduxProps => {
-  const getTradesForDate = makeGetTradesForDate(state);
-  const trades = getTradesForDate(ownProps.timeframe);
+  const getTradesByQuery = makeGetTradesByQuery(state);
+  const trades = getTradesByQuery({ days: ownProps.timeframe, tokens: ownProps.tokens });
 
   return {
     trades,

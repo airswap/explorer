@@ -174,7 +174,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
         </WidgetTitle>
       </Flex>
       <SwapListContainer>
-        <WithLoading isLoading={!props.trades || props.trades.length < 5}>
+        <WithLoading isLoading={!props.trades || props.trades.length < 1}>
           <MediaQuery size="sm">
             <VerticalSpacer units={3} />
           </MediaQuery>
