@@ -24,7 +24,9 @@ const makeGetTradesForDate = createSelector(
 const makeGetTradesByQuery = createSelector(
   getFormattedSwapFills,
   (allTrades: SwapEvent[]) => (query: TradeQuery) => {
-    return allTrades
+    const trades = allTrades.filter(({ tokenSymbol }) => !!tokenSymbol);
+    const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
+    return sortedTrades
       .filter(({ tokenSymbol }) => !!tokenSymbol)
       .filter((trade: SwapEvent) => {
         // Filter by date
