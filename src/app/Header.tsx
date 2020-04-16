@@ -2,6 +2,8 @@ import React from 'react';
 
 import Flex from '../components/Flex';
 import Link from '../components/Link';
+import MediaQuery from '../components/MediaQuery';
+import NetworkSwitch from '../components/NetworkSwitch';
 import { HorizontalSpacer } from '../components/Spacer';
 import {
   AIRSWAP_DISCORD_URL,
@@ -36,11 +38,14 @@ export default function Header() {
         <AirswapLogo height={30} />
       </AirswapLogoContainer>
       <ResourceContainer>
-        <ResourceLink label="AirSwap" url={AIRSWAP_INSTANT_URL} />
-        <ResourceLink label="OTC" url={AIRSWAP_TRADER_URL} />
-        <ResourceLink label="Developers" url={AIRSWAP_DOCS_URL} />
-        <ResourceLink label="Discord" url={AIRSWAP_DISCORD_URL} />
-        <ResourceLink label="FAQ" url={AIRSWAP_FAQ_URL} />
+        <MediaQuery size="md-up">
+          <ResourceLink label="AirSwap" url={AIRSWAP_INSTANT_URL} />
+          <ResourceLink label="OTC" url={AIRSWAP_TRADER_URL} />
+          <ResourceLink label="Developers" url={AIRSWAP_DOCS_URL} />
+          <ResourceLink label="Discord" url={AIRSWAP_DISCORD_URL} />
+          <ResourceLink label="FAQ" url={AIRSWAP_FAQ_URL} />
+          <NetworkSwitch />
+        </MediaQuery>
       </ResourceContainer>
     </HeaderContainer>
   );
