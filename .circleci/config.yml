@@ -26,9 +26,9 @@ references:
     working_directory: ~/repo
 
   npm_cache_key: &npm_cache_key
-    v4-dependencies-{{ checksum "package.json" }}
+    v5-dependencies-{{ checksum "package.json" }}
   npm_backup_cache_key: &npm_backup_cache_key
-    v4-dependencies-
+    v5-dependencies-
 
   restore_node_modules: &restore_node_modules
     restore_cache:
@@ -66,9 +66,9 @@ references:
   restore_repo: &restore_repo
     restore_cache:
       keys:
-        - v4-repo-{{ .Branch }}-{{ .Revision }}
-        - v4-repo-{{ .Branch }}
-        - v4-repo
+        - v5-repo-{{ .Branch }}-{{ .Revision }}
+        - v5-repo-{{ .Branch }}
+        - v5-repo
 
   build_and_deploy: &build_and_deploy
     <<: *container_config
