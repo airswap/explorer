@@ -62,6 +62,10 @@ function NetworkGraph(props: NetworkGraphProps) {
     return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)];
   };
 
+  const getNodeLabel = node => {
+    return node.id;
+  };
+
   const onWindowResize = useDebouncedCallback(() => {
     if (graphRef.current) {
       setWidth(graphRef.current.getBoundingClientRect().width);
@@ -111,7 +115,7 @@ function NetworkGraph(props: NetworkGraphProps) {
           linkDirectionalParticles={2}
           linkDirectionalParticleWidth={0.2}
           linkDirectionalParticleSpeed={0.004}
-          nodeLabel={node => node.id}
+          nodeLabel={getNodeLabel}
           onNodeHover={onNodeHover}
           onNodeClick={onNodeClick}
         />
