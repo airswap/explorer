@@ -2,7 +2,7 @@ import { distanceInWordsStrict } from 'date-fns';
 
 export const willFormatNumber = (num: number, digits: number, decimals?: number) => {
   const amount = num.toString();
-  return amount.length > digits || (amount.includes('.') && (decimals && amount.split('.')[1].length > decimals));
+  return amount.length > digits || (amount.includes('.') && decimals && amount.split('.')[1].length > decimals);
 };
 
 export const getFormattedNumberOld = (num: number, digits: number, decimals?: number, noEllipsis?: boolean) => {
