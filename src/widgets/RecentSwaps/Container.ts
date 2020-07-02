@@ -28,8 +28,4 @@ const mapStateToProps = (state, ownProps: PassedProps): PassedProps & ReduxProps
 
 const mapDispatchToProps = {};
 
-export default Component =>
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(Component);
+export default Component => connect(mapStateToProps, mapDispatchToProps)(Component);

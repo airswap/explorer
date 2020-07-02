@@ -14,21 +14,16 @@ version: 2.1
 orbs:
   airswap: airswap/assume-role@volatile
   aws-cli: airswap/aws-cli@volatile
-  slack: circleci/slack@0.1.1
-  datadog: airswap/datadog@volatile
   ipfs: airswap/ipfs@volatile
 
 references:
-
   container_config: &container_config
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
 
-  npm_cache_key: &npm_cache_key
-    v4-dependencies-{{ checksum "package.json" }}
-  npm_backup_cache_key: &npm_backup_cache_key
-    v4-dependencies-
+  npm_cache_key: &npm_cache_key v5-dependencies-{{ checksum "package.json" }}
+  npm_backup_cache_key: &npm_backup_cache_key v5-dependencies-
 
   restore_node_modules: &restore_node_modules
     restore_cache:
@@ -55,8 +50,8 @@ references:
 
   setup_bucket: &setup_bucket
     run:
-        name: set up bucket name
-        command: echo "export S3_BUCKET=explorer.$DOMAIN" >> $BASH_ENV
+      name: set up bucket name
+      command: echo "export S3_BUCKET=explorer.$DOMAIN" >> $BASH_ENV
 
   install_missing_packages: &install_missing_packages
     run:
@@ -66,9 +61,9 @@ references:
   restore_repo: &restore_repo
     restore_cache:
       keys:
-        - v4-repo-{{ .Branch }}-{{ .Revision }}
-        - v4-repo-{{ .Branch }}
-        - v4-repo
+        - v5-repo-{{ .Branch }}-{{ .Revision }}
+        - v5-repo-{{ .Branch }}
+        - v5-repo
 
   build_and_deploy: &build_and_deploy
     <<: *container_config
@@ -80,7 +75,7 @@ references:
       - *install_missing_packages
       - add_ssh_keys:
           fingerprints:
-            - "70:4e:92:f1:da:63:59:af:cd:40:b3:43:90:e7:cb:0a"
+            - '70:4e:92:f1:da:63:59:af:cd:40:b3:43:90:e7:cb:0a'
       - run:
           name: yarn install
           command: yarn install
@@ -103,11 +98,9 @@ references:
           command: |
             aws s3 sync ./build s3://$S3_BUCKET --delete
       - *invalidate_cloudfront
-      - slack/status
-      - datadog/deploy
       - persist_to_workspace:
-            root: ~/repo
-            paths: .
+          root: ~/repo
+          paths: .
 
 jobs:
   development:
@@ -125,9 +118,9 @@ jobs:
       - airswap/assume-role:
           role-name: StaticSiteDeployer
       - ipfs/deploy_and_update_dns:
-          directory: "./build"
-          dns-record: "explorer.ipfs.airswap.io"
-          zone-id: "Z05966961CTDPINBDB9E7" # ipfs.airswap.io zone
+          directory: './build'
+          dns-record: 'explorer.ipfs.airswap.io'
+          zone-id: 'Z05966961CTDPINBDB9E7' # ipfs.airswap.io zone
 
 workflows:
   build_test_deploy:

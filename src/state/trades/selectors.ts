@@ -11,10 +11,34 @@ import { selectors as ethPriceSelectors } from '../ethPrice/reducers';
 const { getEthPrice } = ethPriceSelectors;
 const { getFormattedSwapFills } = swapSelectors;
 
+const stablecoins = ['DAI', 'USDT', 'USDC'];
+
 const makeGetTradesForDate = createSelector(
   getFormattedSwapFills,
-  (allTrades: SwapEvent[]) => days => {
-    const trades = allTrades.filter(({ tokenSymbol }) => !!tokenSymbol);
+  getEthPrice,
+  (allTrades: SwapEvent[], ethPrice: number) => days => {
+    const trades = allTrades
+      .filter(({ tokenSymbol }) => !!tokenSymbol)
+      .map(trade => {
+        if (trade.ethAmount) {
+          return trade;
+        }
+        if (_.includes(stablecoins, trade.takerSymbol)) {
+          const ethAmount = Number(trade.takerAmountFormatted) / ethPrice;
+          return {
+            ...trade,
+            ethAmount,
+          };
+        }
+        if (_.includes(stablecoins, trade.makerSymbol)) {
+          const ethAmount = Number(trade.makerAmountFormatted) / ethPrice;
+          return {
+            ...trade,
+            ethAmount,
+          };
+        }
+        return trade;
+      });
     const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
     const ts = Math.round(new Date().getTime() / 1000);
     const timeStamp24Hour = ts - 24 * 3600 * days;
@@ -51,12 +75,9 @@ const makeGetTradesByQuery = createSelector(
   },
 );
 
-const stablecoins = ['DAI', 'USDT', 'USDC'];
-
 const makeGetTradeVolumeByDate = createSelector(
   makeGetTradesForDate,
-  getEthPrice,
-  (getTradesForDate, ethPrice) => (query: TradeQuery) => {
+  getTradesForDate => (query: TradeQuery) => {
     const tradesByDay = {};
 
     const filteredTrades = getTradesForDate(query.days);
@@ -80,13 +101,7 @@ const makeGetTradeVolumeByDate = createSelector(
         if (trade.timestamp) {
           const timestampDate = moment.unix(trade.timestamp);
           const formattedDate = timestampDate.format('MMM D, YYYY');
-          if (trade.ethAmount) {
-            tradesByDay[formattedDate] += trade.ethAmount;
-          } else if (_.includes(stablecoins, trade.takerSymbol)) {
-            tradesByDay[formattedDate] += Number(trade.takerAmountFormatted) / ethPrice;
-          } else if (_.includes(stablecoins, trade.makerSymbol)) {
-            tradesByDay[formattedDate] += Number(trade.makerAmountFormatted) / ethPrice;
-          }
+          tradesByDay[formattedDate] += trade.ethAmount || 0;
         }
       });
     return Object.keys(tradesByDay)
