@@ -14,7 +14,6 @@ version: 2.1
 orbs:
   airswap: airswap/assume-role@volatile
   aws-cli: airswap/aws-cli@volatile
-  ipfs: airswap/ipfs@volatile
 
 references:
   container_config: &container_config
@@ -109,18 +108,6 @@ jobs:
     <<: *build_and_deploy
   production:
     <<: *build_and_deploy
-  deploy_to_ipfs:
-    <<: *container_config
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - aws-cli/install
-      - airswap/assume-role:
-          role-name: StaticSiteDeployer
-      - ipfs/deploy_and_update_dns:
-          directory: './build'
-          dns-record: 'explorer.ipfs.airswap.io'
-          zone-id: 'Z05966961CTDPINBDB9E7' # ipfs.airswap.io zone
 
 workflows:
   build_test_deploy:
@@ -133,14 +120,6 @@ workflows:
                 - develop
       - production:
           context: Production
-          filters:
-            branches:
-              only:
-                - master
-      - deploy_to_ipfs:
-          context: Production
-          requires:
-            - production
           filters:
             branches:
               only:
