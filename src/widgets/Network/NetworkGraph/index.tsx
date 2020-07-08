@@ -58,7 +58,7 @@ function NetworkGraph(props: NetworkGraphProps) {
     }
   };
 
-  const getNodeColor = node => {
+  const getNodeColor = () => {
     return GRAPH_COLOR_PALLETE[Math.floor(Math.random() * GRAPH_COLOR_PALLETE.length)];
   };
 
@@ -107,7 +107,7 @@ function NetworkGraph(props: NetworkGraphProps) {
           height={height}
           graphData={graphData}
           backgroundColor="#30303b"
-          nodeColor={node => getNodeColor(node)}
+          nodeColor={() => getNodeColor()}
           nodeAutoColorBy="id"
           nodeResolution={10}
           showNavInfo={false}

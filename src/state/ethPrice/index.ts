@@ -1,4 +1,4 @@
 import middleware from './middleware';
-import reducers, { selectors } from './reducers';
+import reducers from './reducers';
 
 export { middleware, reducers };
