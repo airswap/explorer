@@ -36,7 +36,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
       width: '10%',
     },
     {
-      label: 'Sender Token',
+      label: 'Signer Token',
       width: '25%',
     },
     {
@@ -44,7 +44,7 @@ function RecentSwapsWidget(props: RecentSwapProps) {
       width: '5%',
     },
     {
-      label: 'Signer Token',
+      label: 'Sender Token',
       width: '25%',
     },
     {
