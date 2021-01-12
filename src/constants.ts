@@ -23,11 +23,13 @@ export const STABLECOIN_SYMBOLS = ['SAI', 'DAI', 'USDC', 'USDT', 'TUSD', 'PAX', 
 export const GRAPH_COLOR_PALLETE = ['#C58A80', '#DB6C33', '#304CD2', '#416A75'];
 
 // Swap Sources
+export const METASWAP_ADDRESS = '0x74de5d4fcbf63e00296fd95d33236b9794016631';
 export const ONEINCH_EXCHANGE_ADDRESS = '0x11111254369792b2ca5d084ab5eea397ca8fa48b';
 export const DEX_AG_ADDRESS = '0xa540fb50288cc31639305b1675c70763c334953b';
 export const TOTLE_ADDRESS = '0x91f3935ed7a4ee8d15023c5df26895b26ae98015';
 
 export const SwapSourceMap = {
+  [METASWAP_ADDRESS]: 'MetaMask',
   [ONEINCH_EXCHANGE_ADDRESS]: '1Inch',
   [DEX_AG_ADDRESS]: 'Dex.ag',
   [TOTLE_ADDRESS]: 'Totle',
