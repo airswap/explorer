@@ -1,4 +1,5 @@
 import { selectors as swapSelectors } from 'airswap.js/src/swap/redux/';
+import { getFormattedSwapLightFills } from 'airswap.js/src/swaplight/redux/selectors';
 import _ from 'lodash';
 import _fp from 'lodash/fp';
 import moment from 'moment';
@@ -15,8 +16,10 @@ const stablecoins = ['DAI', 'USDT', 'USDC'];
 
 const makeGetTradesForDate = createSelector(
   getFormattedSwapFills,
+  getFormattedSwapLightFills,
   getEthPrice,
-  (allTrades: SwapEvent[], ethPrice: number) => days => {
+  (swapTrades: SwapEvent[], swapLightTrades: SwapEvent[], ethPrice: number) => days => {
+    const allTrades = [...swapTrades, ...swapLightTrades];
     const trades = allTrades
       .filter(({ tokenSymbol }) => !!tokenSymbol)
       .map(trade => {
@@ -47,30 +50,35 @@ const makeGetTradesForDate = createSelector(
   },
 );
 
-const makeGetTradesByQuery = createSelector(getFormattedSwapFills, (allTrades: SwapEvent[]) => (query: TradeQuery) => {
-  const trades = allTrades.filter(({ tokenSymbol }) => !!tokenSymbol);
-  const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
-  return sortedTrades
-    .filter(({ tokenSymbol }) => !!tokenSymbol)
-    .filter((trade: SwapEvent) => {
-      // Filter by date
-      if (trade.timestamp && query.days) {
-        const timestampDate = moment.unix(trade.timestamp);
-        const dayDiff = moment().diff(timestampDate, 'days');
+const makeGetTradesByQuery = createSelector(
+  getFormattedSwapFills,
+  getFormattedSwapLightFills,
+  (swapTrades: SwapEvent[], swapLightTrades: SwapEvent[]) => (query: TradeQuery) => {
+    const allTrades = [...swapTrades, ...swapLightTrades];
+    const trades = allTrades.filter(({ tokenSymbol }) => !!tokenSymbol);
+    const sortedTrades = _fp.sortBy(trade => -1 * trade.timestamp, trades);
+    return sortedTrades
+      .filter(({ tokenSymbol }) => !!tokenSymbol)
+      .filter((trade: SwapEvent) => {
+        // Filter by date
+        if (trade.timestamp && query.days) {
+          const timestampDate = moment.unix(trade.timestamp);
+          const dayDiff = moment().diff(timestampDate, 'days');
 
-        if (dayDiff >= query.days) {
-          return false;
+          if (dayDiff >= query.days) {
+            return false;
+          }
         }
-      }
 
-      // Filter by tokens
-      if (query.tokens && query.tokens.length) {
-        return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
-      }
+        // Filter by tokens
+        if (query.tokens && query.tokens.length) {
+          return query.tokens.indexOf(trade.makerToken) !== -1 || query.tokens.indexOf(trade.takerToken) !== -1;
+        }
 
-      return true;
-    });
-});
+        return true;
+      });
+  },
+);
 
 const makeGetTradeVolumeByDate = createSelector(makeGetTradesForDate, getTradesForDate => (query: TradeQuery) => {
   const tradesByDay = {};
