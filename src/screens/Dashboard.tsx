@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 import { QueryContext } from '../app/context/QueryContext';
-import NetworkWidget from '../widgets/Network';
 import PeerDistributionWidget from '../widgets/PeerDistribution';
 import RecentSwapsWidget from '../widgets/RecentSwaps';
 import SearchWidget from '../widgets/Search';
@@ -23,7 +22,6 @@ export default function Dashboard() {
         <TopTradersWidget timeframe={timeframe} tokens={tokens} />
         <PeerDistributionWidget timeframe={timeframe} tokens={tokens} />
         <RecentSwapsWidget timeframe={timeframe} tokens={tokens} />
-        <NetworkWidget />
       </WidgetGrid>
     </ScreenContainer>
   );
