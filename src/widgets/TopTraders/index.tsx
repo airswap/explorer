@@ -41,7 +41,7 @@ function TopTradersWidget(props: TopTradersWidgetProps) {
         </Flex>
         <VerticalSpacer units={6} />
         <Table columns={columns}>
-          {props.tradeVolumeByTrader.slice(0, 4).map((trader, index) => (
+          {props.tradeVolumeByTrader.slice(1, 5).map((trader, index) => (
             <TableRow fadeIn index={index} key={trader.address}>
               <TableRowItem>
                 <TraderImageContainer onClick={() => openEtherscanLink(trader.address, 'address')}>
