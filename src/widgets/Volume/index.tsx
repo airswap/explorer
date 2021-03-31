@@ -17,7 +17,7 @@ function VolumeWidget(props: VolumeWidgetProps) {
   const { tokens, timeframe } = useContext(QueryContext);
 
   const getTotalVolume = () => {
-    const totalVolume = tradeVolume.reduce((result, dateVolume) => result + dateVolume.volume, 0);
+    const totalVolume = tradeVolume.reduce((result, dateVolume) => result + (dateVolume.volume || 0), 0);
     return `${getFormattedNumber({
       num: totalVolume,
       digits: 10,
